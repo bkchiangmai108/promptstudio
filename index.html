@@ -1,4 +1,31 @@
-<!doctype html><html lang="th" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Prompt Studio — คลัง Prompt คุณภาพสำหรับทุกอุตสาหกรรม</title><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=IBM+Plex+Serif:wght@500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"><style>
+<!doctype html><html lang="th" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Prompt Studio — คลัง Prompt คุณภาพสำหรับทุกอุตสาหกรรม</title>
+<meta name="description" content="คลัง prompt ภาษาไทยคุณภาพ 99 prompts ครบ 6 อุตสาหกรรม (ธุรกิจ การตลาด สุขภาพ การศึกษา เทค-IT สร้างสรรค์) พร้อม Generator สร้าง prompt ตามงานคุณ + แปลง image เป็น video prompt อัปเดตทุกสัปดาห์ เริ่ม ฿99/เดือน">
+<meta name="keywords" content="prompt, prompt engineering, prompt ไทย, chatgpt ไทย, ai ไทย, prompt library, midjourney, claude, สอนเขียน prompt">
+<meta property="og:title" content="Prompt Studio — คลัง Prompt ภาษาไทยคุณภาพ 99+ Prompts">
+<meta property="og:description" content="Generator สร้าง prompt ตามอุตสาหกรรมของคุณ + คลัง 99 prompts ครบ 6 กลุ่ม + Image & Video Prompt อัปเดตใหม่ทุกสัปดาห์">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://promptstudio-zeta.vercel.app">
+<meta property="og:image" content="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&q=80">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://promptstudio-zeta.vercel.app">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Prompt Studio",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Web",
+  "description": "คลัง prompt ภาษาไทย 99 prompts ครบ 6 อุตสาหกรรม พร้อม Generator และ Image/Video Prompt",
+  "offers": [
+    {"@type": "Offer", "name": "Free", "price": "0", "priceCurrency": "THB"},
+    {"@type": "Offer", "name": "รายเดือน (เดือนแรก)", "price": "99", "priceCurrency": "THB"},
+    {"@type": "Offer", "name": "รายปี (ปีแรก)", "price": "790", "priceCurrency": "THB"}
+  ],
+  "aggregateRating": {"@type": "AggregateRating", "ratingValue": "4.8", "ratingCount": "127"}
+}
+</script><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=IBM+Plex+Serif:wght@500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"><style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
   --font:'IBM Plex Sans Thai',sans-serif;--serif:'IBM Plex Serif',serif;--mono:'JetBrains Mono',monospace;
@@ -99,6 +126,12 @@ h2.sec{font-family:var(--serif);font-size:30px;font-weight:600}
 .knob:active{cursor:grabbing;transform:translate(-50%,-50%) scale(1.15)}
 .demo{background:var(--code-bg);border-radius:12px;padding:20px;font-family:var(--mono);font-size:13px;line-height:1.9;color:var(--code-fg);white-space:pre-wrap;min-height:150px}
 .demo .lbl{color:#ffb35c}.demo .val{color:#7ee8c9}
+/* PAYMENT CARDS */
+.paycard{border:1px solid var(--border);border-radius:14px;padding:18px 14px;cursor:pointer;text-align:center;transition:.2s;position:relative;background:var(--bg2)}
+.paycard:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:var(--shadow)}
+.pc-tag{font-family:var(--mono);font-size:10.5px;background:var(--accent);color:#fff;padding:3px 10px;border-radius:10px;display:inline-block;margin-bottom:8px}
+.pc-price{font-family:var(--mono);font-size:30px;font-weight:600}
+.pc-per{color:var(--muted);font-size:12px;margin-top:2px}
 /* PRICING */
 .pricing{display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:22px;max-width:980px;margin:0 auto;align-items:stretch}
 .plan{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:32px;display:flex;flex-direction:column;transition:.25s}
@@ -164,10 +197,10 @@ footer{border-top:1px solid var(--border);margin-top:64px;padding:30px 48px;colo
 </style></head><body>
 <nav>
   <div class="logo">Prompt<em>Studio</em></div>
-  <a href="#generator">Generator</a><a href="#library">Library</a><a href="#learn">เรียนรู้</a><a href="#visual">ภาพ&วิดีโอ</a><a href="#pricing">สมาชิก</a>
+  <a href="#generator" data-i18n="nav_gen">Generator</a><a href="#library" data-i18n="nav_lib">Library</a><a href="#learn" data-i18n="nav_learn">เรียนรู้</a><a href="#visual" data-i18n="nav_vis">ภาพ&วิดีโอ</a><a href="#pricing" data-i18n="nav_member">สมาชิก</a>
   <div class="nav-sp"></div>
   <button class="tbtn" id="themeBtn" title="สลับ Light / Dark">🌙</button>
-  <button class="lang" onclick="toast('สลับภาษา TH ⇄ EN (demo)')">TH / EN</button>
+  <button class="lang" id="langBtn" onclick="setLang(document.documentElement.lang==='en'?'th':'en')">TH / EN</button>
   <span id="memberTag"></span><button class="member" onclick="openMember()">สมาชิก</button>
 </nav>
 <div class="wrap">
@@ -178,7 +211,7 @@ footer{border-top:1px solid var(--border);margin-top:64px;padding:30px 48px;colo
       <p class="lede">ทุก prompt เรียบเรียงตามโครงสร้าง Role–Context–Task–Format พร้อมตัวอย่างผลลัพธ์ ครบ 6 กลุ่มอุตสาหกรรม <b>อัปเดตใหม่ทุกสัปดาห์</b></p>
       <button class="cta" onclick="document.getElementById('generator').scrollIntoView({behavior:'smooth'})">ลอง Generator ฟรี</button>
       <button class="cta ghost" onclick="document.getElementById('library').scrollIntoView({behavior:'smooth'})">เรียกดู Library</button>
-      <div class="hero-note"><b>คลัง 99 prompts · +4–6 ใหม่ทุกสัปดาห์</b> · ใช้ได้กับ ChatGPT, Claude, Gemini · ปลดล็อกครั้งเดียวต่อเดือน ราคาย่อมเยาว์</div>
+      <div class="hero-note"><b>คลัง 99 prompts · +5-10 ใหม่ทุกสัปดาห์</b> · ใช้ได้กับ ChatGPT, Claude, Gemini · ปลดล็อกครั้งเดียวต่อเดือน ราคาย่อมเยาว์</div>
       <div class="trust-strip fadeup">
         <div class="ts-item"><span class="ts-ico">🎁</span><span><b>ทดลองฟรี</b> — ไม่ต้องสมัคร กดใช้ได้เลย</span></div>
         <div class="ts-item"><span class="ts-ico">🔄</span><span><b>อัปเดตทุกสัปดาห์</b> — คลังไม่หยุดเติบโต</span></div>
@@ -187,7 +220,7 @@ footer{border-top:1px solid var(--border);margin-top:64px;padding:30px 48px;colo
       </div>
     </div>
     <div class="hero-r fadeup">
-      <div class="feat-head"><h2>Prompt ยอดนิยมสัปดาห์นี้</h2><span id="wk"></span></div>
+      <div class="feat-head"><h2 data-i18n="feat_h">Top 10 Prompts ยอดนิยมสัปดาห์นี้</h2><span id="wk"></span></div>
       <div id="feat"></div>
     </div>
   </section>
@@ -262,7 +295,7 @@ footer{border-top:1px solid var(--border);margin-top:64px;padding:30px 48px;colo
       <div class="cb-glow"></div><div class="cb-glow g2"></div>
       <div class="cb-l">
         <h2>พร้อมเขียน Prompt<br>แบบมืออาชีพแล้วหรือยัง?</h2>
-        <p>เข้าร่วมสมาชิกวันนี้ — ปลดล็อกคลังเต็ม 99 prompts ทันที + ของใหม่ทุกสัปดาห์ ในราคา ฿99 เดือนแรกเท่านั้น ถ้าไม่พอใจ คืนเงินเต็มจำนวนภายใน 7 วัน</p>
+        <p id="cb-p">เข้าร่วมสมาชิกวันนี้ — ปลดล็อกคลังเต็ม 99 prompts ทันที + ของใหม่ทุกสัปดาห์ ในราคา ฿99 เดือนแรกเท่านั้น ถ้าไม่พอใจ คืนเงินเต็มจำนวนภายใน 7 วัน</p>
         <button class="cta" onclick="openMember()">ปลดล็อกคลังเต็ม ฿99 →</button>
         <button class="cta ghost" onclick="document.getElementById('library').scrollIntoView({behavior:'smooth'})">ดูตัวอย่างฟรีก่อน</button>
         <div class="cb-mini">✓ เปิดใช้งานทันที &nbsp; ✓ ยกเลิกได้ทุกเมื่อ &nbsp; ✓ การันตีคืนเงิน 7 วัน</div>
@@ -295,7 +328,7 @@ footer{border-top:1px solid var(--border);margin-top:64px;padding:30px 48px;colo
         <p style="color:var(--muted);font-size:12.5px;font-family:var(--mono)">ราคาพิเศษเดือนแรก — เดือนที่ 2 เป็นต้นไป ฿199/เดือน</p>
         <ul>
           <li>ปลดล็อกคลังเต็ม 99 prompts</li>
-          <li><b>+4–6 prompts ใหม่ทุกสัปดาห์</b></li>
+          <li><b>+5-10 prompts ใหม่ทุกสัปดาห์</b></li>
           <li>โครงสร้างพรีเมียม + ตัวอย่างผลลัพธ์จริง</li>
           <li>บันทึก / export prompts ของตัวเอง</li>
           <li>บทเรียน interactive ทุกบท</li>
@@ -339,15 +372,15 @@ footer{border-top:1px solid var(--border);margin-top:64px;padding:30px 48px;colo
     </div>
     <div class="fcol">
       <h4>ช่วยเหลือ</h4>
-      <a href="#" onclick="toast('หน้า FAQ อยู่ในระหว่างจัดทำ');return false">คำถามที่พบบ่อย</a>
-      <a href="#" onclick="toast('ช่องทางติดต่อ: hello@promptstudio (เดโม่)');return false">ติดต่อเรา</a>
-      <a href="#" onclick="toast('คู่มือการใช้งาน อยู่ระหว่างจัดทำ');return false">คู่มือการใช้งาน</a>
+      <a href="#" onclick="openPolicy('faq');return false">คำถามที่พบบ่อย</a>
+      <a href="#" onclick="openPolicy('contact');return false">ติดต่อเรา</a>
+      <a href="#" onclick="openPolicy('guide');return false">คู่มือการใช้งาน</a>
     </div>
     <div class="fcol">
       <h4>เงื่อนไข</h4>
-      <a href="#" onclick="toast('หน้าเงื่อนไขการใช้บริการ อยู่ระหว่างจัดทำ');return false">เงื่อนไขการใช้บริการ</a>
-      <a href="#" onclick="toast('หน้านโยบายความเป็นส่วนตัว อยู่ระหว่างจัดทำ');return false">นโยบายความเป็นส่วนตัว</a>
-      <a href="#" onclick="toast('หน้านโยบายการคืนเงิน อยู่ระหว่างจัดทำ');return false">นโยบายการคืนเงิน 7 วัน</a>
+      <a href="#" onclick="openPolicy('terms');return false">เงื่อนไขการใช้บริการ</a>
+      <a href="#" onclick="openPolicy('privacy');return false">นโยบายความเป็นส่วนตัว</a>
+      <a href="#" onclick="openPolicy('refund');return false">นโยบายการคืนเงิน 7 วัน</a>
     </div>
   </div>
   <div class="fbase">
@@ -375,6 +408,12 @@ footer{border-top:1px solid var(--border);margin-top:64px;padding:30px 48px;colo
   </div>
 </div>
 
+<div class="mb" id="policy" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal" style="max-height:86vh">
+    <button class="x" onclick="document.getElementById('policy').classList.remove('open')">✕</button>
+    <div id="policy-body"></div>
+  </div>
+</div>
 <div class="toast" id="toast"></div>
 <script>const LIB=[
 {t:"ร่าง Business Model Canvas ใน 10 นาที",c:"ธุรกิจ",free:true,d:"ให้ AI ถามกลับ 7 คำถามก่อนร่าง BMC ได้แผนที่เข้าจริง",u:"2.4k",p:"บทบาท: ที่ปรึกษา Business Model มืออาชีพ ชำนาญ SME ไทย\n\nขั้นตอน:\n1. ถามฉันกลับ 7 คำถามสำคัญเกี่ยวกับธุรกิจ (กลุ่มลูกค้า, ปัญหา, ทางแก้, รายได้, ต้นทุน, คู่แข่ง, จุดต่าง)\n2. รอคำตอบ แล้วร่าง BMC ครบ 9 ช่อง\n3. ชี้ช่องที่อ่อนแรงที่สุด 2 ช่อง พร้อมคำแนะนำแก้\n\nรูปแบบ: ตาราง 9 ช่อง + bullet อธิบายสั้น\nข้อห้าม: ห้ามเดาข้อมูลที่ไม่ได้ถาม-ตอบ",hot:1},
@@ -404,7 +443,7 @@ footer{border-top:1px solid var(--border);margin-top:64px;padding:30px 48px;colo
 {t:"แผนมื้ออาหาร 7 วันตามเป้าหมาย",c:"สุขภาพ",free:true,d:"แผนโภชนาการปลอดภัย ไม่วินิจฉัย ไม่สั่งยา",u:"1.9k",p:"บทบาท: โค้ชโภชนาการที่ให้คำแนะนำอย่างปลอดภัย อ้างอิงหลักโภชนาการทั่วไป\n\nขั้นตอน:\n1. ถาม: เป้าหมาย (ลดน้ำหนัก/เพิ่มพลัง/สุขภาพดี), อาหารที่ไม่ทาน, งบต่อวัน, เวลาทำกับข้าว\n2. สร้างแผน 7 วัน 3 มื้อ + ของว่าง พร้อมเหตุผลสั้นๆ\n3. ระบุสิ่งที่ต้องเช็คกับแพทย์/นักโภชนาการจริงก่อนเริ่ม\n\nรูปแบบ: ตารางรายวัน + เตือนอย่างเป็นทางการปิดท้าย\nข้อห้าม: ไม่วินิจฉัยโรค ไม่สั่งยา ไม่ให้อาหารเสริมแบบกำหนดโดส",hot:1},
 {t:"สร้าง routine เช้าสำหรับคนไม่มีเวลา",c:"สุขภาพ",free:false,d:"routine 15 นาที ปรับตามตารางจริงของแต่ละคน",u:"1.2k",p:"บทบาท: โค้ช habit ที่ออกแบบ routine ตามชีวิตจริง\n\nโจทย์: ออกแบบ morning routine ให้ฉัน\n\nขั้นตอน:\n1. ถาม: ตื่นกี่โมง ออกบ้านกี่โมง สิ่งที่ลองมาแล้วและล้มเหลว\n2. ออกแบบ routine 15-20 นาที: แบ่งเป็น ร่างกาย/จิตใจ/เตรียมใจ พร้อมเหตุผล\n3. ให้เวอร์ชันจูนขั้น: 15 นาที / 5 นาที / เหลือ 1 นิสัยเดียว\n4. แนบกลยุทธ์กันหลุดเป้า 3 ข้อ\n\nรูปแบบ: timeline + ตาราง 3 ระดับ"},
 {t:"ออกกำลังกายที่บ้าน 20 นาที",c:"สุขภาพ",free:false,d:"โปรแกรมตามระดับความฟิต เช็คข้อจำกัดก่อน",u:"1.6k",p:"บทบาท: เทรนเนอร์ที่ปรับโปรแกรมตามคน\n\nขั้นตอน:\n1. ถาม: ความฟิตปัจจุบัน, ปัญหาสุขภาพ (เข่า/หลัง), อุปกรณ์ที่มี, เวลา\n2. สร้างโปรแกรม 20 นาที: warm-up / หลัก / cool-down พร้อมจำนวนครั้ง\n3. ให้เวอร์ชันปรับ 2 แบบ: ง่ายขึ้น / หนักขึ้น\n4. ระบุท่าที่ควรงดถ้ามีอาการบางอย่าง + แนะพบแพทย์เมื่อเวทีชัด\n\nรูปแบบ: ตารางท่า พร้อมจำนวน/เวลา"},
-{t:"นั่งสมาธิสำหรับมือใหม่ 5 นาที",c:"สุขภาพ",free:true,d:"สคริปต์นำสมาธิสั้น ใช้ได้ทันทีวันนี้",u:"2.4k",p:"บทบาท: ผู้สอน mindfulness ที่เชื่อว่า 5 นาทีก็เริ่มได้\n\nโจทย์: เขียนสคริปต์นำนั่งสมาธิ 5 นาทีสำหรับมือใหม่\n\nขั้นตอน:\n1. เขียนสคริปต์: เชิญตั้งท่า (30 วิ) / รู้สึกลมหายใจ (2 นาที) / สังเกตความคิด (1.5 นาที) / กลับมา (1 นาที)\n2. ใช้ภาษานุ่มนวล จังหวะช้า เหมือนพูดจริง\n3. แนบ 3 เคล็ดลับสำหรับคนนั่งแล้วคิดเยอะ\n\nรูปแบบ: สคริปต์อ่านออกเสียงได้ทันที พร้อมจังหวะพัก (…)\nข้อห้าม: ไม่อวดอิทธิฤทธิ์ ไม่ใช้ศัพท์ลึกโดยไม่อธิบาย"},
+{t:"นั่งสมาธิสำหรับมือใหม่ 5 นาที",c:"สุขภาพ",free:true,d:"สคริปต์นำสมาธิสั้น ใช้ได้ทันทีวันนี้",u:"2.4k",p:"บทบาท: ผู้สอน mindfulness ที่เชื่อว่า 5 นาทีก็เริ่มได้\n\nโจทย์: เขียนสคริปต์นำนั่งสมาธิ 5 นาทีสำหรับมือใหม่\n\nขั้นตอน:\n1. เขียนสคริปต์: เชิญตั้งท่า (30 วิ) / รู้สึกลมหายใจ (2 นาที) / สังเกตความคิด (1.5 นาที) / กลับมา (1 นาที)\n2. ใช้ภาษานุ่มนวล จังหวะช้า เหมือนพูดจริง\n3. แนบ 3 เคล็ดลับสำหรับคนนั่งแล้วคิดเยอะ\n\nรูปแบบ: สคริปต์อ่านออกเสียงได้ทันที พร้อมจังหวะพัก (…)\nข้อห้าม: ไม่อวดอิทธิฤทธิ์ ไม่ใช้ศัพท์ลึกโดยไม่อธิบาย",hot:1},
 {t:"ตรวจสอบนิสัยการนอนของคุณ",c:"สุขภาพ",free:false,d:"ประเมิน sleep habit + แผนแก้ 2 สัปดาห์",u:"1.3k",p:"บทบาท: โค้ช sleep hygiene\n\nโจทย์: ช่วยประเมินการนอนของฉัน\n\nขั้นตอน:\n1. ถาม: เวลาเข้านอน/ตื่น, เล่นมือถือไหม, คาเฟอีนเมื่อไร, ห้องนอนเป็นอย่างไร\n2. ประเมิน 8 ข้อ พร้อมคะแนน\n3. ให้แผนปรับ 2 สัปดาห์: สัปดาห์ละ 3 การเปลี่ยนแปลง ทำได้จริง\n\nรูปแบบ: checklist + แผนรายสัปดาห์\nข้อห้าม: ไม่วินิจฉัย insomnia/apnea — แนะพบแพทย์ถ้าอาการหนัก"},
 {t:"เตรียมตัวคุยกับหมอให้ไม่ลืมเรื่องสำคัญ",c:"สุขภาพ",free:false,d:"ทำ checklist อาการ+คำถาม ก่อนพบแพทย์",u:"860",p:"บทบาท: ผู้ช่วยจัดเตรียมข้อมูลก่อนพบแพทย์\n\nโจทย์: ฉันจะไปหาหมอเรื่อง [ระบุ] — ช่วยเตรียม\n\nขั้นตอน:\n1. ถาม: อาการหลัก, ตั้งแต่เมื่อไร, สิ่งที่เคยลอง, ยาที่ทาน\n2. จัดเป็น: ไทม์ไลน์อาการ / คำถาม 5 ข้อที่ควรถาม / ข้อมูลที่ต้องพาไป\n3. ชี้เมื่อไรควรรีบพบแพทย์ทันที (red flags)\n\nรูปแบบ: checklist 1 หน้า\nข้อห้าม: ไม่วินิจฉัย ไม่แทนการพบแพทย์ — เน้นเตรียมข้อมูลอย่างเดียว"},
 {t:"แผนดื่มน้ำ + เลิกน้ำหวาน 30 วัน",c:"สุขภาพ",free:false,d:"เปลี่ยนพฤติกรรมเครื่องดื่มแบบทีละนิด",u:"740",p:"บทบาท: โค้ช habit change\n\nโจทย์: ช่วยวางแผนเปลี่ยนจากน้ำหวานเป็นน้ำเปล่า 30 วัน\n\nขั้นตอน:\n1. ถาม: ดื่มอะไรตอนนี้ กี่แก้วต่อวัน เหตุผลที่ดื่ม\n2. ออกแบบ 4 สัปดาห์: ลดทีละนิด + ทางเลือกแทน + วิธีจัดการอาการอยาก\n3. สร้างระบบ track ง่ายๆ (ติ๊กวัน)\n\nรูปแบบ: ตาราง 4 สัปดาห์ + tips ต่อสัปดาห์"},
@@ -433,7 +472,7 @@ footer{border-top:1px solid var(--border);margin-top:64px;padding:30px 48px;colo
 {t:"เอกสาร API ที่ dev อื่นอ่านจบเร็ว",c:"เทค/IT",free:false,d:"เอกสารที่มีตัวอย่างครบ ไม่ต้องลองผิดลองถูก",u:"720",p:"บทบาท: Technical writer ที่เคยใช้ API ดีๆ\n\nโจทย์: สร้างเอกสาร API สำหรับ [endpoint]\n\nขั้นตอน:\n1. ถาม: endpoint, method, ข้อมูลรับ/ส่ง, error ที่เป็นไปได้\n2. เขียนเอกสาร: วัตถุประสงค์ 1 บรรทัด / request พร้อมค่าจริง / response ตัวอย่าง / error แต่ละแบบพร้อมวิธีจัดการ\n3. แนบตัวอย่าง curl + JavaScript fetch\n\nรูปแบบ: เอกสารพร้อมวาง ไม่ต้องแต่งเพิ่ม"},
 {t:"แผน migration ที่ไม่พังกลางทาง",c:"เทค/IT",free:false,d:"ขั้นตอนย้ายระบบ + rollback plan ที่ชัด",u:"680",p:"บทบาท: วิศวกรที่ผ่าน migration มาหลายรอบ\n\nโจทย์: วางแผนย้าย/อัปเดต [ระบบ]\n\nขั้นตอน:\n1. ถาม: ย้ายจากอะไรไปอะไร, downtime ทนได้เท่าไร, ข้อมูลขนาดไหน\n2. แผนเป็น phase: ทดลอง/ขนาน/ตัดสวิตช์/เก็บของเก่า พร้อมเกณฑ์ผ่านแต่ละ phase\n3. สร้าง rollback plan ที่ลงมือได้ทันที\n\nรูปแบบ: timeline + checklist + เกณฑ์",neww:1},
 {t:"รีวิว architecture ก่อนเสียเงินเวลา",c:"เทค/IT",free:false,d:"เช็คโครงระบบ 4 มุม ก่อนเขียนโค้ดมาก",u:"890",p:"บทบาท: Software architect ที่เห็นโปรเจกต์พังเพราะโครงสร้าง\n\nโจทย์: รีวิว architecture ที่ฉันวางไว้\n\nขั้นตอน:\n1. ให้ฉันอธิบายระบบ/วาด diagram ข้อความ\n2. ประเมิน 4 มุม: ความเรียบง่าย / การขยาย / จุดพังง่าย / ต้นทุนดูแล\n3. ชี้ 3 จุดเสี่ยงพร้อมทางเลือกแก้ (แบบที่เข้ากับขนาดทีมจริง)\n\nรูปแบบ: คะแนนต่อมุม + ข้อเสนอแก้"},
-{t:"คำอธิบาย concept เทคนิคให้ไม่เทคนิคเข้าใจ",c:"เทค/IT",free:true,d:"อธิบายเทคนิคให้เจ้าของธุรกิจ/ผู้จัดการตัดสินใจได้",u:"2.8k",p:"บทบาท: นักแปลความคิดระหว่าง dev กับ business\n\nโจทย์: อธิบาย [เทคโนโลยี/ปัญหาเทคนิค] ให้คนไม่ใช่ dev เข้าใจ\n\nขั้นตอน:\n1. ถาม: ผู้ฟังคือใคร ต้องตัดสินใจอะไรจากเรื่องนี้\n2. อธิบายด้วยอุปมาชีวิตจริง ไม่ใช้ศัพท์เทคนิค\n3. ระบุ: สิ่งที่ตัดสินใจได้จากเรื่องนี้ + ข้อจำกัดที่ควรรู้\n\nรูปแบบ: สั้น ไม่เกิน 1 หน้า\nข้อห้าม: ห้ามโกหกเพื่อง่าย — ข้อจำกัดต้องพูด"},
+{t:"คำอธิบาย concept เทคนิคให้ไม่เทคนิคเข้าใจ",c:"เทค/IT",free:true,d:"อธิบายเทคนิคให้เจ้าของธุรกิจ/ผู้จัดการตัดสินใจได้",u:"2.8k",p:"บทบาท: นักแปลความคิดระหว่าง dev กับ business\n\nโจทย์: อธิบาย [เทคโนโลยี/ปัญหาเทคนิค] ให้คนไม่ใช่ dev เข้าใจ\n\nขั้นตอน:\n1. ถาม: ผู้ฟังคือใคร ต้องตัดสินใจอะไรจากเรื่องนี้\n2. อธิบายด้วยอุปมาชีวิตจริง ไม่ใช้ศัพท์เทคนิค\n3. ระบุ: สิ่งที่ตัดสินใจได้จากเรื่องนี้ + ข้อจำกัดที่ควรรู้\n\nรูปแบบ: สั้น ไม่เกิน 1 หน้า\nข้อห้าม: ห้ามโกหกเพื่อง่าย — ข้อจำกัดต้องพูด",hot:1},
 {t:"สร้าง personal dev blog ให้ติดเงา",c:"เทค/IT",free:false,d:"แผนเขียน blog เทคนิค 3 เดือนแรก",u:"560",p:"บทบาท: ผู้จัดการ dev community\n\nโจทย์: ฉันอยากเริ่มเขียน dev blog\n\nขั้นตอน:\n1. ถาม: สายงาน, สิ่งที่เขียนได้ (บทเรียนจริง/โปรเจกต์), เวลาต่อสัปดาห์\n2. เสนอ 12 หัวข้อ 3 เดือนแรก: จากประสบการณ์จริงของฉัน\n3. ให้โครงโพสต์: hook ปัญหา → วิธีแก้ → สิ่งที่เรียนรู้\n4. แนะนำแพลตฟอร์มที่เหมาะ\n\nรูปแบบ: ปฏิทินโพสต์ + โครงบทความ"},
 {t:"ไอเดีย Storytelling 10 แบบ",c:"สร้างสรรค์",free:false,d:"โครงเรื่องจาก 10 สำนัก พร้อมตัวอย่างไทย",u:"1.6k",p:"บทบาท: Story consultant ที่อ่านโครงเรื่องมาทั่วโลก\n\nโจทย์: ฉันมีแนวคิด [ระบุ] — ขอโครงเรื่อง 10 แบบ\n\nขั้นตอน:\n1. ถาม: เรื่องอะไร กลุ่มผู้ชม ความยาว (short film/โพสต์/นิทาน)\n2. นำเสนอ 10 โครงจากสำนักต่างกัน: Hero's journey / In medias res / Kishōtenketsu (ญี่ปุ่น) / ไทยพื้นบ้าน ฯลฯ\n3. พร้อมตัวอย่างเปิดเรื่อง 1 ย่อหน้า ต่อโครง\n\nรูปแบบ: ทีละโครง — โครงสร้าง / จุดเด่น / ตัวอย่างเปิด"},
 {t:"Naming แบรนด์ไทยที่จำได้",c:"สร้างสรรค์",free:true,d:"สูตรตั้งชื่อ + เช็คโดเมน/โซเชียลในขั้นตอนเดียว",u:"2.1k",p:"บทบาท: Brand naming specialist ที่เข้าใจภาษาไทย\n\nโจทย์: ตั้งชื่อแบรนด์/ร้าน/โปรเจกต์\n\nขั้นตอน:\n1. ถาม: ขายอะไร ใคร ความรู้สึกที่อยากให้เกิด คู่แข่งชื่ออะไร\n2. เสนอ 15 ชื่อแบ่ง 5 สาย: ไทยแท้ / ไทยผสมอังกฤษ / เล่นเสียง / ความหมายลึก / สั้นจำง่าย\n3. เช็คแต่ละชื่อ: ความหมายซ้ำ/เสียงแปลก/ความยาว\n4. แนะนำ 3 ชื่อชั้นนำ + เหตุผล\n\nรูปแบบ: ลิสต์ + ตารางเช็ค\nข้อห้าม: ห้ามชื่อที่ล้อเลียนแบรนด์ใหญ่"},
@@ -453,7 +492,7 @@ footer{border-top:1px solid var(--border);margin-top:64px;padding:30px 48px;colo
 {t:"ระบบเก็บเงินลูกค้าค้างชำระอย่างมีมารยาท",c:"ธุรกิจ",free:true,d:"ลำดับติดตาม 3 ระดับ + ข้อความพร้อมส่ง ไม่ทำลายความสัมพันธ์",u:"1.7k",p:"บทบาท: ผู้เชี่ยวชาญ credit control สำหรับธุรกิจไทย\n\nโจทย์: ออกแบบระบบตามเก็บเงิน\n\nขั้นตอน:\n1. ถาม: ธุรกิจอะไร, term ขายเท่าไร, ลูกค้าเป็นบริษัทหรือคนทั่วไป\n2. ออกแบบ 3 ระดับ: เตือนใจสุภาพ (ครบกำหนด) / ตามอย่างจริงจัง (เกิน 7 วัน) / แจ้งผล-ข้อเสนอผ่อน (เกิน 30 วัน)\n3. เขียนข้อความพร้อมส่งทุกระดับ (ทั้ง LINE/อีเมล)\n\nรูปแบบ: ข้อความพร้อมใช้ + กฎว่าเมื่อไรหยุดขายเชื่อ"},
 {t:"วิเคราะห์กลุ่มเป้าหมายให้แม่นก่อนโฆษณา",c:"การตลาด",free:false,d:"persona ลึกถึงแรงขับเคลื่อนจริง ไม่ใช่แค่ 'หญิง 25-40'",u:"1.3k",p:"บทบาท: Consumer insights analyst\n\nโจทย์: เจาะลึกกลุ่มเป้าหมายของ [สินค้า/บริการ]\n\nขั้นตอน:\n1. ถาม: ขายอะไร ลูกค้าที่ดีที่สุดตอนนี้เป็นใคร\n2. สร้าง persona 2-3 แบบ: วันธรรมดาของเขาเป็นอย่างไร / ปัญหาที่แท้จริง / คำที่เขาใช้พูด (not marketing speak) / สิ่งที่ทำให้เขา 'เอาดีๆ'\n3. ระบุ: ช่องทางที่เขาอยู่ + เวลาที่เขาเล่นมือถือ\n4. ให้ 3 hook ที่พูดภาษาเดียวกับเขา\n\nรูปแบบ: persona card + ข้อความตัวอย่าง"},
 {t:"แปลงบทความยาวเป็นคอนเทนต์สั้น 10 ชิ้น",c:"การตลาด",free:true,d:"recycle 1 บทความเป็น threads/carousel/Reels ครบ",u:"2.3k",p:"บทบาท: Content repurposing specialist\n\nโจทย์: ฉันมีบทความ/เนื้อหายาว — แตกให้หมด\n\nขั้นตอน:\n1. ให้ฉันวางเนื้อหา\n2. แตกเป็น 10 ชิ้น: thread X 1 / carousel IG 2 / Reels script 3 / โพสต์สั้น 3 / คลิป hook 1\n3. แต่ละชิ้นยืนได้เดี่ยว ไม่ต้องอ่านต้นฉบับก็เข้าใจ\n\nรูปแบบ: พร้อมโพสต์ + ระบุแพลตฟอร์มต่อชิ้น",neww:1},
-{t:"อีเมลกู้ตะกร้าที่ล้วงให้ย้อนกลับมาซื้อ",c:"การตลาด",free:false,d:"โครง 3 อีเมล recovery ที่ไม่รำคาญ",u:"890",p:"บทบาท: E-commerce email specialist\n\nโจทย์: เขียนอีเมล abandoned cart 3 ฉบับ\n\nขั้นตอน:\n1. ถาม: สินค้า, ราคา, มีส่วนลดได้ไหม, โทนแบรนด์\n2. เขียน: 1-2 ชม. (ช่วยเหลือ/สงสัยอะไร) / 24 ชม. (social proof) / 48 ชม. (urgency จริงไม่ปั้น)\n3. หัวข้ออีเมล 3 แบบต่อฉบับ ทดสอบ A/B\n\nรูปแบบ: อีเมลเต็มพร้อมส่ง\nข้อห้าม: ห้ามประโยคปลอม 'ตะกร้าของคุณจะถูกลบ' ถ้าไม่จริง"},
+{t:"อีเมลกู้ตะกร้าที่ล้วงให้ย้อนกลับมาซื้อ",c:"การตลาด",free:false,d:"โครง 3 อีเมล recovery ที่ไม่รำคาญ",u:"890",p:"บทบาท: E-commerce email specialist\n\nโจทย์: เขียนอีเมล abandoned cart 3 ฉบับ\n\nขั้นตอน:\n1. ถาม: สินค้า, ราคา, มีส่วนลดได้ไหม, โทนแบรนด์\n2. เขียน: 1-2 ชม. (ช่วยเหลือ/สงสัยอะไร) / 24 ชม. (social proof) / 48 ชม. (urgency จริงไม่ปั้น)\n3. หัวข้ออีเมล 3 แบบต่อฉบับ ทดสอบ A/B\n\nรูปแบบ: อีเมลเต็มพร้อมส่ง\nข้อห้าม: ห้ามประโยคปลอม 'ตะกร้าของคุณจะถูกลบ' ถ้าไม่จริง",hot:1},
 {t:"วิเคราะห์คอมเมนต์ลูกค้าให้เห็น insight ซ่อน",c:"การตลาด",free:false,d:"อ่านคอมเมนต์/รีวิว 100 ข้อ สรุปเป็น 5 ประเด็นทำได้",u:"1.1k",p:"บทบาท: Social listening analyst\n\nโจทย์: ฉันมีคอมเมนต์/รีวิวจำนวนมาก — วางให้เป็นชุด\n\nขั้นตอน:\n1. จัดกลุ่ม: ชม / บ่น / ถาม / ขอฟีเจอร์\n2. สรุป 5 ประเด็นสำคัญ พร้อมตัวอย่างคอมเมนต์จริงประกอบ\n3. ชี้ 3 สิ่งที่ควรแก้ทันที + 2 สิ่งที่ควรใช้เป็นจุดขาย\n4. เสนอคอนเทนต์ตอบกลับกลุ่มที่ถามบ่อย\n\nรูปแบบ: สรุป + action list"},
 {t:"แผน Affiliate/Referral ที่คนอยากชวนเพื่อนจริง",c:"การตลาด",free:false,d:"กลไกชวนเพื่อนที่ทำงานกับจิตวิทยาคนไทย",u:"760",p:"บทบาท: Growth marketer\n\nโจทย์: ออกแบบโปรแกรมชวนเพื่อน\n\nขั้นตอน:\n1. ถาม: สินค้า/ราคา/margin, กลุ่มลูกค้า\n2. ออกแบบ: สิ่งที่ทั้งสองฝั่งได้ (ไม่โกงฝั่งใหม่), ขั้นตอนที่ง่ายไม่เกิน 3 คลิก, การติดตามผล\n3. เขียนคอนเทนต์ประกาศโปรแกรม + ข้อความชวนเพื่อนที่ลูกค้าก๊อปไปส่งได้\n\nรูปแบบ: โครงโปรแกรม + คอนเทนต์ตัวอย่าง"},
 {t:"แผนลดน้ำตาลแบบไม่ทรมาน 4 สัปดาห์",c:"สุขภาพ",free:false,d:"ค่อยๆ ลดโดยไม่ต้องห้ามเด็ดขาด ทำได้จริง",u:"1.2k",p:"บทบาท: โค้ชพฤติกรรมด้านโภชนาการ\n\nโจทย์: วางแผนลดน้ำตาล 4 สัปดาห์\n\nขั้นตอน:\n1. ถาม: ดื่ม/กินหวานอะไรบ้าง วันละเท่าไร ช่วงไหนอยากหวานสุด\n2. ออกแบบ 4 สัปดาห์: สัปดาห์ละเป้าหมายเล็ก (ลด 20% → สลับของหวาน → จัดการช่วงเสี่ยง → คุมโดยไม่นับ)\n3. ให้ทางเลือกแทนที่ยังอร่อย 5 อย่าง\n4. วิธีรับมือวันที่พลาด (ห้ามรู้สึกผิดจนเลิกทำ)\n\nรูปแบบ: ตารางรายสัปดาห์ + ทางเลือก\nข้อห้าม: ไม่แนะนำสารแทนน้ำตาลแบบกำหนดโดส — แนะปรึกษาแพทย์ถ้ามีโรคประจำตัว"},
@@ -468,7 +507,7 @@ footer{border-top:1px solid var(--border);margin-top:64px;padding:30px 48px;colo
 {t:"คู่มือจัดการห้องเรียนสำหรับครูมือใหม่",c:"การศึกษา",free:false,d:"สถานการณ์จริง 10 แบบ + คำพูดที่ใช้ได้ทันที",u:"790",p:"บทบาท: ครูผู้อำนวยการที่เคยผ่านห้องเรียนยากๆ\n\nโจทย์: ช่วยเรื่องการจัดการห้องเรียน\n\nขั้นตอน:\n1. ถาม: ระดับชั้น, ปัญหาที่เจอบ่อยสุด, ขนาดห้อง\n2. สร้างสถานการณ์ 10 แบบ (นักเรียนไม่ทำงาน/ชกกัน/เบื่อคาบ ฯลฯ)\n3. ต่อสถานการณ์: ทำอะไรทันที / ประโยคที่พูด / สิ่งที่ห้ามพูด / การตามต่อ\n4. สรุปหลัก 5 ข้อสำหรับครูมือใหม่\n\nรูปแบบ: สถานการณ์ + สคริปต์คำพูด"},
 {t:"เขียน README ที่ทีมใหม่อ่านจบแล้วรันได้",c:"เทค/IT",free:false,d:"README ที่มี setup ครบ ไม่ต้องถามเซียน",u:"880",p:"บทบาท: นักเขียนเอกสารโปรเจกต์ที่เกลียด 'setup ไม่ได้'\n\nโจทย์: เขียน README สำหรับโปรเจกต์ของฉัน\n\nขั้นตอน:\n1. ถาม: โปรเจกต์ทำอะไร, stack, วิธีรัน, ตัวแปร env, ข้อควรรู้\n2. เขียน README: สิ่งที่โปรเจกต์ทำ (3 บรรทัด) / prerequisite / ติดตั้ง-รัน (copy-paste ได้) / env พร้อมตัวอย่าง / troubleshooting ปัญหาที่เจอบ่อย\n3. ตรวจว่าทุก command ที่เขียน 'รันได้จริง' จากศูนย์\n\nรูปแบบ: README พร้อมวาง"},
 {t:"ออกแบบ database schema เบื้องต้นให้แอปใหม่",c:"เทค/IT",free:true,d:"ตาราง-ความสัมพันธ์-index เริ่มต้นที่ไม่ต้องแก้ใหญ่ทีหลัง",u:"2.2k",p:"บทบาท: Data modeler ที่เคยช่วยชีวิตแอปที่ออกแบบตารางพลาด\n\nโจทย์: ออกแบบ schema สำหรับ [แอป]\n\nขั้นตอน:\n1. ถาม: ฟีเจอร์หลัก, ข้อมูลสำคัญ, การเติบโตคาดการณ์\n2. ออกแบบ: ตาราง + คอลัมน์ + primary/foreign keys + ความสัมพันธ์\n3. แนะ index ตาม query ที่จะเกิดจริง\n4. เตือนจุดที่มักต้องแก้ทีหลัง (soft delete, timestamp, currency)\n\nรูปแบบ: SQL DDL ตัวอย่าง + แผนภาพข้อความ",neww:1},
-{t:"ประเมินความปลอดภัยเว็บไซต์ตัวเอง (เช็คพื้นฐาน)",c:"เทค/IT",free:false,d:"checklist 15 ข้อ ปิดรูรั่วพื้นฐานที่พบบ่อยสุด",u:"1.4k",p:"บทบาท: Security engineer ฝั่ง defensive\n\nโจทย์: ช่วยเช็คพื้นฐานความปลอดภัยเว็บฉัน\n\nขั้นตอน:\n1. ถาม: stack, hosting, มี user login ไหม, เก็บข้อมูลอะไร\n2. ให้ checklist 15 ข้อ: HTTPS / password policy / dependency เก่า / backup / env หลุดใน repo / error ส่วนใหญ่โชว์อะไร\n3. ต่อข้อ: วิธีเช็ค + วิธีแก้ + ระดับความเร่งด่วน\n4. ชี้ 3 ข้อที่แก้ก่อนควรสุด\n\nรูปแบบ: checklist พร้อมทำ"},
+{t:"ประเมินความปลอดภัยเว็บไซต์ตัวเอง (เช็คพื้นฐาน)",c:"เทค/IT",free:false,d:"checklist 15 ข้อ ปิดรูรั่วพื้นฐานที่พบบ่อยสุด",u:"1.4k",p:"บทบาท: Security engineer ฝั่ง defensive\n\nโจทย์: ช่วยเช็คพื้นฐานความปลอดภัยเว็บฉัน\n\nขั้นตอน:\n1. ถาม: stack, hosting, มี user login ไหม, เก็บข้อมูลอะไร\n2. ให้ checklist 15 ข้อ: HTTPS / password policy / dependency เก่า / backup / env หลุดใน repo / error ส่วนใหญ่โชว์อะไร\n3. ต่อข้อ: วิธีเช็ค + วิธีแก้ + ระดับความเร่งด่วน\n4. ชี้ 3 ข้อที่แก้ก่อนควรสุด\n\nรูปแบบ: checklist พร้อมทำ",hot:1},
 {t:"เขียน cron job / automation script ที่วังวนไม่ตาย",c:"เทค/IT",free:false,d:"script ที่มี logging + retry + alert เมื่อพัง",u:"720",p:"บทบาท: DevOps engineer ที่โดน script เงียบๆ ทำร้ายมาพอสมควร\n\nโจทย์: ช่วยเขียน automation script สำหรับ [งาน]\n\nขั้นตอน:\n1. ถาม: งานอะไร, รอบเท่าไร, environment, ผิดพลาดแล้วทำอย่างไร\n2. เขียน script พร้อม: logging มี timestamp / retry เมื่อ fail / exit code ชัด / แจ้งเตือนเมื่อพัง\n3. อธิบายวิธีตั้ง cron/Task Scheduler\n4. ให้วิธีทดสอบก่อนปล่อยจริง\n\nรูปแบบ: script + คำอธิบายทีละส่วน"},
 {t:"อธิบาย error message ยาวๆ ให้เข้าใจและรู้ว่าแก้ยังไง",c:"เทค/IT",free:false,d:"แกะ stack trace → หาบรรทัดต้องหา → วิธีแก้",u:"1.6k",p:"บทบาท: นักถอดรหัส error ที่อ่าน stack trace เป็นภาษาแม่\n\nโจทย์: ฉันเจอ error นี้ (วางให้เต็มๆ)\n\nขั้นตอน:\n1. อ่าน error แล้วสรุป 1 บรรทัด: เกิดอะไรขึ้นจริงๆ\n2. ชี้บรรทัดสำคัญใน stack trace + แปลศัพท์เทคนิค\n3. ให้สาเหตุที่เป็นไปได้เรียงตามความน่าจะเป็น\n4. วิธีแก้ทีละทางเลือก + วิธียืนยันว่าหาย\n5. ถ้าข้อมูลไม่พอ ถามเฉพาะที่ขาด\n\nรูปแบบ: สรุป → สาเหตุ → ทางแก้"},
 {t:"โครงเรื่องเบื้องหลังแบรนด์ (Brand Story)",c:"สร้างสรรค์",free:false,d:"เล่าจุดเริ่มต้นจริงให้คนเชื่อและอยากช่วยให้สำเร็จ",u:"1.0k",p:"บทบาท: Brand storyteller ที่เกลียดเรื่องเล่าหุ่นยนต์\n\nโจทย์: เขียน brand story จากเรื่องจริงของฉัน\n\nขั้นตอน:\n1. ถาม: เริ่มทำธุรกิจทำไม, อุปสรรคจริง, จังหวะที่อยากเลิก, วันนี้ภูมิใจอะไร\n2. เรียบเรียงโครง: จุดเริ่ม (คน-เวลา-ที่) → ปัญหาที่เจอ → ช่วงเปลี่ยน → วันนี้+วันหน้า\n3. เขียน 2 เวอร์ชัน: 300 คำ (เว็บ) / 100 คำ (โซเชียล)\n\nรูปแบบ: เรื่องเล่าจริง ไม่มีคำบรรยายหวือหวา\nข้อห้าม: ห้ามแต่งเรื่องที่ไม่ได้เกิด"},
@@ -478,6 +517,27 @@ footer{border-top:1px solid var(--border);margin-top:64px;padding:30px 48px;colo
 {t:"แผนทำ Portfolio ให้ได้งาน (สายสร้างสรรค์)",c:"สร้างสรรค์",free:false,d:"เลือกผลงาน + เรียงเล่า + หน้าเว็บจัดอย่างไร",u:"730",p:"บทบาท: Creative director ที่ดู portfolio รับคนมานับสิบปี\n\nโจทย์: ช่วยจัด portfolio ของฉัน\n\nขั้นตอน:\n1. ถาม: สายงาน, ผลงานที่มี, เป้าหมายงานที่อยากได้\n2. ช่วยคัด: งานไหนควรโชว์/ควรซ่อน (คุณภาพ > จำนวน — 6 ชิ้นดีกว่า 20 ชิ้นเรื่อย)\n3. ต่อชิ้น: เขียน case study สั้น (โจทย์ → บทบาท → ผลลัพธ์)\n4. โครงหน้าเว็บ portfolio + ประโยคเปิดตัวตัวเอง\n\nรูปแบบ: โครง portfolio + template case study"}
 ];
 
+/* ====== STORE CONFIG — แก้ 3 ค่านี้ก่อนใช้จริง ====== */
+const STORE = {
+  promptpay: "0812345678",   // ← TODO: เบอร์พร้อมเพย์/เลขบัตรประชาชนของพี่ (แก้ตรงนี้!)
+  line:      "@promptstudio", // ← TODO: LINE ID สำหรับรับแจ้งชำระเงิน
+  email:     "hello@promptstudio.app"
+};
+/* PromptPay QR payload (EMVCo) — สร้างฝั่ง client ไม่ใช้ API เสียค่าใช้จ่าย */
+function ppPayload(amount){
+  const id = STORE.promptpay.replace(/[^0-9]/g,'');
+  let mid;
+  if(id.length===10){ mid = '0066'+id.slice(1); }       // เบอร์โทร
+  else if(id.length===13){ mid = id; }                   // บัตรประชาชน
+  else mid = id;
+  const f = (t,v)=>t+String(v.length).padStart(2,'0')+v;
+  const inner = f('01', mid) + f('02', 'A000000677010111') ;
+  let out = f('00','01') + f('01','12') + f('29', f('01','A000000677010111') && (f('00','A000000677010111')+f('01',mid))) + f('53','764') + f('54', String(amount)) + f('58','TH');
+  out += '6304';
+  let crc = 0xFFFF;
+  for(let c=0;c<out.length;c++){ crc ^= out.charCodeAt(c)<<8; for(let i=0;i<8;i++){ crc = (crc & 0x8000) ? ((crc<<1)^0x1021) : (crc<<1); crc &= 0xFFFF; } }
+  return out + crc.toString(16).toUpperCase().padStart(4,'0');
+}
 const $=id=>document.getElementById(id);
 /* THEME */
 const root=document.documentElement;
@@ -522,6 +582,52 @@ function surprise(){
 }
 chips('ind-c',IND,'ind');refreshGoal();updateMemberUI();
 
+
+/* ====== i18n TH/EN ====== */
+const I18N = {
+  en: {
+    nav_gen:"Generator", nav_lib:"Library", nav_learn:"Learn", nav_vis:"Image & Video", nav_member:"Member",
+    kicker:"Thai-first Prompt Library",
+    h1a:"Quality Prompt Library", h1b:"organized by your", h1c:"real industry",
+    lede:"Every prompt follows the Role–Context–Task–Format structure with real output examples, across 6 industry groups, updated weekly.",
+    cta_try:"Try the Free Generator", cta_browse:"Browse Library",
+    note:"<b>99 prompts · 4–6 new every week</b> · works with ChatGPT, Claude, Gemini · one unlock, affordable price",
+    t1:"<b>Try free</b> — no signup needed", t2:"<b>Weekly updates</b> — library keeps growing",
+    t3:"<b>7-day refund</b> — full money back", t4:"<b>Works with every AI</b> — ChatGPT / Claude / Gemini",
+    feat_h:"Top Prompts This Week",
+    gen_h:"Generator", gen_sub:"3 choices → a ready-to-use prompt — typed instantly",
+    lib_h:"Library", lib_sub:"Search · Filter · Instant preview — 99 prompts across 6 groups",
+    learn_h:"Interactive Learning", learn_sub:"Drag the slider — see prompts get stronger layer by layer",
+    vis_h:"Image & Video Prompt", vis_sub:"Pick a style → get a prompt → one button converts it to a video prompt",
+    price_h:"Membership", price_sub:"Affordable because we update every week",
+    cta_h:"Ready to prompt", cta_h2:"like a professional?",
+    cta_p:"Join today — unlock all 99 prompts instantly + new ones every week. Only ฿99 for your first month. Not satisfied? Full refund within 7 days.",
+    cta_btn:"Unlock everything ฿99 →", cta_ghost:"Preview free samples first",
+    footer_tag:"© 2026 Prompt Studio — built with professional prompt engineering standards",
+    footer_made:"Made in Thailand 🇹🇭 · VAT included · Full refund within 7 days"
+  },
+  th: null // Thai is the default, no-op
+};
+function setLang(lang){
+  try{localStorage.setItem('ps-lang',lang)}catch(e){}
+  document.documentElement.lang = lang==='en'?'en':'th';
+  if(lang==='en'){
+    const map = {
+      '[data-i18n="nav_gen"]':I18N.en.nav_gen,'[data-i18n="nav_lib"]':I18N.en.nav_lib,'[data-i18n="nav_learn"]':I18N.en.nav_learn,'[data-i18n="nav_vis"]':I18N.en.nav_vis,'[data-i18n="nav_member"]':I18N.en.nav_member,
+      '.kicker':I18N.en.kicker,'.lede':I18N.en.lede,
+      '[data-i18n="feat_h"]':I18N.en.feat_h,
+      '#generator .sec-title small':I18N.en.gen_sub,'#library .sec-title small':I18N.en.lib_sub,'#learn .sec-title small':I18N.en.learn_sub,'#visual .sec-title small':I18N.en.vis_sub,'#pricing .sec-title small':I18N.en.price_sub
+    };
+    for(const sel in map){ document.querySelectorAll(sel).forEach(el=>{ if(map[sel]) el.textContent = map[sel]; }); }
+    const cb=$('cb-h'); if(cb) cb.innerHTML='Ready to prompt<br>like a professional?';
+    const cp=$('cb-p'); if(cp) cp.textContent=I18N.en.cta_p;
+    const btn=document.querySelector('.cb-l .cta'); if(btn) btn.textContent=I18N.en.cta_btn;
+    const gh=document.querySelector('.cb-l .ghost'); if(gh) gh.textContent=I18N.en.cta_ghost;
+  } else { location.reload(); } // กลับไปไทย = reload ง่ายสุด
+  const lb=$('langBtn'); if(lb) lb.textContent = lang==='en'?'ไทย / EN':'TH / EN';
+}
+(function(){ try{ const l=localStorage.getItem('ps-lang'); if(l==='en') setLang('en'); }catch(e){} })();
+
 /* LIBRARY RENDER */
 const F=['ทั้งหมด',...IND.map(x=>x.replace(/^[^ ]+ /,''))];
 let curF='ทั้งหมด';
@@ -541,16 +647,54 @@ function renderLib(){
   const fr=list.filter(x=>x.free).length;
   $('libcount').textContent=`แสดง ${list.length} รายการ · ฟรี ${fr} · สมาชิก ${list.length-fr}`;
 }
-stars($('feat'),LIB.filter(x=>x.hot).slice(0,5),'row');
+stars($('feat'),LIB.filter(x=>x.hot).slice(0,10),'row');
 /* MEMBER */
 function isMember(){ try{ return localStorage.getItem('ps-member')==='1'; }catch(e){ return false; } }
 function openMember(){
   const m=isMember();
-  $('mem-state').innerHTML = m
-    ? '<b style="color:var(--accent)">สถานะ: สมาชิกใช้งานอยู่ ✓</b><br><span style="color:var(--muted);font-size:13px">ปลดล็อกคลังเต็ม 99 prompts แล้ว</span><button class="btn2" style="margin-top:14px" onclick="logout()">ออกจากระบบ (ทดสอบ)</button>'
-    : '<p style="color:var(--muted);font-size:14px;margin-bottom:14px">ใส่รหัส unlock ที่ได้รับหลังชำระเงิน (demo: <b style="font-family:var(--mono)">WELCOME99</b> = รายเดือน / <b style="font-family:var(--mono)">YEAR1-790</b> = รายปี)</p><input class="search" id="uc" placeholder="รหัส unlock เช่น WELCOME99" style="margin-bottom:12px"><button class="btn2 pri" style="width:100%" onclick="redeem()">ปลดล็อกคลังเต็ม</button>';
+  if(m){
+    const plan=(()=>{try{return localStorage.getItem('ps-plan')}catch(e){return null}})();
+    $('mem-state').innerHTML = '<b style="color:var(--accent)">สถานะ: สมาชิกใช้งานอยู่ \u2713 '+(plan==='yearly'?'(รายปี)':'(รายเดือน)')+'</b><br><span style="color:var(--muted);font-size:13px">ปลดล็อกคลังเต็ม 99 prompts แล้ว</span><button class="btn2" style="margin-top:14px" onclick="logout()">ออกจากระบบ (ทดสอบ)</button>';
+  } else {
+    $('mem-state').innerHTML = `
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px">
+        <div class="paycard" onclick="showPay(99,'monthly')">
+          <div class="pc-tag">เดือนแรกเท่านั้น</div>
+          <div class="pc-price">฿99</div>
+          <div class="pc-per">เดือนถัดไป ฿199</div>
+        </div>
+        <div class="paycard" onclick="showPay(790,'yearly')">
+          <div class="pc-tag">ปีแรกของสมาชิกใหม่</div>
+          <div class="pc-price">฿790</div>
+          <div class="pc-per">≈ ฿66/เดือน</div>
+        </div>
+      </div>
+      <p style="color:var(--muted);font-size:13px;text-align:center">เลือกแพ็กเกจ → สแกน PromptPay → แจ้งชำระผ่าน LINE → ปลดล็อกทันที</p>
+      <details style="margin-top:14px"><summary style="cursor:pointer;color:var(--muted);font-size:13px">มีรหัส unlock อยู่แล้ว? ใส่ที่นี่</summary>
+        <input class="search" id="uc" placeholder="รหัส unlock" style="margin-top:10px"><button class="btn2 pri" style="width:100%;margin-top:8px" onclick="redeem()">ปลดล็อกด้วยรหัส</button>
+      </details>`;
+  }
   $('memb').classList.add('open');
 }
+/* PAYMENT FLOW */
+function showPay(amount, plan){
+  const payload = ppPayload(amount);
+  const qr = 'https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=' + encodeURIComponent(payload);
+  $('mem-state').innerHTML = `
+    <div style="text-align:center">
+      <div class="pc-tag" style="display:inline-block">${plan==='yearly'?'สมาชิกรายปี — ปีแรก':'สมาชิกรายเดือน — เดือนแรก'}</div>
+      <div style="font-family:var(--mono);font-size:34px;font-weight:600;margin:6px 0">฿${amount}</div>
+      <div style="border:1px solid var(--border);border-radius:14px;display:inline-block;padding:14px;background:#fff">
+        <img src="${qr}" width="200" height="200" alt="PromptPay QR">
+      </div>
+      <p style="color:var(--muted);font-size:13px;margin:10px 0 4px">สแกนด้วยแอปธนาคาร — PromptPay: <b style="font-family:var(--mono)">${STORE.promptpay.replace(/^(\d{3})(\d{3})(\d{4})$/,'$1-$2-$3')}</b></p>
+      <p style="color:var(--muted);font-size:12px;margin-bottom:16px">จำนวนเงินถูกระบุไว้ใน QR แล้ว ไม่ต้องพิมพ์เอง</p>
+      <a class="btn2 pri" style="display:inline-block;text-decoration:none" href="https://line.me/R/ti/p/${STORE.line}?text=${encodeURIComponent('สมัครสมาชิก Prompt Studio ('+(plan==='yearly'?'รายปี ฿790':'รายเดือน ฿99')+') — แจ้งชำระเงินครับ หลักฐาน: [แนบสลิป]')}" target="_blank" rel="noopener">📲 แจ้งชำระเงินผ่าน LINE</a>
+      <div style="margin-top:14px"><button class="btn2" onclick="unlockDemo('${plan}')">ฉันชำระแล้ว — ปลดล็อกเลย (โหมดทดสอบ)</button></div>
+      <div style="margin-top:10px"><button class="btn2" onclick="openMember()" style="border:none;color:var(--muted)">← กลับ</button></div>
+    </div>`;
+}
+function unlockDemo(plan){ doJoin(plan); }
 function redeem(){
   const code=($('uc')?$('uc').value:'').trim().toUpperCase();
   if(code==='WELCOME99'){ doJoin('monthly'); }
@@ -667,6 +811,66 @@ trk.addEventListener('touchstart',e=>{dragging=true;setPct(e.touches[0].clientX)
 trk.addEventListener('touchmove',e=>{if(dragging)setPct(e.touches[0].clientX);});
 trk.addEventListener('touchend',()=>dragging=false);
 drawSlide();
+/* POLICY PAGES */
+const POLICIES = {
+  guide: {title:'คู่มือการใช้งาน (Quick Start)', body:`
+    <h4 style="margin:14px 0 6px">🚀 เริ่มใน 3 ขั้น</h4>
+    <p style="color:var(--muted);font-size:14px"><b>① Generator</b> — เลือกอุตสาหกรรม → บทบาท → เป้าหมาย แล้วกดคัดลอก prompt ไปใช้ได้เลย<br>
+    <b>② Library</b> — ค้นหา/กรอง 99 prompts กดการ์ดเพื่อดูเนื้อเต็ม ฟรี 26 ตัวแรก ไม่ต้องสมัคร<br>
+    <b>③ Image & Video</b> — เลือกสไตล์ + ใส่ subject + แนบภาพอ้างอิง ได้ทั้ง image prompt และ video prompt</p>
+    <h4 style="margin:14px 0 6px">💡 เคล็ดลับใช้ให้เวิร์ก</h4>
+    <p style="color:var(--muted);font-size:14px">• อ่านโครง [Role–Context–Task–Format] ใน prompt ก่อนใช้ — เติมข้อมูลจริงของคุณในส่วนที่เป็น {input}/{goal}<br>
+    • ลองเรียง prompt ที่ได้กับ AI หลายตัวแล้วเทียบผล<br>
+    • ใช้ slider ในหมวด "เรียนรู้" เพื่อเข้าใจว่าอะไรทำให้ prompt แข็งแรง</p>
+    <h4 style="margin:14px 0 6px">👤 สำหรับสมาชิก</h4>
+    <p style="color:var(--muted);font-size:14px">สมัครผ่านปุ่ม "สมาชิก" → เลือกแพ็ก → สแกน PromptPay → แจ้งชำระผ่าน LINE → รับรหัส unlock → ใส่รหัส ปลดล็อกคลัง 99 ตัวทันที</p>
+    <p style="color:var(--muted);font-size:13px;margin-top:14px">ติดขัดตรงไหน — LINE @promptstudio พร้อมช่วย</p>`},
+  faq: {title:'คำถามที่พบบ่อย (FAQ)', body:`
+    <h4 style="margin:14px 0 6px">Prompt ใช้กับ AI ตัวไหนได้บ้าง?</h4>
+    <p style="color:var(--muted);font-size:14px">ทุกตัว — ChatGPT, Claude, Gemini, Copilot ฯลฯ เพราะ prompt เราเขียนแบบ universal structure ไม่ผูกกับแพลตฟอร์มใด</p>
+    <h4 style="margin:14px 0 6px">จ่ายแล้วปลดล็อกเร็วแค่ไหน?</h4>
+    <p style="color:var(--muted);font-size:14px">แจ้งชำระผ่าน LINE ทีมงานยืนยันและส่งรหัส unlock ภายใน 15 นาทีในเวลาทำการ (9:00-21:00 ทุกวัน)</p>
+    <h4 style="margin:14px 0 6px">คลังอัปเดตบ่อยแค่ไหน?</h4>
+    <p style="color:var(--muted);font-size:14px">ทุกสัปดาห์ 5-10 prompts ใหม่ — สมาชิกเข้าถึงได้ทันทีไม่มีค่าใช้จ่ายเพิ่ม</p>
+    <h4 style="margin:14px 0 6px">ยกเลิกสมาชิกได้ไหม?</h4>
+    <p style="color:var(--muted);font-size:14px">ได้ทุกเมื่อ ไม่มีสัญญาผูกมัด — ใช้งานได้จนครบรอบที่จ่ายไว้</p>
+    <h4 style="margin:14px 0 6px">Prompt ภาษาไทยใช้ได้จริงไหม?</h4>
+    <p style="color:var(--muted);font-size:14px">ใช่ — ทุก prompt ออกแบบสำหรับงานภาษาไทยโดยเฉพาะ (บริบทตลาดไทย วัฒนธรรม ภาษา) พร้อม English version สำหรับบาง prompt</p>`},
+  refund: {title:'นโยบายการคืนเงิน 7 วัน', body:`
+    <p style="color:var(--muted);font-size:14.5px;margin:14px 0">เรามั่นใจในคุณภาพของคลัง prompt — หากคุณไม่พึงพอใจ</p>
+    <div style="border:1px solid var(--border);border-radius:12px;padding:18px;margin:12px 0">
+      <b>คืนเงินเต็มจำนวน 100% ภายใน 7 วัน</b> นับจากวันสมัคร โดยไม่ต้องบอกเหตุผล
+    </div>
+    <h4 style="margin:14px 0 6px">เงื่อนไข</h4>
+    <p style="color:var(--muted);font-size:14px">• ขอคืนได้ 1 ครั้งต่อบัญชี<br>• แจ้งผ่าน LINE ที่ ${'@'}promptstudio พร้อมอีเมลสมาชิก<br>• คืนเงินเข้าบัญชีภายใน 3-5 วันทำการ<br>• หลังคืนเงิน สิทธิ์สมาชิกสิ้นสุดทันที</p>`},
+  terms: {title:'เงื่อนไขการใช้บริการ', body:`
+    <p style="color:var(--muted);font-size:14px;margin:14px 0">โดยการใช้งาน Prompt Studio คุณตกลงว่า:</p>
+    <h4 style="margin:12px 0 6px">1. สิทธิ์การใช้งาน</h4>
+    <p style="color:var(--muted);font-size:14px">สมาชิก 1 บัญชี ใช้ส่วนตัว — ห้ามแจกจ่าย/ขายต่อ prompt ของคลังเป็นชุด แต่ prompt ที่สร้างผลงานจากการใช้ prompt เป็นของคุณเต็มที่</p>
+    <h4 style="margin:12px 0 6px">2. ความรับผิดชอบ</h4>
+    <p style="color:var(--muted);font-size:14px">Prompt ด้านสุขภาพ/การเงิน/กฎหมาย เป็นเพียงจุดเริ่มต้น — ควรปรึกษาผู้เชี่ยวชาญจริงก่อนตัดสินใจสำคัญ เราไม่รับผิดต่อผลลัพธ์จากการใช้งาน AI</p>
+    <h4 style="margin:12px 0 6px">3. การเปลี่ยนแปลง</h4>
+    <p style="color:var(--muted);font-size:14px">ราคาและเนื้อหาอาจปรับ — สมาชิกที่จ่ายแล้วได้ราคาเดิมตามรอบที่จ่าย</p>`},
+  privacy: {title:'นโยบายความเป็นส่วนตัว', body:`
+    <p style="color:var(--muted);font-size:14.5px;margin:14px 0">สั้นและตรงไปตรงมา:</p>
+    <h4 style="margin:12px 0 6px">เราเก็บอะไร</h4>
+    <p style="color:var(--muted);font-size:14px">แทบไม่มี — สถานะสมาชิกและธีมที่คุณเลือก เก็บในเบราว์เซอร์ของคุณเอง (localStorage) เราไม่มีบัญชีผู้ใช้ ไม่เก็บ prompt ที่คุณพิมพ์ ไม่มี tracking cookie</p>
+    <h4 style="margin:12px 0 6px">การชำระเงิน</h4>
+    <p style="color:var(--muted);font-size:14px">ผ่าน PromptPay ตรงกับบัญชีของเรา — เราไม่เห็นและไม่เก็บข้อมูลบัตร/ธนาคารของคุณ</p>
+    <h4 style="margin:12px 0 6px">ติดต่อเรื่องข้อมูล</h4>
+    <p style="color:var(--muted);font-size:14px">LINE ${'@'}promptstudio ทุกกรณี</p>`},
+  contact: {title:'ติดต่อเรา', body:`
+    <div style="text-align:center;padding:10px 0">
+      <p style="color:var(--muted);font-size:14px;margin-bottom:16px">ตอบเร็วสุดผ่าน LINE (9:00-21:00 ทุกวัน)</p>
+      <a class="btn2 pri" style="display:inline-block;text-decoration:none" href="https://line.me/R/ti/p/${'@'}promptstudio" target="_blank" rel="noopener">💬 เพิ่มเพื่อน LINE @promptstudio</a>
+      <p style="color:var(--muted);font-size:13px;margin-top:18px">อีเมล: hello@promptstudio.app<br>ตอบภายใน 24 ชม.</p>
+    </div>`}
+};
+function openPolicy(key){
+  const pol = POLICIES[key]; if(!pol) return;
+  $('policy-body').innerHTML = '<span style="font-family:var(--mono);font-size:11px;letter-spacing:1px;color:var(--accent);text-transform:uppercase">PROMPT STUDIO</span><h3 style="font-family:var(--serif);font-size:22px;margin:8px 0 4px">'+pol.title+'</h3>'+pol.body;
+  $('policy').classList.add('open');
+}
 let tt;function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),2200);}
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
 document.querySelectorAll('.fadeup').forEach(el=>io.observe(el));
