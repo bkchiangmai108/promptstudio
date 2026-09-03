@@ -158,6 +158,8 @@ h2.sec{font-family:var(--serif);font-size:30px;font-weight:600}
 .card:hover .cat, .row:hover .badge { color:#f97316 !important }
 .card h3, .row h3, .mcard h4, .card .cat, .row .badge { transition:color .2s ease }
 .modal h3, #m-title { color:#f97316 !important }
+.hov-orange h3, .hov-orange h4, .hov-orange > div > h3 { color:#f97316 !important }
+
 
 /* PROFESSIONAL FOOTER */
 .site-footer{border-top:1px solid var(--border);margin-top:72px;background:var(--bg2)}
@@ -906,6 +908,21 @@ function openPolicy(key){
 let tt;function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),2200);}
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
 document.querySelectorAll('.fadeup').forEach(el=>io.observe(el));
+/* JS-BASED HOVER (bulletproof — ทำงานแม้ CSS :hover มีปัญหา) */
+(function(){
+  function bindHover(){
+    document.querySelectorAll('#feat .row, #grid .card, .marq .mcard').forEach(el=>{
+      if(el._hov) return; el._hov=true;
+      el.addEventListener('mouseenter',function(){ this.classList.add('hov-orange'); });
+      el.addEventListener('mouseleave',function(){ this.classList.remove('hov-orange'); });
+      el.style.cursor='pointer';
+      el.querySelectorAll('h3,h4,p,span,div').forEach(c=>c.style.cursor='pointer');
+    });
+  }
+  bindHover();
+  const origRender = window.renderLib;
+  window.renderLib = function(){ origRender(); setTimeout(bindHover,50); };
+})();
 const d=new Date();const thu=new Date(d);thu.setDate(d.getDate()-((d.getDay()+4)%7));
 $('wk').textContent='WEEK OF '+thu.toLocaleDateString('en-GB',{day:'2-digit',month:'2-digit',year:'numeric'});
 renderLib();
