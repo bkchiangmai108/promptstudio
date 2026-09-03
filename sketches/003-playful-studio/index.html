@@ -1,0 +1,176 @@
+<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Prompt Studio — Playful Studio</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;700;900&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet"><style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#14121f;--card:#1d1a2e;--border:#332e4d;--fg:#f5f3ff;--muted:#a49cc4;--a1:#ff6ec7;--a2:#7c5cff;--a3:#ffd166;--a4:#4ce0b3;--font:'Noto Sans Thai',sans-serif;--disp:'Space Grotesk',sans-serif;--mono:'JetBrains Mono',monospace}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);line-height:1.6;overflow-x:hidden}
+.blob{position:fixed;border-radius:50%;filter:blur(90px);opacity:.4;pointer-events:none;z-index:0;animation:float 12s ease-in-out infinite}
+@keyframes float{50%{transform:translate(30px,-30px) scale(1.08)}}
+.b1{width:420px;height:420px;background:#7c5cff;top:-120px;left:-100px}
+.b2{width:360px;height:360px;background:#ff6ec7;bottom:-140px;right:-80px;opacity:.25;animation-delay:-4s}
+.b3{width:280px;height:280px;background:#ffd166;top:40%;left:55%;opacity:.12;animation-delay:-8s}
+nav{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:26px;padding:16px 36px;background:rgba(20,18,31,.8);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+.logo{font-family:var(--disp);font-weight:700;font-size:20px}
+.logo span{background:linear-gradient(90deg,var(--a1),var(--a2),var(--a3));-webkit-background-clip:text;background-clip:text;color:transparent}
+nav a{color:var(--muted);text-decoration:none;font-size:14.5px}nav a:hover{color:var(--a3)}
+.nav-sp{flex:1}
+.lang{font-family:var(--mono);font-size:12px;border:1px solid var(--border);background:transparent;color:var(--muted);padding:6px 14px;border-radius:20px;cursor:pointer}
+main{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:0 32px}
+.hero{text-align:center;padding:96px 0 64px}
+.h-badge{display:inline-block;font-family:var(--disp);font-size:13px;letter-spacing:1px;padding:8px 20px;border-radius:24px;border:1px solid var(--border);background:var(--card);margin-bottom:26px}
+h1{font-size:clamp(40px,6vw,72px);line-height:1.08;font-weight:900;letter-spacing:-1px}
+.rotator{display:inline-block;min-width:9ch;text-align:left}
+.rotator::after{content:'';display:inline-block;width:4px;height:.9em;background:var(--a3);margin-left:6px;vertical-align:-.08em;animation:blink 1s step-end infinite}
+@keyframes blink{50%{opacity:0}}
+.sub{color:var(--muted);font-size:18px;max-width:600px;margin:24px auto 38px}
+.cta{display:inline-block;font-family:var(--disp);font-weight:700;font-size:17px;color:#14121f;background:linear-gradient(90deg,var(--a3),var(--a1));padding:16px 38px;border-radius:14px;border:none;cursor:pointer;transition:transform .2s,box-shadow .2s}
+.cta:hover{transform:translateY(-3px) rotate(-1deg);box-shadow:0 14px 44px rgba(255,110,199,.35)}
+.ws{display:grid;grid-template-columns:340px 1fr;border:1px solid var(--border);border-radius:20px;overflow:hidden;background:var(--card);margin-top:40px;min-height:420px}
+.ws-l{border-right:1px solid var(--border);padding:26px}
+.ws-l h3{font-family:var(--disp);font-size:15px;letter-spacing:1px;color:var(--muted);margin-bottom:16px}
+.opt{padding:11px 16px;border-radius:10px;border:1px solid transparent;cursor:pointer;transition:.15s;margin-bottom:6px;font-size:14.5px}
+.opt:hover{background:rgba(255,255,255,.05)}
+.opt.sel{background:linear-gradient(90deg,rgba(124,92,255,.25),rgba(255,110,199,.15));border-color:var(--a2)}
+.ws-r{padding:26px;display:flex;flex-direction:column}
+.bar{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.pill{font-family:var(--mono);font-size:11.5px;padding:5px 12px;border-radius:16px;background:rgba(124,92,255,.15);border:1px solid var(--a2);color:#c9b8ff}
+.draft{flex:1;background:#12101c;border:1px dashed var(--border);border-radius:14px;padding:20px;font-family:var(--mono);font-size:13px;color:#e8ddff;white-space:pre-wrap;min-height:200px}
+.ph{color:var(--muted);font-style:italic}
+.btns{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.btn{padding:11px 20px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--fg);cursor:pointer;font-family:var(--font);font-size:14px;transition:.18s}
+.btn:hover{border-color:var(--a3);color:var(--a3);transform:translateY(-1px)}
+.btn.pri{background:linear-gradient(90deg,var(--a3),var(--a1));color:#14121f;border:none;font-weight:700}
+.btn.pri:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 8px 24px rgba(255,110,199,.3)}
+.section{padding:72px 0}
+h2{font-family:var(--disp);font-size:32px;text-align:center;margin-bottom:10px}
+.sec-sub{text-align:center;color:var(--muted);margin-bottom:40px}
+.lesson{max-width:760px;margin:0 auto;background:var(--card);border:1px solid var(--border);border-radius:18px;padding:32px}
+.lz{display:flex;align-items:center;gap:14px;margin-bottom:20px}
+.lz b{font-family:var(--disp);font-size:14px;color:var(--a3);white-space:nowrap}
+.track{flex:1;height:6px;border-radius:3px;background:var(--border);position:relative;cursor:pointer}
+.fill{position:absolute;top:0;left:0;bottom:0;width:0%;background:linear-gradient(90deg,var(--a2),var(--a1));border-radius:3px}
+.knob{position:absolute;top:50%;width:20px;height:20px;border-radius:50%;background:#fff;transform:translate(-50%,-50%);box-shadow:0 2px 10px rgba(0,0,0,.4);cursor:grab}
+.demo-box{background:#12101c;border-radius:12px;padding:20px;font-family:var(--mono);font-size:13px;line-height:1.9;color:#e8ddff;white-space:pre-wrap}
+.quiz{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:20px}
+.qopt{padding:14px 18px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--fg);cursor:pointer;font-family:var(--font);font-size:14px;text-align:left;transition:.18s}
+.qopt:hover{border-color:var(--a2)}
+.qopt.ok{border-color:#4ce0b3;background:rgba(76,224,179,.1)}
+.qopt.bad{border-color:#ff5c7a;background:rgba(255,92,122,.08)}
+.marq{overflow:hidden;margin-top:48px}
+.marq-in{display:flex;gap:16px;width:max-content;animation:scroll 30s linear infinite}
+.marq:hover .marq-in{animation-play-state:paused}
+@keyframes scroll{to{transform:translateX(-50%)}}
+.mcard{width:250px;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;flex-shrink:0;transition:.2s}
+.mcard:hover{border-color:var(--a3);transform:translateY(-4px)}
+.mcard .c{font-family:var(--mono);font-size:11px;color:var(--a1);margin-bottom:8px}
+.mcard h4{font-size:14.5px;line-height:1.45}
+.mcard .u{color:var(--muted);font-size:12px;margin-top:8px;font-family:var(--mono)}
+footer{border-top:1px solid var(--border);padding:30px 36px;color:var(--muted);font-size:13px;display:flex;justify-content:space-between;margin-top:40px}
+@media(max-width:900px){.ws{grid-template-columns:1fr}.ws-l{border-right:none;border-bottom:1px solid var(--border)}.quiz{grid-template-columns:1fr}}
+</style></head><body>
+<div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+<nav>
+  <div class="logo">prompt<span>studio</span> ✦</div>
+  <a href="#ws">Generator</a><a href="#learn">เรียนรู้</a><a href="#cards">Library</a>
+  <div class="nav-sp"></div>
+  <button class="lang" onclick="alert('สลับภาษา TH ⇄ EN (demo)')">TH / EN</button>
+</nav>
+<main>
+  <section class="hero">
+    <div class="h-badge">✦ Thai-first Prompt Playground ✦</div>
+    <h1>เขียน Prompt ให้ AI<br><span class="rotator" id="rot"></span><br>แบบมืออาชีพ</h1>
+    <p class="sub">เล่น ลอง เรียนรู้ — Generator แบบทำงานจริง Library 48 prompts และ interactive lessons ที่สอนให้คุณเขียน prompt แข็งแรงขึ้นทุกครั้งที่ใช้</p>
+    <button class="cta" onclick="document.getElementById('ws').scrollIntoView({behavior:'smooth'})">เริ่มเล่นเลย ✦</button>
+  </section>
+  <section id="ws" style="padding-top:24px">
+    <h2>Prompt Workspace</h2>
+    <p class="sec-sub">เลือกจากด้านซ้าย — ด้านขวาประกอบ prompt ให้ทันที</p>
+    <div class="ws">
+      <div class="ws-l">
+        <h3>① อุตสาหกรรม/บทบาท</h3>
+        <div id="ind-l"></div>
+        <h3 style="margin-top:18px">② รูปแบบผลลัพธ์</h3>
+        <div id="fmt-l"></div>
+      </div>
+      <div class="ws-r">
+        <div class="bar" id="pills"></div>
+        <div class="draft" id="draft"><span class="ph">เลือกตัวเลือกทางซ้ายเพื่อเริ่มประกอบ prompt…</span></div>
+        <div class="btns">
+          <button class="btn pri" onclick="copyD()">คัดลอก</button>
+          <button class="btn" onclick="shuffle()">🎲 สุ่ม 3 ตัวเลือก</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section" id="learn">
+    <h2>เรียนรู้แบบ Interactive</h2>
+    <p class="sec-sub">ลาก slider — ดู prompt แข็งแรงขึ้นทีละชั้น: Role → Context → Task → Format → Example</p>
+    <div class="lesson">
+      <div class="lz"><b>ความแข็งแรง</b><div class="track" id="trk"><div class="fill" id="fill"></div><div class="knob" id="knob"></div></div><b id="pct" style="color:var(--a3)">0%</b></div>
+      <div class="demo-box" id="box"></div>
+      <div class="quiz">
+        <button class="qopt" onclick="qz(this,1)">โครง R-C-T-F ช่วยให้ AI เข้าใจโจทย์ชัดขึ้น?</button>
+        <button class="qopt" onclick="qz(this,0)">ใส่ข้อมูลมั่วๆ ยิ่งเยอะยิ่งดี?</button>
+        <button class="qopt" onclick="qz(this,0)">ยิ่ง prompt ยาว ยิ่งดีเสมอ?</button>
+        <button class="qopt" onclick="qz(this,0)">AI ถามกลับ = prompt ล้มเหลว?</button>
+      </div>
+    </div>
+    <div class="marq" id="cards">
+      <div class="marq-in" id="marq-in"></div>
+    </div>
+  </section>
+</main>
+<footer><span>© 2026 Prompt Studio ✦</span><span>Static · No backend · Made with 🎲</footer>
+<script>
+const IND=['💼 ธุรกิจ','📣 การตลาด','🌿 สุขภาพ','🎓 การศึกษา','💻 เทค/IT','🎨 สร้างสรรค์'];
+const ROLE={'💼 ธุรกิจ':'ที่ปรึกษากลยุทธ์','📣 การตลาด':'Content Strategist','🌿 สุขภาพ':'โค้ชสุขภาพ','🎓 การศึกษา':'นักออกแบบการเรียนรู้','💻 เทค/IT':'Senior Developer','🎨 สร้างสรรค์':'Creative Director'};
+const FMT=['📋 bullet กระชับ','📊 ตารางเปรียบเทียบ','📝 บทความเรียงความ','🎯 แผน step-by-step'];
+const sel={ind:null,fmt:null};
+function lists(){
+  const il=document.getElementById('ind-l');
+  il.innerHTML=IND.map(o=>`<div class="opt" data-k="ind" data-v="${o}">${o} — AI เป็น${ROLE[o]}</div>`).join('');
+  document.getElementById('fmt-l').innerHTML=FMT.map(o=>`<div class="opt" data-k="fmt" data-v="${o}">${o}</div>`).join('');
+  il.querySelectorAll('.opt').forEach(el=>el.addEventListener('click',()=>{sel.ind=el.dataset.v;lists();render();}));
+  document.querySelectorAll('#fmt-l .opt').forEach(el=>el.addEventListener('click',()=>{sel.fmt=el.dataset.v;render();refreshSel();}));
+  refreshSel();
+}
+function refreshSel(){
+  document.querySelectorAll('#ind-l .opt').forEach(el=>el.classList.toggle('sel',sel.ind===el.dataset.v));
+  document.querySelectorAll('#fmt-l .opt').forEach(el=>el.classList.toggle('sel',sel.fmt===el.dataset.v));
+}
+function render(){
+  document.getElementById('pills').innerHTML=[sel.ind,sel.fmt].filter(Boolean).map(v=>`<span class="pill">${v}</span>`).join('');
+  if(!sel.ind&&!sel.fmt){return;}
+  const parts=[];
+  if(sel.ind) parts.push('คุณคือ'+ROLE[sel.ind]+'มืออาชีพ ทำงานด้าน'+sel.ind.replace(/^[^ ]+ /,'')+'ในไทย');
+  if(sel.fmt) parts.push('รูปแบบผลลัพธ์: '+sel.fmt);
+  parts.push('โจทย์: [ใส่โจทย์ของคุณตรงนี้]');
+  parts.push('ข้อกำหนด: ถามกลับหากข้อมูลไม่ครบ · ตอบภาษาไทยกระชับ · ให้ตัวอย่างประกอบ');
+  document.getElementById('draft').textContent=parts.join('\n\n');
+}
+function copyD(){navigator.clipboard.writeText(document.getElementById('draft').textContent);alert('คัดลอกแล้ว! (demo)');}
+function shuffle(){sel.ind=IND[Math.floor(Math.random()*6)];sel.fmt=FMT[Math.floor(Math.random()*FMT.length)];lists();render();}
+lists();
+const W=['ให้ถูกคน ถูกงาน','ที่ใช้ซ้ำได้','ที่ขายได้จริง'];let wi=0;
+function rot(){const el=document.getElementById('rot');el.textContent=W[wi];wi=(wi+1)%3;}
+rot();setInterval(rot,2400);
+const LAYERS=['ลองเขียน: AI ช่วยเขียนโพสต์ขายสินค้า','คุณคือนักการตลาดมืออาชีพ (Role)','คุณคือนักการตลาดมืออาชีพ สินค้า: ชานมไข่มุกร้านใหม่ในเชียงใหม่ (Role+Context)','คุณคือนักการตลาดมืออาชีพ สินค้า: ชานมไข่มุกร้านใหม่ในเชียงใหม่ โจทย์: เขียนโพสต์ขาย 1 โพสต์ (R+C+T)','คุณคือนักการตลาดมืออาชีพ สินค้า: ชานมไข่มุกร้านใหม่ในเชียงใหม่ โจทย์: เขียนโพสต์ขาย 1 โพสต์ รูปแบบ: hook + เนื้อหา + CTA (R+C+T+F)','คุณคือนักการตลาดที่เคยสร้างยอดขายให้ร้านชานม 50 แห่ง สินค้า: ชานมไข่มุกร้านใหม่ในเชียงใหม่ โจทย์: เขียนโพสต์ขาย 1 โพสต์ รูปแบบ: hook + เนื้อหา + CTA ตัวอย่าง hook: ชานมที่คนต่อแถวรอ (R+C+T+F+E)'];
+let pct=0,dragging=false;
+function drawSlide(){
+  document.getElementById('fill').style.width=pct+'%';
+  document.getElementById('knob').style.left=pct+'%';
+  document.getElementById('pct').textContent=Math.round(pct)+'%';
+  const idx=Math.min(Math.floor(pct/100*(LAYERS.length-1)+.0001),LAYERS.length-1);
+  document.getElementById('box').textContent=LAYERS[idx];
+}
+const trk=document.getElementById('trk');
+function setPct(x){const r=trk.getBoundingClientRect();pct=Math.max(0,Math.min(100,(x-r.left)/r.width*100));drawSlide();}
+trk.addEventListener('mousedown',e=>{dragging=true;setPct(e.clientX);});
+window.addEventListener('mousemove',e=>{if(dragging)setPct(e.clientX);});
+window.addEventListener('mouseup',()=>dragging=false);
+trk.addEventListener('touchstart',e=>{dragging=true;setPct(e.touches[0].clientX);});
+trk.addEventListener('touchmove',e=>{if(dragging)setPct(e.touches[0].clientX);});
+trk.addEventListener('touchend',()=>dragging=false);
+drawSlide();
+function qz(btn,ok){btn.classList.add(ok?'ok':'bad');}
+const MC=[['ธุรกิจ','ร่าง Business Model Canvas ใน 10 นาที','2.4k'],['การตลาด','Content Calendar 30 วันจาก 1 หัวข้อ','3.8k'],['สุขภาพ','แผนมื้ออาหาร 7 วันตามเป้าหมาย','1.9k'],['การศึกษา','สร้างแบบฝึกหัดจากหัวข้อใดก็ได้','2.7k'],['เทค/IT','Code Review เหมือน Senior ตัวจริง','4.1k'],['สร้างสรรค์','ไอเดีย Storytelling 10 แบบ','1.6k']];
+document.getElementById('marq-in').innerHTML=[...MC,...MC].map(m=>`<div class="mcard"><div class="c">${m[0]}</div><h4>${m[1]}</h4><div class="u">▲ ${m[2]} ใช้งาน</div></div>`).join('');
+</script></body></html>

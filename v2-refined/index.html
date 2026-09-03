@@ -1,0 +1,678 @@
+<!doctype html><html lang="th" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Prompt Studio — คลัง Prompt คุณภาพสำหรับทุกอุตสาหกรรม</title><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=IBM+Plex+Serif:wght@500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"><style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --font:'IBM Plex Sans Thai',sans-serif;--serif:'IBM Plex Serif',serif;--mono:'JetBrains Mono',monospace;
+  --ease:cubic-bezier(.22,1,.36,1)
+}
+[data-theme=light]{
+  --bg:#fbfaf7;--bg2:#f3f1ea;--card:#ffffff;--border:#e7e4dc;--fg:#1c1b18;--muted:#8a857a;
+  --accent:#c2410c;--accent-soft:#fff1e8;--code-bg:#1c1b18;--code-fg:#f5ead9;--shadow:0 6px 24px rgba(28,27,24,.08)
+}
+[data-theme=dark]{
+  --bg:#111018;--bg2:#181726;--card:#1d1b2b;--border:#2f2d44;--fg:#f0eef8;--muted:#9a96b4;
+  --accent:#ff7a3d;--accent-soft:rgba(255,122,61,.12);--code-bg:#0c0b13;--code-fg:#d5ffe9;--shadow:0 8px 30px rgba(0,0,0,.45)
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);line-height:1.65;-webkit-font-smoothing:antialiased;transition:background .35s,color .35s}
+nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:26px;padding:16px 48px;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.logo{font-family:var(--serif);font-weight:600;font-size:20px}
+.logo em{color:var(--accent);font-style:normal}
+nav a{color:var(--muted);text-decoration:none;font-size:14.5px;transition:color .2s}
+nav a:hover{color:var(--fg)}
+.nav-sp{flex:1}
+.tbtn{border:1px solid var(--border);background:var(--card);color:var(--muted);width:40px;height:40px;border-radius:10px;cursor:pointer;font-size:16px;transition:.25s;display:grid;place-items:center}
+.tbtn:hover{border-color:var(--accent);transform:rotate(-12deg)}
+.lang{font-family:var(--mono);font-size:12px;border:1px solid var(--border);background:var(--card);padding:8px 14px;border-radius:8px;cursor:pointer;color:var(--muted)}
+.member{background:var(--accent);color:#fff;border:none;font-weight:600;font-size:14px;padding:9px 20px;border-radius:8px;cursor:pointer;font-family:var(--font);transition:.2s}
+.member:hover{transform:translateY(-1px);box-shadow:var(--shadow)}
+.wrap{max-width:1200px;margin:0 auto;padding:0 48px}
+/* HERO asymmetric */
+.hero{display:grid;grid-template-columns:5fr 7fr;gap:64px;padding:72px 0 64px;align-items:start}
+.hero-l{position:sticky;top:96px}
+.kicker{font-family:var(--mono);font-size:12px;letter-spacing:2px;color:var(--accent);text-transform:uppercase;margin-bottom:18px}
+h1{font-family:var(--serif);font-size:clamp(34px,4vw,50px);line-height:1.18;font-weight:600;letter-spacing:-.5px}
+.lede{color:var(--muted);font-size:17px;margin:20px 0 30px}
+.cta{background:var(--accent);color:#fff;border:none;font-size:15.5px;font-family:var(--font);font-weight:600;padding:13px 28px;border-radius:8px;cursor:pointer;transition:.2s}
+.cta:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.ghost{background:transparent;color:var(--fg);border:1px solid var(--border);margin-left:12px;font-weight:400}
+.ghost:hover{border-color:var(--accent);box-shadow:none}
+.hero-note{margin-top:36px;border-left:3px solid var(--accent);padding:6px 0 6px 18px;color:var(--muted);font-size:14px}
+.hero-note b{color:var(--fg)}
+.feat-head{display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid var(--fg);padding-bottom:10px}
+.feat-head h2{font-family:var(--serif);font-size:20px}
+.feat-head span{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.row{display:grid;grid-template-columns:52px 1fr auto;gap:18px;align-items:center;padding:16px 4px;border-bottom:1px solid var(--border);cursor:pointer;transition:.2s var(--ease)}
+.row:hover{background:var(--card);padding-left:14px;padding-right:14px;transform:translateX(4px)}
+.num{font-family:var(--mono);color:var(--muted);font-size:13px}
+.row h3{font-size:16.5px;font-weight:600}
+.row p{color:var(--muted);font-size:13.5px;margin-top:2px}
+.badge{font-family:var(--mono);font-size:11px;padding:3px 10px;border-radius:5px;white-space:nowrap}
+.b-free{color:#166534;background:#e7f5ec}
+[data-theme=dark] .b-free{color:#6fe3a8;background:rgba(111,227,168,.1)}
+.b-pro{color:var(--accent);background:var(--accent-soft)}
+.fadeup{opacity:0;transform:translateY(18px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.fadeup.in{opacity:1;transform:none}
+/* GEN */
+.section{padding:64px 0}
+.sec-title{display:flex;align-items:baseline;gap:14px;margin-bottom:24px}
+h2.sec{font-family:var(--serif);font-size:30px;font-weight:600}
+.sec-title small{color:var(--muted);font-family:var(--mono);font-size:12.5px}
+.gen{display:grid;grid-template-columns:360px 1fr;border:1px solid var(--border);border-radius:16px;overflow:hidden;background:var(--card)}
+.gen-l{border-right:1px solid var(--border);padding:28px}
+.gen-l h3{font-family:var(--mono);font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin:0 0 14px}
+.gen-l h3+.gen-l h3, .gh3{margin-top:22px}
+.chip{display:block;width:100%;text-align:left;padding:11px 16px;border-radius:9px;border:1px solid transparent;background:transparent;color:var(--fg);cursor:pointer;font-family:var(--font);font-size:14.5px;transition:.18s;margin-bottom:6px}
+.chip:hover{background:var(--bg2);transform:translateX(3px)}
+.chip.sel{background:var(--accent-soft);border-color:var(--accent);color:var(--accent);font-weight:600}
+.gen-r{padding:28px;display:flex;flex-direction:column}
+.pbar{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.pill{font-family:var(--mono);font-size:11.5px;padding:5px 12px;border-radius:16px;background:var(--accent-soft);border:1px solid var(--accent);color:var(--accent)}
+.out{flex:1;background:var(--code-bg);border-radius:12px;padding:22px;font-family:var(--mono);font-size:13px;color:var(--code-fg);white-space:pre-wrap;min-height:230px;line-height:1.8}
+.out .cur{display:inline-block;width:8px;height:15px;background:var(--accent);vertical-align:-2px;animation:blink 1s step-end infinite}
+@keyframes blink{50%{opacity:0}}
+.gen-btns{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.btn2{padding:11px 22px;border-radius:9px;border:1px solid var(--border);background:transparent;color:var(--fg);cursor:pointer;font-size:14px;font-family:var(--font);transition:.2s}
+.btn2:hover{border-color:var(--accent);color:var(--accent)}
+.btn2.pri{background:var(--accent);color:#fff;border:none;font-weight:600}
+.btn2.pri:hover{transform:translateY(-1px);box-shadow:var(--shadow)}
+/* LIBRARY */
+.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:26px}
+.search{flex:1;min-width:220px;border:1px solid var(--border);background:var(--card);border-radius:9px;padding:11px 16px;font-size:14.5px;font-family:var(--font);color:var(--fg)}
+.search:focus{outline:2px solid var(--accent);outline-offset:-1px}
+.f{font-size:13.5px;padding:9px 18px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--muted);cursor:pointer;font-family:var(--font);transition:.15s}
+.f.on{background:var(--fg);color:var(--bg);border-color:var(--fg);font-weight:600}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;display:flex;flex-direction:column;gap:10px;transition:.25s var(--ease);cursor:pointer}
+.card:hover{border-color:var(--accent);box-shadow:var(--shadow);transform:translateY(-4px)}
+.card .cat{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--accent)}
+.card h3{font-size:16.5px;font-weight:600;line-height:1.4}
+.card p{color:var(--muted);font-size:13.5px;flex:1}
+.card .foot{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:12px;color:var(--muted);border-top:1px dashed var(--border);padding-top:12px}
+.card.locked{opacity:.62}
+/* LESSON slider */
+.lesson{max-width:780px;margin:0 auto;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:32px}
+.lz{display:flex;align-items:center;gap:14px;margin-bottom:20px}
+.lz b{font-family:var(--mono);font-size:13px;color:var(--accent);white-space:nowrap}
+.track{flex:1;height:6px;border-radius:3px;background:var(--border);position:relative;cursor:pointer}
+.fill{position:absolute;top:0;left:0;bottom:0;width:0%;background:var(--accent);border-radius:3px}
+.knob{position:absolute;top:50%;width:20px;height:20px;border-radius:50%;background:var(--accent);border:3px solid var(--bg);transform:translate(-50%,-50%);box-shadow:0 2px 8px rgba(0,0,0,.25);cursor:grab;transition:transform .15s}
+.knob:active{cursor:grabbing;transform:translate(-50%,-50%) scale(1.15)}
+.demo{background:var(--code-bg);border-radius:12px;padding:20px;font-family:var(--mono);font-size:13px;line-height:1.9;color:var(--code-fg);white-space:pre-wrap;min-height:150px}
+.demo .lbl{color:#ffb35c}.demo .val{color:#7ee8c9}
+/* PRICING */
+.pricing{display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:22px;max-width:980px;margin:0 auto;align-items:stretch}
+.plan{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:32px;display:flex;flex-direction:column;transition:.25s}
+.plan:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.plan.hot{border:2px solid var(--accent);position:relative;transform:scale(1.03)}
+.plan.hot:hover{transform:scale(1.03) translateY(-4px)}
+.plan .tag2{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;font-size:11.5px;font-weight:600;font-family:var(--mono);padding:4px 14px;border-radius:12px;white-space:nowrap}
+.plan h3{font-family:var(--serif);font-size:20px}
+.price{font-family:var(--mono);font-size:36px;font-weight:600;margin:14px 0 2px}
+.price small{font-size:14px;color:var(--muted)}
+.plan ul{list-style:none;margin:18px 0 24px;flex:1}
+.plan li{padding:7px 0;color:var(--muted);font-size:14px;border-bottom:1px dashed var(--border)}
+.plan li::before{content:'✓ ';color:var(--accent);font-weight:700}
+.plan li.no{opacity:.45}.plan li.no::before{content:'— ';color:var(--muted)}
+.plan .btn2{width:100%;text-align:center}
+.plan .btn2.pri{color:#fff}
+.anchor{font-size:12.5px;color:var(--muted);text-decoration:line-through;font-family:var(--mono)}
+/* PROFESSIONAL FOOTER */
+.site-footer{border-top:1px solid var(--border);margin-top:72px;background:var(--bg2)}
+.fwrap{max-width:1200px;margin:0 auto;padding:52px 48px 36px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px}
+.flogo{font-family:var(--serif);font-weight:600;font-size:21px;margin-bottom:12px}
+.flogo em{color:var(--accent);font-style:normal}
+.fbrand p{color:var(--muted);font-size:13.5px;line-height:1.7;max-width:300px}
+.trust{display:flex;flex-direction:column;gap:7px;margin-top:18px}
+.t-item{color:var(--fg);font-size:13px;font-weight:500}
+.fcol h4{font-family:var(--mono);font-size:11.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+.fcol a{display:block;color:var(--muted);text-decoration:none;font-size:14px;padding:5px 0;transition:.2s}
+.fcol a:hover{color:var(--accent);transform:translateX(3px)}
+.fbase{border-top:1px solid var(--border);max-width:1200px;margin:0 auto;padding:20px 48px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;color:var(--muted);font-size:12.5px}
+/* CTA BANNER */
+.cta-banner{position:relative;overflow:hidden;border-radius:20px;background:linear-gradient(135deg,var(--accent) 0%,#e05a1f 55%,#b33507 100%);padding:56px 56px;display:grid;grid-template-columns:1.4fr 1fr;gap:32px;align-items:center;margin:24px 0 8px}
+.cb-glow{position:absolute;width:340px;height:340px;border-radius:50%;background:rgba(255,255,255,.14);filter:blur(60px);top:-120px;right:-60px;animation:cbfloat 9s ease-in-out infinite}
+.cb-glow.g2{width:220px;height:220px;background:rgba(255,220,150,.25);bottom:-100px;left:20%;top:auto;animation-delay:-4s}
+@keyframes cbfloat{50%{transform:translateY(24px) scale(1.06)}}
+.cb-l h2{font-family:var(--serif);font-size:clamp(26px,3.4vw,40px);line-height:1.2;color:#fff;letter-spacing:-.5px;position:relative}
+.cb-l p{color:rgba(255,255,255,.92);font-size:16px;margin:14px 0 26px;position:relative;max-width:480px}
+.cb-l .cta{background:#fff;color:#b33507;font-weight:700;position:relative}
+.cb-l .cta:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 12px 34px rgba(0,0,0,.25)}
+.cb-l .ghost{border-color:rgba(255,255,255,.5);color:#fff;margin-left:12px;position:relative}
+.cb-l .ghost:hover{border-color:#fff}
+.cb-mini{font-family:var(--mono);font-size:12px;color:rgba(255,255,255,.85);margin-top:18px;position:relative}
+.cb-r{position:relative;display:flex;justify-content:center}
+.cb-art{width:100%;max-width:300px;border-radius:14px;box-shadow:0 18px 50px rgba(0,0,0,.3);transform:rotate(2.5deg);transition:transform .4s cubic-bezier(.22,1,.36,1)}
+.cb-art:hover{transform:rotate(0) scale(1.03)}
+/* FLOATING TRUST STRIP under hero */
+.trust-strip{display:flex;gap:26px;flex-wrap:wrap;margin-top:26px;padding:16px 20px;border:1px solid var(--border);border-radius:12px;background:var(--card)}
+.ts-item{display:flex;align-items:center;gap:9px;font-size:13.5px;color:var(--muted)}
+.ts-item b{color:var(--fg);font-weight:600}
+.ts-ico{width:30px;height:30px;border-radius:8px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font-size:15px;flex-shrink:0}
+@media(max-width:960px){.fwrap{grid-template-columns:1fr 1fr;padding:40px 24px 28px}.cta-banner{grid-template-columns:1fr;padding:40px 28px}.cb-l .ghost{margin-left:0;margin-top:10px}.fbase{padding:18px 24px;flex-direction:column}}
+/* MODAL + FOOTER */
+.mb{position:fixed;inset:0;background:rgba(10,10,15,.5);display:none;align-items:center;justify-content:center;z-index:90;backdrop-filter:blur(5px)}
+.mb.open{display:flex}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:36px;width:min(620px,92vw);max-height:84vh;overflow:auto;animation:pop .3s var(--ease)}
+@keyframes pop{from{transform:scale(.95) translateY(10px);opacity:0}}
+.modal h3{font-family:var(--serif);font-size:22px;margin:8px 0 4px}
+.modal pre{font-family:var(--mono);font-size:13px;background:var(--code-bg);color:var(--code-fg);border-radius:10px;padding:20px;white-space:pre-wrap;margin:16px 0 20px;line-height:1.75}
+.x{float:right;border:none;background:none;font-size:18px;cursor:pointer;color:var(--muted)}
+footer{border-top:1px solid var(--border);margin-top:64px;padding:30px 48px;color:var(--muted);font-size:13px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.toast{position:fixed;bottom:28px;left:50%;transform:translate(-50%,80px);background:var(--fg);color:var(--bg);padding:12px 26px;border-radius:12px;font-size:14px;font-weight:600;z-index:99;transition:transform .35s var(--ease);pointer-events:none}
+.toast.show{transform:translate(-50%,0)}
+@media(max-width:960px){.hero{grid-template-columns:1fr}.hero-l{position:static}.gen{grid-template-columns:1fr}.gen-l{border-right:none;border-bottom:1px solid var(--border)}.cards{grid-template-columns:1fr}.pricing{grid-template-columns:1fr}.plan.hot{transform:none}.plan.hot:hover{transform:translateY(-4px)}nav,.wrap,footer{padding-left:22px;padding-right:22px}}
+</style></head><body>
+<nav>
+  <div class="logo">Prompt<em>Studio</em></div>
+  <a href="#generator">Generator</a><a href="#library">Library</a><a href="#learn">เรียนรู้</a><a href="#visual">ภาพ&วิดีโอ</a><a href="#pricing">สมาชิก</a>
+  <div class="nav-sp"></div>
+  <button class="tbtn" id="themeBtn" title="สลับ Light / Dark">🌙</button>
+  <button class="lang" onclick="toast('สลับภาษา TH ⇄ EN (demo)')">TH / EN</button>
+  <span id="memberTag"></span><button class="member" onclick="openMember()">สมาชิก</button>
+</nav>
+<div class="wrap">
+  <section class="hero">
+    <div class="hero-l fadeup">
+      <div class="kicker">Thai-first Prompt Library</div>
+      <h1>คลัง Prompt คุณภาพ<br>จัดหมวดตามอุตสาหกรรม<br>ที่คุณทำงานจริง</h1>
+      <p class="lede">ทุก prompt เรียบเรียงตามโครงสร้าง Role–Context–Task–Format พร้อมตัวอย่างผลลัพธ์ ครบ 6 กลุ่มอุตสาหกรรม <b>อัปเดตใหม่ทุกสัปดาห์</b></p>
+      <button class="cta" onclick="document.getElementById('generator').scrollIntoView({behavior:'smooth'})">ลอง Generator ฟรี</button>
+      <button class="cta ghost" onclick="document.getElementById('library').scrollIntoView({behavior:'smooth'})">เรียกดู Library</button>
+      <div class="hero-note"><b>คลัง 99 prompts · +4–6 ใหม่ทุกสัปดาห์</b> · ใช้ได้กับ ChatGPT, Claude, Gemini · ปลดล็อกครั้งเดียวต่อเดือน ราคาย่อมเยาว์</div>
+      <div class="trust-strip fadeup">
+        <div class="ts-item"><span class="ts-ico">🎁</span><span><b>ทดลองฟรี</b> — ไม่ต้องสมัคร กดใช้ได้เลย</span></div>
+        <div class="ts-item"><span class="ts-ico">🔄</span><span><b>อัปเดตทุกสัปดาห์</b> — คลังไม่หยุดเติบโต</span></div>
+        <div class="ts-item"><span class="ts-ico">🛡️</span><span><b>คืนเงิน 7 วัน</b> — ไม่พอใจ คืนเต็มจำนวน</span></div>
+        <div class="ts-item"><span class="ts-ico">⚡</span><span><b>ใช้ได้ทุก AI</b> — ChatGPT / Claude / Gemini</span></div>
+      </div>
+    </div>
+    <div class="hero-r fadeup">
+      <div class="feat-head"><h2>Prompt ยอดนิยมสัปดาห์นี้</h2><span id="wk"></span></div>
+      <div id="feat"></div>
+    </div>
+  </section>
+
+  <section class="section" id="generator">
+    <div class="sec-title fadeup"><h2 class="sec">Generator</h2><small>เลือก 3 ขั้น ได้ prompt พร้อมใช้ — พิมพ์ให้ทันที</small></div>
+    <div class="gen fadeup">
+      <div class="gen-l">
+        <h3>① อุตสาหกรรม</h3><div id="ind-c"></div>
+        <h3 class="gh3">② บทบาท AI</h3><div id="role-c"></div>
+        <h3 class="gh3">③ เป้าหมาย</h3><div id="goal-c"></div>
+      </div>
+      <div class="gen-r">
+        <div class="pbar" id="pills"></div>
+        <div class="out" id="out">เลือกอุตสาหกรรมทางซ้ายเพื่อเริ่ม — prompt จะถูกพิมพ์ออกมาให้ทันที<span class="cur"></span></div>
+        <div class="gen-btns">
+          <button class="btn2 pri" onclick="copyOut()">คัดลอก Prompt</button>
+          <button class="btn2" onclick="toast('บันทึกเข้า Library ของฉัน (localStorage ในเวอร์ชันเต็ม)')">+ บันทึกไว้ใช้</button>
+          <button class="btn2" onclick="surprise()">🎲 สุ่มให้เลย</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="library">
+    <div class="sec-title fadeup"><h2 class="sec">Library</h2><small>ค้นหา · กรอง · พรีวิวทันที — 99 prompts ครบ 6 กลุ่ม</small><small id="libcount" style="margin-left:auto"></small></div>
+    <div class="toolbar fadeup">
+      <input class="search" id="q" placeholder="ค้นหา prompt… เช่น content calendar, code review" oninput="renderLib()">
+      <span id="fs" style="display:flex;gap:6px;flex-wrap:wrap"></span>
+    </div>
+    <div class="cards" id="grid"></div>
+  </section>
+
+  <section class="section" id="learn">
+    <div class="sec-title fadeup"><h2 class="sec">เรียนรู้แบบ Interactive</h2><small>ลาก slider ดู prompt แข็งแรงขึ้นทีละชั้น</small></div>
+    <div class="lesson fadeup">
+      <div class="lz"><b>ความแข็งแรง <span id="pct">0%</span></b>
+        <div class="track" id="trk"><div class="fill" id="fill"></div><div class="knob" id="knob"></div></div>
+      </div>
+      <div class="demo" id="box"></div>
+    </div>
+  </section>
+
+  <section class="section" id="visual">
+    <div class="sec-title fadeup"><h2 class="sec">Image & Video Prompt</h2><small>เลือกสไตล์ → ได้ prompt → ปุ่มเดียวแปลงเป็นวิดีโอพร้อมท์</small></div>
+    <div class="gen fadeup">
+      <div class="gen-l">
+        <h3>① สไตล์ภาพ (14 สไตล์)</h3><div id="style-c"></div>
+        <h3 class="gh3">② แสง/โทน</h3><div id="light-c"></div>
+      </div>
+      <div class="gen-r">
+        <div class="pbar" id="vpills"></div>
+        <div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap">
+          <input class="search" id="subj" placeholder="ใส่สิ่งที่อยากเห็นในภาพ… เช่น แมวส้มนั่งชงกาแฟในร้านกาแฟยามเช้า" style="flex:1;min-width:200px">
+          <label class="btn2" for="refFile" style="display:inline-flex;align-items:center;gap:8px;cursor:pointer;white-space:nowrap">📎 แนบภาพอ้างอิง
+            <input type="file" id="refFile" accept="image/*" multiple style="display:none" onchange="showRefs(this)">
+          </label>
+        </div>
+        <div id="refPreview" style="display:none;gap:10px;margin-bottom:14px;flex-wrap:wrap"></div>
+        <div class="out" id="vout">เลือกสไตล์ + พิมพ์ subject แล้วกด "สร้าง Image Prompt"<span class="cur"></span></div>
+        <div class="gen-btns">
+          <button class="btn2 pri" onclick="genImg()">สร้าง Image Prompt</button>
+          <button class="btn2" onclick="toVideo()">🎬 แปลงเป็น Video Prompt</button>
+          <button class="btn2" onclick="copyV()">คัดลอก</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-bottom:8px" id="cta">
+    <div class="cta-banner fadeup">
+      <div class="cb-glow"></div><div class="cb-glow g2"></div>
+      <div class="cb-l">
+        <h2>พร้อมเขียน Prompt<br>แบบมืออาชีพแล้วหรือยัง?</h2>
+        <p>เข้าร่วมสมาชิกวันนี้ — ปลดล็อกคลังเต็ม 99 prompts ทันที + ของใหม่ทุกสัปดาห์ ในราคา ฿99 เดือนแรกเท่านั้น ถ้าไม่พอใจ คืนเงินเต็มจำนวนภายใน 7 วัน</p>
+        <button class="cta" onclick="openMember()">ปลดล็อกคลังเต็ม ฿99 →</button>
+        <button class="cta ghost" onclick="document.getElementById('library').scrollIntoView({behavior:'smooth'})">ดูตัวอย่างฟรีก่อน</button>
+        <div class="cb-mini">✓ เปิดใช้งานทันที &nbsp; ✓ ยกเลิกได้ทุกเมื่อ &nbsp; ✓ การันตีคืนเงิน 7 วัน</div>
+      </div>
+      <div class="cb-r">
+        <img class="cb-art" src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&q=80&auto=format&fit=crop" alt="AI prompt art" loading="lazy" onerror="this.style.display='none'">
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="pricing">
+    <div class="sec-title fadeup" style="justify-content:center"><h2 class="sec">แพ็กเกจสมาชิก</h2><small>ราคาย่อมเยาว์ เพราะเราอัปเดตทุกสัปดาห์</small></div>
+    <div class="pricing">
+      <div class="plan fadeup">
+        <h3>Free</h3>
+        <div class="price">฿0</div>
+        <ul>
+          <li>เข้าถึง prompt ฟรี ~30% ของคลัง</li>
+          <li>Generator + Image/Video ใช้ได้ไม่จำกัด</li>
+          <li>บทเรียน interactive พื้นฐาน</li>
+          <li class="no">Prompt ฉบับเต็มทุกหมวด</li>
+          <li class="no">คลังใหม่ที่เพิ่มทุกสัปดาห์</li>
+        </ul>
+        <button class="btn2" onclick="toast('เริ่มใช้ฟรีได้เลย!')">เริ่มใช้ฟรี</button>
+      </div>
+      <div class="plan hot fadeup">
+        <div class="tag2">🔥 ราคา 1 เดือนแรกเท่านั้น</div>
+        <h3>สมาชิกรายเดือน</h3>
+        <div class="price"><span class="anchor">฿199</span> ฿99<small>/เดือน</small></div>
+        <p style="color:var(--muted);font-size:12.5px;font-family:var(--mono)">ราคาพิเศษเดือนแรก — เดือนที่ 2 เป็นต้นไป ฿199/เดือน</p>
+        <ul>
+          <li>ปลดล็อกคลังเต็ม 99 prompts</li>
+          <li><b>+4–6 prompts ใหม่ทุกสัปดาห์</b></li>
+          <li>โครงสร้างพรีเมียม + ตัวอย่างผลลัพธ์จริง</li>
+          <li>บันทึก / export prompts ของตัวเอง</li>
+          <li>บทเรียน interactive ทุกบท</li>
+          <li>ยกเลิกได้ทุกเมื่อ</li>
+        </ul>
+        <button class="btn2 pri" onclick="openMember()">สมัคร ฿99/เดือน</button>
+      </div>
+      <div class="plan fadeup">
+        <div class="tag2" style="background:var(--fg);color:var(--bg)">สำหรับสมาชิกใหม่ปีแรก</div>
+        <h3>รายปี</h3>
+        <div class="price">฿790<small>/ปี</small></div>
+        <p style="color:var(--muted);font-size:12.5px;font-family:var(--mono)">เท่ากับ ฿66/เดือน — ราคานี้สำหรับสมาชิกใหม่ในปีแรกเท่านั้น</p>
+        <ul>
+          <li>ทุกอย่างในรายเดือน</li>
+          <li>ประหยัดกว่ารายเดือนปกติ 67%</li>
+          <li>ล็อกราคาปีแรก — ต่ออายุปีถัดไปตามตารางปกติ</li>
+          <li>ไม่ต้องกังวลต่ออายุรายเดือน</li>
+        </ul>
+        <button class="btn2" onclick="openMember()">เอารายปี ฿790</button>
+      </div>
+    </div>
+  </section></section>
+</div>
+<footer class="site-footer">
+  <div class="fwrap">
+    <div class="fcol fbrand">
+      <div class="flogo">Prompt<em>Studio</em></div>
+      <p>คลัง prompt คุณภาพภาษาไทย จัดโครงสร้างตามหลัก prompt engineering จริง อัปเดตทุกสัปดาห์ ใช้ได้กับทุก AI platform</p>
+      <div class="trust">
+        <span class="t-item">✓ ทดลองใช้ฟรี ไม่ต้องสมัคร</span>
+        <span class="t-item">✓ ยกเลิกได้ทุกเมื่อ ไม่มีสัญญาผูกมัด</span>
+        <span class="t-item">✓ อัปเดตคลังทุกสัปดาห์ ตรงตามสัญญา</span>
+      </div>
+    </div>
+    <div class="fcol">
+      <h4>ผลิตภัณฑ์</h4>
+      <a href="#generator">Prompt Generator</a>
+      <a href="#library">คลัง 99 Prompts</a>
+      <a href="#visual">Image & Video Prompt</a>
+      <a href="#learn">บทเรียน Interactive</a>
+    </div>
+    <div class="fcol">
+      <h4>ช่วยเหลือ</h4>
+      <a href="#" onclick="toast('หน้า FAQ อยู่ในระหว่างจัดทำ');return false">คำถามที่พบบ่อย</a>
+      <a href="#" onclick="toast('ช่องทางติดต่อ: hello@promptstudio (เดโม่)');return false">ติดต่อเรา</a>
+      <a href="#" onclick="toast('คู่มือการใช้งาน อยู่ระหว่างจัดทำ');return false">คู่มือการใช้งาน</a>
+    </div>
+    <div class="fcol">
+      <h4>เงื่อนไข</h4>
+      <a href="#" onclick="toast('หน้าเงื่อนไขการใช้บริการ อยู่ระหว่างจัดทำ');return false">เงื่อนไขการใช้บริการ</a>
+      <a href="#" onclick="toast('หน้านโยบายความเป็นส่วนตัว อยู่ระหว่างจัดทำ');return false">นโยบายความเป็นส่วนตัว</a>
+      <a href="#" onclick="toast('หน้านโยบายการคืนเงิน อยู่ระหว่างจัดทำ');return false">นโยบายการคืนเงิน 7 วัน</a>
+    </div>
+  </div>
+  <div class="fbase">
+    <span>© 2026 Prompt Studio — สร้างด้วยมาตรฐานวิชาชีพ prompt engineering</span>
+    <span>ทำในไทย 🇹🇭 · ราคารวม VAT · คืนเงินเต็มจำนวนภายใน 7 วัน</span>
+  </div>
+</footer>
+
+<div class="mb" id="mb" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal">
+    <button class="x" onclick="document.getElementById('mb').classList.remove('open')">✕</button>
+    <span class="cat" id="m-cat" style="font-family:var(--mono);font-size:11px;letter-spacing:1px;color:var(--accent);text-transform:uppercase"></span>
+    <h3 id="m-title"></h3>
+    <pre id="m-body"></pre>
+    <button class="cta" id="m-act">คัดลอก Prompt</button>
+  </div>
+</div>
+<div class="mb" id="memb" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal">
+    <button class="x" onclick="document.getElementById('memb').classList.remove('open')">✕</button>
+    <span style="font-family:var(--mono);font-size:11px;letter-spacing:1px;color:var(--accent);text-transform:uppercase">MEMBER ACCESS</span>
+    <h3>เข้าถึงคลังเต็ม 99 prompts</h3>
+    <p style="color:var(--muted);font-size:14px;margin-top:6px">รายเดือน ฿99 — ราคาพิเศษ <b style="color:var(--fg)">1 เดือนแรกเท่านั้น</b> (เดือนถัดไป ฿199) · รายปี ฿790 — <b style="color:var(--fg)">สำหรับสมาชิกใหม่ในปีแรก</b> เท่ากับ ฿66/เดือน</p>
+    <div id="mem-state" style="margin-top:18px"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<script>const LIB=[
+{t:"ร่าง Business Model Canvas ใน 10 นาที",c:"ธุรกิจ",free:true,d:"ให้ AI ถามกลับ 7 คำถามก่อนร่าง BMC ได้แผนที่เข้าจริง",u:"2.4k",p:"บทบาท: ที่ปรึกษา Business Model มืออาชีพ ชำนาญ SME ไทย\n\nขั้นตอน:\n1. ถามฉันกลับ 7 คำถามสำคัญเกี่ยวกับธุรกิจ (กลุ่มลูกค้า, ปัญหา, ทางแก้, รายได้, ต้นทุน, คู่แข่ง, จุดต่าง)\n2. รอคำตอบ แล้วร่าง BMC ครบ 9 ช่อง\n3. ชี้ช่องที่อ่อนแรงที่สุด 2 ช่อง พร้อมคำแนะนำแก้\n\nรูปแบบ: ตาราง 9 ช่อง + bullet อธิบายสั้น\nข้อห้าม: ห้ามเดาข้อมูลที่ไม่ได้ถาม-ตอบ",hot:1},
+{t:"Email ตามลูกค้าแบบไม่น่าเบื่อ",c:"ธุรกิจ",free:false,d:"โครง follow-up 3 จังหวะ อัตราตอบกลับสูงขึ้น",u:"1.1k",p:"บทบาท: ผู้เชี่ยวชาญ B2B follow-up ที่ได้อัตราตอบกลับสูง\n\nโจทย์: เขียนอีเมลตามลูกค้า 3 จังหวะ (วันที่ 3, 7, 14 หลังพบกัน)\n\nขั้นตอน:\n1. ถามบริบทสั้นๆ: ขายอะไร, ลูกค้าคือใคร, ค้างอะไรไว้\n2. เขียน 3 อีเมล: จังหวะแรกให้ value / จังหวะสองนำเสนอ case / จังหวะสามปิดแบบสุภาพ ไม่ตื้อ\n\nรูปแบบ: หัวข้ออีเมล 3 แบบต่อฉบับ + เนื้อความไม่เกิน 120 คำ ภาษาไทยกึ่งทางการ\nข้อห้าม: ห้ามใช้คำขอร้องจ๋าๆ หรือกดดัน"},
+{t:"วิเคราะห์คู่แข่งใน 15 นาที",c:"ธุรกิจ",free:false,d:"โครงคำถาม + ตารางเปรียบเทียบ + จุดโจมตี",u:"2.2k",p:"บทบาท: นักวิเคราะห์กลยุทธ์การแข่งขัน\n\nโจทย์: วิเคราะห์คู่แข่งของธุรกิจฉัน\n\nขั้นตอน:\n1. ถาม: ธุรกิจฉันคืออะไร คู่แข่งที่มองเห็นคือใคร (3-5 ราย)\n2. สร้างตารางเปรียบเทียบ: จุดแข็ง, จุดอ่อน, ราคา, ช่องทาง, กลุ่มลูกค้า\n3. หาช่องว่างตลาด 3 จุดที่คู่แข่งยังทำไม่ดี\n4. เสนอ 3 จุดโจมตีที่เป็นไปได้จริงกับทรัพยากร SME\n\nรูปแบบ: ตาราง + สรุป executive summary 5 บรรทัด"},
+{t:"Pitch Deck 10 สไลด์สำหรับขอทุน",c:"ธุรกิจ",free:false,d:"โครงเล่าเรื่องแบบนักลงทุนฟังจบ",u:"980",p:"บทบาท: อดีต VC ที่ดู pitch มาแล้วหลายพันเด็ค\n\nโจทย์: ช่วยร่างโครง pitch deck 10 สไลด์\n\nขั้นตอน:\n1. ถาม: ธุรกิจ, stage, ขอทุนเท่าไร เพื่ออะไร\n2. ร่างโครง 10 สไลด์: ปัญหา → ทางแก้ → ตลาด → โมเดลรายได้ → traction → ทีม → คู่แข่ง → การเงิน → ขอทุน → วิเซอร์\n3. ระบุว่าแต่ละสไลด์ต้องมีตัวเลขอะไร นักลงทุนจะถามอะไร\n\nรูปแบบ: ต่อสไลด์ 1 หัวข้อ + bullet ไม่เกิน 3 บรรทัด + คำถามที่คาดว่าจะโดนถาม"},
+{t:"ตั้งราคาขายแบบมีกำไรจริง",c:"ธุรกิจ",free:true,d:"คำนวณต้นทุนแฝง + 3 กลยุทธ์ราคา เลือกได้เหมาะ",u:"1.8k",p:"บทบาท: ที่ปรึกษา pricing สำหรับ SME\n\nขั้นตอน:\n1. ถาม: สินค้า/บริการคืออะไร, ต้นทุนตรง, ต้นทุนแฝง (เวลา, แพ็ก, ค่าส่ง, ค่าธรรมเนียม), คู่แข่งราคาเท่าไร\n2. คำนวณจุดคุ้มทุนพร้อมสมมติฐานที่ใช้\n3. เสนอ 3 กลยุทธ์: cost-plus, value-based, competitor — พร้อมข้อดีข้อเสียต่อธุรกิจฉัน\n4. แนะนำตัวเลือกที่เหมาะสุด 1 ข้อ พร้อมเหตุผล\n\nรูปแบบ: ตารางเปรียบเทียบ + สรุปคำแนะนำ\nข้อห้าม: ห้ามสรุปตัวเลขโดยไม่แสดงสมมติฐาน"},
+{t:"SOP งานประจำวันให้พนักงานทำตามได้",c:"ธุรกิจ",free:false,d:"แปลงงานในหัวเจ้าของเป็นคู่มือ 5 นาทีต่อขั้น",u:"860",p:"บทบาท: ผู้เชี่ยวชาญงานเอกสาร SOP สำหรับร้าน/SME\n\nโจทย์: เขียน SOP ให้พนักงานใหม่ทำตามได้ทันที\n\nขั้นตอน:\n1. ถาม: งานอะไร กี่ขั้นตอน เครื่องมืออะไร ความผิดพลาดที่เจอบ่อย\n2. เขียน SOP: ทีละขั้น + ภาพจำ + จุด check + what-if เจอปัญหา\n3. แนบ checklist ปิดท้าย\n\nรูปแบบ: หัวข้อตัวเลขชัด ประโยคสั้น ห้ามศัพท์เทคนิคเกินจำเป็น",neww:1},
+{t:"สรุปงบการเงินให้คนไม่ใช่นักบัญชีเข้าใจ",c:"ธุรกิจ",free:false,d:"แปลงงบเป็นภาษาคน พร้อม 3 สัญญาณเตือน",u:"1.3k",p:"บทบาท: CFO ที่อธิบายการเงินให้เจ้าของธุรกิจเข้าใจง่าย\n\nโจทย์: ฉันจะวางตัวเลขงบให้ (หรือให้ AI ใช้ตัวอย่างจำลอง)\n\nขั้นตอน:\n1. อ่านตัวเลขที่ให้ แล้วสรุปสุขภาพธุรกิจ 3 บรรทัด\n2. อธิบายกำไร/กระแสเงินสด/หนี้ ด้วยภาษาคน + อุปมา\n3. ชี้ 3 สัญญาณเตือนที่ควรจับตา\n4. ให้ action สัปดาห์นี้ 3 ข้อ\n\nรูปแบบ: สั้น กระชับ ไม่ใช้ศัพท์บัญชีโดยไม่อธิบาย"},
+{t:"แผนขยายสาขาที่สองแบบไม่เจ๊ง",c:"ธุรกิจ",free:false,d:"เช็คความพร้อม + timeline + จุดเสี่ยง",u:"720",p:"บทบาท: ที่ปรึกษา expansion ร้านค้า/ร้านอาหาร\n\nขั้นตอน:\n1. ถาม: สาขาแรกเป็นอย่างไร (ยอด, กำไร, ทีม), เงินทุนขยาย, เป้าหมาย\n2. ให้ checklist ความพร้อม 8 ข้อ ประเมินผ่าน/ไม่ผ่าน\n3. ร่าง timeline 6 เดือน แบ่งเป็น phase\n4. ชี้ความเสี่ยง 5 อันดับแรก พร้อมแผนสำรอง\n\nรูปแบบ: checklist + timeline แบบตาราง"},
+{t:"เขียน Job Description ที่คนเก่งอยากสมัคร",c:"ธุรกิจ",free:false,d:"JD ที่ขายจุดขายของตำแหน่ง ไม่ใช่แค่ขอ",u:"640",p:"บทบาท: ผู้เชี่ยวชาญ recruitment สาย SME\n\nโจทย์: เขียน JD สำหรับตำแหน่ง [ระบุ]\n\nขั้นตอน:\n1. ถาม: งานจริงทำอะไร, คนแบบไหนที่เวิร์ก, ให้อะไรได้ (เงิน, โต, วัฒนธรรม)\n2. เขียน JD: เปิดด้วยทำไมงานนี้น่าสน, หน้าที่ 5 ข้อ, คุณสมบัติแบ่งต้องมี/มีได้ยิ่งดี, สิ่งที่ได้รับ\n\nรูปแบบ: ภาษาตรง เป็นกันเอง ห้าม corporate buzzword"},
+{t:"ประชุม 30 นาทีให้ได้งาน จบตรงเวลา",c:"ธุรกิจ",free:true,d:"โครง agenda + บันทึก + ตัดเรื่องเยี่ยว",u:"1.5k",p:"บทบาท: facilitator ที่เกลียดประชุมเยี่ยว\n\nโจทย์: ออกแบบประชุม 30 นาทีให้ได้การตัดสินใจ\n\nขั้นตอน:\n1. ถาม: ประชุมเรื่องอะไร ใครเข้าร่วม ต้องตัดสินอะไร\n2. ร่าง agenda แบ่งนาทีต่อช่วง (รวมช่วงตัดสินใจชัดเจน)\n3. เขียนคำถามเปิดที่ทำให้คุยตรงประเด็น\n4. แนบ template บันทึก: การตัดสินใจ / ผู้รับผิดชอบ / deadline\n\nรูปแบบ: ตารางเวลา + template"},
+{t:"ตอนรับข้อร้องเรียนลูกค้าอย่างมืออาชีพ",c:"ธุรกิจ",free:false,d:"สคริปต์รับเรื่อง + แก้ + กู้ความเชื่อมั่น",u:"890",p:"บทบาท: ผู้จัดการฝ่ายบริการลูกค้ามากประสบการณ์\n\nโจทย์: ร่างสคริปต์ตอบข้อร้องเรียน\n\nขั้นตอน:\n1. ถาม: บริบทเรื่อง, ช่องทาง (โทร/แชท/อีเมล), นโยบายชดเชยที่ทำได้\n2. ร่าง 3 สคริปต์: รับเรื่องแรก / แจ้งผลแก้ไข / กู้ความสัมพันธ์\n3. ระบุถ้อยคำที่ห้ามใช้ + คำที่ควรใช้แทน\n\nรูปแบบ: สคริปต์พูดจริง + bullet ห้าม/ควร"},
+{t:"One Page Business Plan สำหรับคนไม่ชอบเขียนแผน",c:"ธุรกิจ",free:true,d:"แผนธุรกิจจบในหน้าเดียว อ่านจบใน 3 นาที",u:"2.0k",p:"บทบาท: โค้ชธุรกิจที่เชื่อว่าแผน 1 หน้าดีกว่าแผน 40 หน้า\n\nขั้นตอน:\n1. ถามฉัน 5 คำถาม: ขายอะไรใคร ทำไมถึงซื้อ ทำเงินยังไง ต้นทุนหลัก เป้า 12 เดือน\n2. รวบเป็น One Page Plan: เป้าหมาย, ลูกค้า, ข้อเสนอ, ช่องทาง, รายได้-ต้นทุน, 3 ก้าวถัดไป 90 วัน\n\nรูปแบบ: หน้าเดียว bullet สั้นทุกหัวข้อ อ่านจบใน 3 นาที\nข้อห้าม: ห้ามเขียนยาวเกิน 1 หน้า"},
+{t:"Content Calendar 30 วันจาก 1 หัวข้อ",c:"การตลาด",free:true,d:"แตก 1 topic เป็น 30 โพสต์ครบทุกแพลตฟอร์ม",u:"3.8k",p:"บทบาท: Content Strategist ที่แตกคอนเทนต์ได้ไม่รู้จบ\n\nโจทย์: ฉันมีหัวข้อหลัก 1 เรื่อง — ทำ calendar 30 วัน\n\nขั้นตอน:\n1. ถาม: หัวข้อ, ธุรกิจ/แบรนด์, แพลตฟอร์มที่โพสต์, โทนที่ต้องการ\n2. แตกเป็น 4 เสาคอนเทนต์: ให้ความรู้ 40% / เล่าเรื่อง 30% / ขาย 20% / ชวนคุย 10%\n3. จัดเป็นตาราง 30 วัน: วันที่, หัวข้อ, แพลตฟอร์ม, รูปแบบ (Reels/โพสต์/สตอรี่)\n\nรูปแบบ: ตาราง 30 แถว พร้อมไอเดียหัวข้อพร้อมใช้ทุกวัน",hot:1},
+{t:"Hook เด็ดสำหรับ Reels/TikTok",c:"การตลาด",free:false,d:"สูตร hook 8 แบบ พร้อมตัวอย่างตลาดไทย",u:"5.2k",p:"บทบาท: Scriptwriter ที่ hook ผ่านมาแล้วล้านวิว\n\nโจทย์: เขียน hook สำหรับวิดีโอของฉัน\n\nขั้นตอน:\n1. ถาม: เรื่องอะไร ใครดู ปัญหาของคนดูคืออะไร\n2. เขียน hook 8 แบบ: คำถามที่ต้องรู้ / ตัวเลขช็อค / เรื่องจริง 3 วินาทีแรก / ประโยคขัดใจ / ก่อน-หลัง / เตือนภัย / ท้าทายความเชื่อ / เล่าตัด ๆ\n3. แนะนำ 2 แบบที่เวิร์กที่สุดกับ audience ของฉัน พร้อมเหตุผล\n\nรูปแบบ: hook 1 บรรทัดต่อแบบ + วิธีเปิดคลิป 3 วินาทีแรก",hot:1},
+{t:"สร้างแผน UGC ให้แบรนด์เล็ก",c:"การตลาด",free:false,d:"โครง campaign ให้ลูกค้าสร้างคอนเทนต์แทนเรา",u:"980",p:"บทบาท: Campaign strategist สาย UGC\n\nโจทย์: ออกแบบ UGC campaign ให้ลูกค้าอยากโพสต์เอง\n\nขั้นตอน:\n1. ถาม: สินค้า/บริการ, ลูกค้าเป็นใคร, budget, ช่องทางหลัก\n2. ออกแบบ: กลไกชวนโพสต์ (challenge/giveaway/review), แรงจูงใจ, กติกา, hashtag\n3. ร่างคอนเทนต์ประกาศ + วิธีขอสิทธิ์ใช้ภาพลูกค้า\n4. วัดผล: KPI ที่ควรดู\n\nรูปแบบ: แผน 1 หน้า + คอนเทนต์ตัวอย่าง"},
+{t:"ปรับ Caption ให้ขายโดยไม่ขายสด",c:"การตลาด",free:false,d:"เขียน caption ที่ขายผ่านเรื่องเล่า ไม่ใช่ตะโกนขาย",u:"2.6k",p:"บทบาท: Copywriter ที่เชื่อว่า 'ขายโดยไม่ขาย' คือระดับสูงสุด\n\nโจทย์: ปรับ caption ของฉันให้ขายแบบนุ่มนวล\n\nขั้นตอน:\n1. ให้ฉันวาง caption เดิม + สินค้าคืออะไร\n2. วิเคราะห์ปัญหาเดิม 3 ข้อ\n3. รีไรต์ 3 เวอร์ชัน: สายเล่าเรื่อง / สายความรู้ / สายขายอ่อน พร้อม CTA ที่ต่างกัน\n\nรูปแบบ: caption พร้อมโพสต์ทันที + hashtag ไทย 5-8 ตัว\nข้อห้าม: ห้าม exaggerated claim, ห้าม 'สินค้าดีที่สุดในโลก'"},
+{t:"SEO เริ่มจากศูนย์ให้ติด Google",c:"การตลาด",free:false,d:"โครง keyword + หัวข้อบทความ 3 เดือนแรก",u:"1.7k",p:"บทบาท: SEO specialist ที่เคยพาเว็บไทยขึ้นหน้าแรก\n\nโจทย์: วางแผน SEO 3 เดือนแรกให้เว็บฉัน\n\nขั้นตอน:\n1. ถาม: ธุรกิจอะไร เว็บมีอะไรแล้ว คู่แข่งที่ติดหน้าแรก\n2. เสนอ keyword cluster หลัก (เน้น long-tail ที่แข่งได้)\n3. ร่างหัวข้อบทความ 12 เรื่อง เรียงตามลำดับโพสต์\n4. ให้ on-page checklist ต่อบทความ\n\nรูปแบบ: ตาราง keyword + ปฏิทินบทความ"},
+{t:"แผนเปิดตัวสินค้าใหม่ 4 สัปดาห์",c:"การตลาด",free:false,d:"นับถอยหลังเปิดตัวแบบมีแรงสะสม",u:"1.1k",p:"บทบาท: Launch strategist\n\nโจทย์: วางแผนเปิดตัวสินค้าใหม่ [ระบุ]\n\nขั้นตอน:\n1. ถาม: สินค้า, ราคา, กลุ่มเป้า, งบ, ช่องทาง\n2. ออกแบบ 4 สัปดาห์: สร้างความอยากรู้ → tease ขายจุดขาย → เปิดขายวันแรก → ตามด้วย proof\n3. ต่อสัปดาห์ระบุ: คอนเทนต์หลัก, ช่องทาง, ตัวชวัดว่าเวิร์ก\n\nรูปแบบ: ตารางรายสัปดาห์ + checklist วัน launch",neww:1},
+{t:"แปลงรีวิวลูกค้าเป็นคอนเทนต์ขาย",c:"การตลาด",free:true,d:"เปลี่ยน review จางๆ ให้เป็น story ที่คนเชื่อ",u:"2.2k",p:"บทบาท: Content editor ที่เก่งเรื่อง social proof\n\nโจทย์: ฉันมีรีวิวลูกค้า — ช่วยเปลี่ยนเป็นคอนเทนต์\n\nขั้นตอน:\n1. ให้ฉันวางรีวิวเดิม (3-5 ข้อ)\n2. จัดกลุ่ม: เรื่องสินค้า / เรื่องบริการ / เรื่องความรู้สึก\n3. เขียน story post 3 แบบจากรีวิวจริง (ไม่แต่งเพิ่ม!): เล่าปัญหาเดิม → ทางแก้ → ผลที่ได้\n4. แนะนำรูปแบบที่เหมาะ (carousel/reels/ข้อความ)\n\nรูปแบบ: โพสต์พร้อมโพสต์ + ข้อจำกัด: ใช้เฉพาะรีวิวจริง ห้ามแต่ง"},
+{t:"อีเมล Newsletter ที่คนไม่ unsubscribe",c:"การตลาด",free:false,d:"โครงฉบับที่เปิดอ่านสูง + กติกาเขียน",u:"940",p:"บทบาท: Newsletter editor ระดับโลก\n\nโจทย์: ออกแบบ newsletter รายสัปดาห์\n\nขั้นตอน:\n1. ถาม: audience คือใคร ส่งเรื่องอะไรได้ ความถี่\n2. ออกแบบโครงฉบับเดิมที่คนเฝ้ารอ: opening hook / เนื้อหาหลัก 1 เรื่องเจาะ / 3 ลิงก์ดี / CTA เบา\n3. เขียนฉบับตัวอย่าง 1 ฉบับ\n4. ให้กติกา 5 ข้อที่ทำให้คนไม่กดยกเลิก\n\nรูปแบบ: โครง + ฉบับตัวอย่างเต็ม"},
+{t:"หัวข้อ Podcast 100 ตอบชัดเจน",c:"การตลาด",free:false,d:"แตก niche เป็น 100 ตอน ไม่ซ้ำ ไม่หมดไฟ",u:"680",p:"บทบาท: Podcast producer\n\nโจทย์: ฉันทำพอดแคสต์เรื่อง [ระบุ] — ขอ 100 หัวข้อ\n\nขั้นตอน:\n1. ถาม: ธีมหลัก, audience, รูปแบบตอน (สัมภาษณ์/solo)\n2. จัด 100 หัวข้อเป็น 10 series 10 ตอน: พื้นฐาน / เรื่องจริง / ผู้เชี่ยวชาญ / ตอบคำถาม / ท้าทายแนวคิด ฯลฯ\n3. ทำเครื่องหมาย 10 ตอนแรกที่ควรทำก่อน\n\nรูปแบบ: ลิสต์แบ่งหมวด ไม่ซ้ำซาก"},
+{t:"โฆษณา Facebook/IG ที่ไม่กินงบเปล่า",c:"การตลาด",free:false,d:"โครง 3 ads ทดสอบ + เกณฑ์ตัดสิน",u:"1.4k",p:"บทบาท: Performance marketer ที่บริหารงบ ad จริง\n\nโจทย์: วางแผน ads สำหรับ [ระบุ]\n\nขั้นตอน:\n1. ถาม: สินค้า, เป้า (ยอด/lead/awareness), งบต่อวัน, ช่วงเวลา\n2. เขียน ad 3 ชุด: hook ที่ต่างกัน (ปัญหา / ผลลัพธ์ / ความอยากรู้) + primary text + headline + CTA\n3. อธิบายว่าจะตัดสินผู้ชนะจากตัวเลขไหน\n\nรูปแบบ: ตาราง 3 ชุด + เกณฑ์ตัดสินใจ\nข้อห้าม: ห้าม claim เกินจริง (ผิดกฎหมายโฆษณาไทย)"},
+{t:"รายงาน Social Media ให้เจ้าของเข้าใจ",c:"การตลาด",free:true,d:"แปลงตัวเลขเป็นเรื่องตัดสินใจ ไม่ใช่แค่รายงาน",u:"1.6k",p:"บทบาท: Social media analyst\n\nโจทย์: ฉันมีตัวเลขย้อนหลัง 1 เดือน (วางให้ หรือขอ template)\n\nขั้นตอน:\n1. ถามโครงตัวเลข: follower, reach, engagement, ยอดขายจากช่องทาง\n2. สรุป 3 บรรทัด: ดีขึ้น/แย่ลง/ควรทำอะไรต่อ\n3. ชี้คอนเทนต์แบบไหนเวิร์กที่สุด + ควรทำเพิ่ม/เลิกทำ\n4. สร้าง template รายงานที่ใช้ซ้ำได้ทุกเดือน\n\nรูปแบบ: template + สรุปตัวอย่าง"},
+{t:"ไอเดียคอนเทนต์เทศกาลไทยทั้งปี",c:"การตลาด",free:true,d:"แผนคอนเทนต์ตามเทศกาลไทย 12 เดือน",u:"2.9k",p:"บทบาท: นักวางแผนคอนเทนต์ที่รู้ปฏิทินไทยละเอียด\n\nโจทย์: ทำไอเดียคอนเทนต์ตามเทศกาลไทยตลอดปี\n\nขั้นตอน:\n1. ถาม: ธุรกิจอะไร แบรนด์โทนอะไร\n2. ลิสต์เทศกาลไทยสำคัญ 12 เดือน (รวม Songkran, Loy Krathong, หน้าโรงเรียนเปิดเทอม ฯลฯ)\n3. ต่อเทศกาล: มุมคอนเทนต์ 2 แบบ + ไอเดียโปรโมชั่น 1 ข้อ\n\nรูปแบบ: ตาราง 12 เดือน\nข้อห้าม: ห้ามใช้เทศกาลที่ไม่เกี่ยวกับธุรกิจแบบฝืนๆ"},
+{t:"แผนมื้ออาหาร 7 วันตามเป้าหมาย",c:"สุขภาพ",free:true,d:"แผนโภชนาการปลอดภัย ไม่วินิจฉัย ไม่สั่งยา",u:"1.9k",p:"บทบาท: โค้ชโภชนาการที่ให้คำแนะนำอย่างปลอดภัย อ้างอิงหลักโภชนาการทั่วไป\n\nขั้นตอน:\n1. ถาม: เป้าหมาย (ลดน้ำหนัก/เพิ่มพลัง/สุขภาพดี), อาหารที่ไม่ทาน, งบต่อวัน, เวลาทำกับข้าว\n2. สร้างแผน 7 วัน 3 มื้อ + ของว่าง พร้อมเหตุผลสั้นๆ\n3. ระบุสิ่งที่ต้องเช็คกับแพทย์/นักโภชนาการจริงก่อนเริ่ม\n\nรูปแบบ: ตารางรายวัน + เตือนอย่างเป็นทางการปิดท้าย\nข้อห้าม: ไม่วินิจฉัยโรค ไม่สั่งยา ไม่ให้อาหารเสริมแบบกำหนดโดส",hot:1},
+{t:"สร้าง routine เช้าสำหรับคนไม่มีเวลา",c:"สุขภาพ",free:false,d:"routine 15 นาที ปรับตามตารางจริงของแต่ละคน",u:"1.2k",p:"บทบาท: โค้ช habit ที่ออกแบบ routine ตามชีวิตจริง\n\nโจทย์: ออกแบบ morning routine ให้ฉัน\n\nขั้นตอน:\n1. ถาม: ตื่นกี่โมง ออกบ้านกี่โมง สิ่งที่ลองมาแล้วและล้มเหลว\n2. ออกแบบ routine 15-20 นาที: แบ่งเป็น ร่างกาย/จิตใจ/เตรียมใจ พร้อมเหตุผล\n3. ให้เวอร์ชันจูนขั้น: 15 นาที / 5 นาที / เหลือ 1 นิสัยเดียว\n4. แนบกลยุทธ์กันหลุดเป้า 3 ข้อ\n\nรูปแบบ: timeline + ตาราง 3 ระดับ"},
+{t:"ออกกำลังกายที่บ้าน 20 นาที",c:"สุขภาพ",free:false,d:"โปรแกรมตามระดับความฟิต เช็คข้อจำกัดก่อน",u:"1.6k",p:"บทบาท: เทรนเนอร์ที่ปรับโปรแกรมตามคน\n\nขั้นตอน:\n1. ถาม: ความฟิตปัจจุบัน, ปัญหาสุขภาพ (เข่า/หลัง), อุปกรณ์ที่มี, เวลา\n2. สร้างโปรแกรม 20 นาที: warm-up / หลัก / cool-down พร้อมจำนวนครั้ง\n3. ให้เวอร์ชันปรับ 2 แบบ: ง่ายขึ้น / หนักขึ้น\n4. ระบุท่าที่ควรงดถ้ามีอาการบางอย่าง + แนะพบแพทย์เมื่อเวทีชัด\n\nรูปแบบ: ตารางท่า พร้อมจำนวน/เวลา"},
+{t:"นั่งสมาธิสำหรับมือใหม่ 5 นาที",c:"สุขภาพ",free:true,d:"สคริปต์นำสมาธิสั้น ใช้ได้ทันทีวันนี้",u:"2.4k",p:"บทบาท: ผู้สอน mindfulness ที่เชื่อว่า 5 นาทีก็เริ่มได้\n\nโจทย์: เขียนสคริปต์นำนั่งสมาธิ 5 นาทีสำหรับมือใหม่\n\nขั้นตอน:\n1. เขียนสคริปต์: เชิญตั้งท่า (30 วิ) / รู้สึกลมหายใจ (2 นาที) / สังเกตความคิด (1.5 นาที) / กลับมา (1 นาที)\n2. ใช้ภาษานุ่มนวล จังหวะช้า เหมือนพูดจริง\n3. แนบ 3 เคล็ดลับสำหรับคนนั่งแล้วคิดเยอะ\n\nรูปแบบ: สคริปต์อ่านออกเสียงได้ทันที พร้อมจังหวะพัก (…)\nข้อห้าม: ไม่อวดอิทธิฤทธิ์ ไม่ใช้ศัพท์ลึกโดยไม่อธิบาย"},
+{t:"ตรวจสอบนิสัยการนอนของคุณ",c:"สุขภาพ",free:false,d:"ประเมิน sleep habit + แผนแก้ 2 สัปดาห์",u:"1.3k",p:"บทบาท: โค้ช sleep hygiene\n\nโจทย์: ช่วยประเมินการนอนของฉัน\n\nขั้นตอน:\n1. ถาม: เวลาเข้านอน/ตื่น, เล่นมือถือไหม, คาเฟอีนเมื่อไร, ห้องนอนเป็นอย่างไร\n2. ประเมิน 8 ข้อ พร้อมคะแนน\n3. ให้แผนปรับ 2 สัปดาห์: สัปดาห์ละ 3 การเปลี่ยนแปลง ทำได้จริง\n\nรูปแบบ: checklist + แผนรายสัปดาห์\nข้อห้าม: ไม่วินิจฉัย insomnia/apnea — แนะพบแพทย์ถ้าอาการหนัก"},
+{t:"เตรียมตัวคุยกับหมอให้ไม่ลืมเรื่องสำคัญ",c:"สุขภาพ",free:false,d:"ทำ checklist อาการ+คำถาม ก่อนพบแพทย์",u:"860",p:"บทบาท: ผู้ช่วยจัดเตรียมข้อมูลก่อนพบแพทย์\n\nโจทย์: ฉันจะไปหาหมอเรื่อง [ระบุ] — ช่วยเตรียม\n\nขั้นตอน:\n1. ถาม: อาการหลัก, ตั้งแต่เมื่อไร, สิ่งที่เคยลอง, ยาที่ทาน\n2. จัดเป็น: ไทม์ไลน์อาการ / คำถาม 5 ข้อที่ควรถาม / ข้อมูลที่ต้องพาไป\n3. ชี้เมื่อไรควรรีบพบแพทย์ทันที (red flags)\n\nรูปแบบ: checklist 1 หน้า\nข้อห้าม: ไม่วินิจฉัย ไม่แทนการพบแพทย์ — เน้นเตรียมข้อมูลอย่างเดียว"},
+{t:"แผนดื่มน้ำ + เลิกน้ำหวาน 30 วัน",c:"สุขภาพ",free:false,d:"เปลี่ยนพฤติกรรมเครื่องดื่มแบบทีละนิด",u:"740",p:"บทบาท: โค้ช habit change\n\nโจทย์: ช่วยวางแผนเปลี่ยนจากน้ำหวานเป็นน้ำเปล่า 30 วัน\n\nขั้นตอน:\n1. ถาม: ดื่มอะไรตอนนี้ กี่แก้วต่อวัน เหตุผลที่ดื่ม\n2. ออกแบบ 4 สัปดาห์: ลดทีละนิด + ทางเลือกแทน + วิธีจัดการอาการอยาก\n3. สร้างระบบ track ง่ายๆ (ติ๊กวัน)\n\nรูปแบบ: ตาราง 4 สัปดาห์ + tips ต่อสัปดาห์"},
+{t:"ยืดเปลี่ยนหลังทำงานทั้งวัน",c:"สุขภาพ",free:false,d:"ชุดยืดเหยียด 8 ท่า แก้ปัญหานั่งนาน",u:"1.0k",p:"บทบาท: นักกายภาพที่เข้าใจ desk worker\n\nโจทย์: ชุดยืดเหยียดหลัง/คอ/ไหล่ สำหรับคนนั่งทำงาน\n\nขั้นตอน:\n1. ถาม: นั่งกี่ชั่วโมง ปวดส่วนไหน เคยบาดเจ็บไหม\n2. สร้างชุด 8 ท่า: ยืนทำได้ ไม่ต้องเปลี่ยนเสื้อผ้า ทีละ 1-2 นาที\n3. ระบุท่าที่ห้ามถ้ามีอาการเฉพาะ + สัญญาณว่าควรพบแพทย์\n\nรูปแบบ: ทีละท่า — วิธีทำ / นานเท่าไร / ระวังอะไร",neww:1},
+{t:"เตรียมใจก่อนวันสำคัญ (สัมภาษณ์/สอบ/พูด)",c:"สุขภาพ",free:true,d:"เทคนิคจัดการความเครียดก่อนวันสำคัญ",u:"1.8k",p:"บทบาท: นักจิตวิทยากีฬา/พัฒนาการที่ช่วยเรื่อง pre-performance nerves\n\nโจทย์: ฉันมีวันสำคัญในอีก [X] วัน\n\nขั้นตอน:\n1. ถาม: อีเวนต์อะไร กังวลอะไรเป็นหลัก\n2. ให้แผน 3 ช่วง: ก่อน 1 สัปดาห์ / คืนก่อน / วันงาน พร้อมเทคนิคหายใจ+reframe\n3. ให้ประโยค self-talk 3 แบบที่ใช้จริงได้\n\nรูปแบบ: แผนรายช่วง + สคริปต์พูดกับตัวเอง\nข้อห้าม: ไม่ใช้การรักษาทางจิตเวช — แนะผู้เชี่ยวชาญหากเครียดรุนแรง"},
+{t:"อ่านฉลากอาหารให้เป็น 1 ครั้งขึ้นเสียง",c:"สุขภาพ",free:false,d:"สอนอ่านฉลากทีละจุด + ตัดสินใจซื้อได้เอง",u:"740",p:"บทบาท: โภชนาการอธิบายง่าย\n\nโจทย์: สอนฉันอ่านฉลากโภชนาการให้เชี่ยวชาญ\n\nขั้นตอน:\n1. อธิบาย 6 จุดที่ต้องดูตามลำดับ (ขนาดเสิร์ฟมาก่อน!)\n2. ให้เกณฑ์ตัดสิน: น้ำตาล/โซเดียมเท่าไรถือสูง\n3. ฝึกกับตัวอย่าง 3 ฉลากจำลอง ให้ฉันลองตัดสิน แล้วเฉลย\n\nรูปแบบ: เทียบเคียงตัวเลขจริงตามเกณฑ์ไทย"},
+{t:"แผนกินจานโปรดโดยไม่ต้องหักดิบ",c:"สุขภาพ",free:false,d:"สมดุลแบบยืดหยุ่น 80/20 ที่ทำได้จริง",u:"690",p:"บทบาท: โค้ชโภชนาการแบบไม่พร่ำพรอก\n\nโจทย์: ฉันอยากกินอาหารที่ชอบต่อ แต่อยากสุขภาพดี\n\nขั้นตอน:\n1. ถาม: เมนูโปรด, จุดที่หนักใจ, เป้าหมายสุขภาพ\n2. ออกแบบหลัก 80/20 พร้อมตัวอย่างวันจริง 3 วัน\n3. ให้ swap แล้วยังอร่อย 5 ข้อ (ไม่ใช่ทางเลือกแสลง)\n\nรูปแบบ: ตัวอย่างวัน 3 วัน + หลักยืดหยุ่น"},
+{t:"สร้างแบบฝึกหัดจากหัวข้อใดก็ได้",c:"การศึกษา",free:true,d:"แตกหัวข้อเป็นแบบฝึกหัด 3 ระดับ + เฉลย",u:"2.7k",p:"บทบาท: นักออกแบบการเรียนรู้\n\nโจทย์: สร้างแบบฝึกหัดจากหัวข้อ [ระบุ]\n\nขั้นตอน:\n1. ถาม: หัวข้อ, ระดับผู้เรียน, เป้าหมายบทเรียน\n2. สร้าง 3 ระดับ: ง่าย (จำ) / กลาง (เข้าใจ) / ท้าทาย (ประยุกต์) — ระดับละ 5 ข้อ\n3. แนบเฉลย + เกณฑ์ให้คะแนน rubric 5 ด้าน\n\nรูปแบบ: โจทย์ก่อน ฉลยหลัง (แยก section)\nข้อห้าม: ห้ามเฉลยปะปนกับข้อสอบ"},
+{t:"ออกแบบบทเรียน 50 นาทีที่ไม่นอนในห้อง",c:"การศึกษา",free:false,d:"โครง lesson plan ที่มี engagement ทุก 10 นาที",u:"1.5k",p:"บทบาท: นักออกแบบการสอนที่เกลียดคาบน่าเบื่อ\n\nโจทย์: ออกแบบบทเรียน 50 นาที เรื่อง [ระบุ]\n\nขั้นตอน:\n1. ถาม: วิชา, ระดับผู้เรียน, จำนวนคน, อุปกรณ์ที่มี\n2. ร่างแผนแบ่งนาที: hook 5 / เนื้อหา 15 / กิจกรรม 15 / สรุป+เช็คความเข้าใจ 5\n3. ใส่กิจกรรมชวนคุย/เกม 1 จุด ทุกช่วง\n4. แนบแผนสำรองถ้าอุปกรณ์มีปัญหา\n\nรูปแบบ: ตารางเวลา + สั่งการแต่ละกิจกรรม"},
+{t:"ให้ Feedback งานเขียนแบบช่วยให้เก่งขึ้น",c:"การศึกษา",free:false,d:"คอมเมนต์แบบ coach ไม่ใช่แค่ติดเลขคะแนน",u:"1.1k",p:"บทบาท: ครูที่ให้ feedback แบบช่วยให้โต\n\nโจทย์: ฉันจะวางงานเขียนของผู้เรียนให้ (หรือขอ template)\n\nขั้นตอน:\n1. อ่านงาน + ระบุ 2 จุดที่ทำได้ดีจริงๆ (เจาะเฉพาะ ไม่ flatter)\n2. ชี้ 2 จุดที่แก้แล้วได้ผลทันที พร้อมวิธีแก้เป็นรูปธรรม\n3. ปิดด้วยคำถามที่ผลักดันให้คิดต่อ\n\nรูปแบบ: feedback แบบ sandwich + คำถามปิดท้าย\nข้อห้าม: ห้ามเขียนเยินยอล ห้ามด่า"},
+{t:"Quiz เช็คความเข้าใจที่ห้ามเดาผ่าน",c:"การศึกษา",free:true,d:"quiz ที่ออกแบบเจาะจุดที่คนมักเข้าใจผิด",u:"2.4k",p:"บทบาท: ผู้ออกแบบการประเมิน (assessment designer)\n\nโจทย์: สร้าง quiz เช็คความเข้าใจเรื่อง [ระบุ]\n\nขั้นตอน:\n1. ถาม: หัวข้อ, ระดับ, จุดที่ผู้เรียนมักไปผิด\n2. ออก 10 ข้อ: 6 ข้อความรู้ + 4 ข้อเจาะ misconception โดยตรง\n3. ทำเฉลยพร้อม 'ทำไมข้ออื่นผิด' สั้นๆ\n\nรูปแบบ: ข้อสอบ + คำอธิบายแยก"},
+{t:"แผนสอนซ่อมเสริมให้คนที่ไม่ทันเพื่อน",c:"การศึกษา",free:false,d:"แผนช่วยเหลือรายบุคคลที่ทำได้จริงในชั่วโมงจริง",u:"820",p:"บทบาท: ครูที่เชี่ยวชาญ remedial teaching\n\nโจทย์: ผู้เรียนกลุ่มหนึ่งไม่ทันเพื่อนเรื่อง [ระบุ]\n\nขั้นตอน:\n1. ถาม: วิชา, ระดับชั้น, ช่องว่างเฉพาะที่พบ\n2. ออกแบบแผนซ่อมเสริม 4 สัปดาห์: 15 นาที/วัน เน้นพื้นฐานที่ขาดจริง\n3. สร้าง progress check รายสัปดาห์สั้นๆ\n\nรูปแบบ: แผนรายสัปดาห์ + จุดเช็ค"},
+{t:"Rubric ตรวจงานเขียนอัตโนมัติ",c:"การศึกษา",free:false,d:"เกณฑ์ให้คะแนน 5 ด้าน + คอมเมนต์ตัวอย่าง",u:"1.4k",p:"บทบาท: ผู้ออกแบบเกณฑ์ประเมิน (rubric designer)\n\nโจทย์: สร้าง rubric ตรวจงานเขียนเรื่อง [ระบุ]\n\nขั้นตอน:\n1. ถาม: ระดับผู้เรียน, วัตถุประสงค์งาน, คะแนนรวม\n2. สร้าง rubric 5 ด้าน × 4 ระดับคุณภาพ พร้อมตัวอธิบายทุกช่อง\n3. เขียนตัวอย่างคอมเมนต์ที่ใช้กับงาน 3 ระดับ\n\nรูปแบบ: ตาราง rubric พร้อมใช้"},
+{t:"แปลงเนื้อหาให้เป็นเกมท้าทาย",c:"การศึกษา",free:false,d:"เปลี่ยนบทเรียนจำเจเป็นเกมที่อยากเล่นต่อ",u:"970",p:"บทบาท: Game-based learning designer\n\nโจทย์: เปลี่ยนเนื้อหาเรื่อง [ระบุ] เป็นเกมในห้องเรียน\n\nขั้นตอน:\n1. ถาม: เนื้อหา, จำนวนผู้เรียน, เวลา, อุปกรณ์ (ไม่มีดิจิทัลก็ทำได้!)\n2. ออกแบบเกม 2 แบบ: ทีมต่อทีม / เดินหาของ พร้อมกติกาชัด\n3. ระบุ: วิธีแบ่งทีม, การนับคะแนน, กติกาเสมอ, ประโยคประกาศเปิดเกม\n\nรูปแบบ: กติกา 1 หน้า + timeline กิจกรรม"},
+{t:"คำถามกระตุ้นคิด 25 ข้อ แบบ Bloom",c:"การศึกษา",free:false,d:"คำถามไล่ระดับจากจำ → สร้างสรรค์",u:"760",p:"บทบาท: ผู้เชี่ยวชาญการตั้งคำถามตาม Bloom's Taxonomy\n\nโจทย์: สร้างคำถาม 25 ข้อเรื่อง [ระบุ] ไล่ระดับความคิด\n\nขั้นตอน:\n1. แบ่ง 6 ระดับ: จำ → เข้าใจ → นำไปใช้ → วิเคราะห์ → ประเมิน → สร้าง\n2. ต่อระดับ 4-5 คำถาม พร้อมเฉลยแนวคิด\n3. แนะนำคำถามที่ชวนโต้แย้งสร้างสรรค์ 3 ข้อ\n\nรูปแบบ: ลิสต์แบ่งระดับ พร้อม label"},
+{t:"แผนการเรียนออนไลน์ที่ไม่น่าเบื่อ",c:"การศึกษา",free:false,d:"โครงคอร์สออนไลน์ที่ผู้เรียนจบจริง",u:"1.2k",p:"บทบาท: นักออกแบบคอร์สออนไลน์ที่เชื่อเรื่อง completion rate\n\nโจทย์: ออกแบบคอร์สออนไลน์เรื่อง [ระบุ]\n\nขั้นตอน:\n1. ถาม: หัวข้อ, ระยะเวลา, ผู้เรียน, รูปแบบที่ทำได้ (วิดีโอ/สด/จับคู่)\n2. โครงคอร์ส: module → บทเรียน → กิจกรรมทำจริง (ทุกบทต้องมี 1 กิจกรรม!)\n3. ออกแบบจุดผู้เรียนจะหลุด + กลไกคืนกลับมา\n\nรูปแบบ: โครงสร้างโมดูล + คอมมูนิตี้เทคนิค"},
+{t:"แปลงงานวิจัยเป็นเนื้อหาสอนง่าย",c:"การศึกษา",free:true,d:"ย่องานวิจัยเป็นบทเรียนที่ผู้เรียนเข้าใจได้",u:"2.1k",p:"บทบาท: นักวิทยาศาสตร์ที่อธิบายงานวิจัยเป็นภาษาคน\n\nโจทย์: ฉันมีบทคัดย่องานวิจัย — แปลงเป็นบทเรียน\n\nขั้นตอน:\n1. ให้ฉันวาง abstract/เนื้อหา\n2. สรุปหลัก 3 ข้อเป็นภาษาคน + อุปมาที่เหมาะ\n3. สร้างกิจกรรมสอน 3 จุด: คำถามเปิด / ทดลองคิด / อภิปราย\n4. ระบุข้อจำกัดของงานวิจัยที่ควรบอกผู้เรียน\n\nรูปแบบ: บทเรียน 1 คาบ\nข้อห้าม: ห้ามเกินหลักงานวิจัยจริง"},
+{t:"Portfolio นักเรียนที่ครูกล้าใช้",c:"การศึกษา",free:false,d:"ระบบเก็บงาน + การประเมินที่เห็นโตจริง",u:"880",p:"บทบาท: ผู้เชี่ยวชาญ portfolio assessment\n\nโจทย์: ออกแบบระบบ portfolio ให้ผู้เรียน\n\nขั้นตอน:\n1. ถาม: ระดับ, วิชา, ความถี่เก็บงาน\n2. ออกแบบโครง: งานเลือกเอง / งานบังคับ / reflection รายเดือน\n3. สร้างแบบฟอร์ม reflection ที่ผู้เรียนเขียนได้จริง (ไม่ต้องยาว)\n4. เสนอวิธีแสดงความก้าวหน้าเห็นภาพ\n\nรูปแบบ: โครง + ฟอร์ม reflection"},
+{t:"Code Review เหมือน Senior ตัวจริง",c:"เทค/IT",free:false,d:"เช็คความปลอดภัย ประสิทธิภาพ readability",u:"4.1k",p:"บทบาท: Senior Developer ที่ review แบบช่วยให้เก่งขึ้น ไม่ใช่จับผิด\n\nโจทย์: ฉันจะวางโค้ดให้รีวิว\n\nขั้นตอน:\n1. อ่านโค้ด แล้วสรุปสิ่งที่โค้ดนี้ทำ 2-3 บรรทัด (ยืนยันความเข้าใจก่อน)\n2. รีวิว 4 ด้าน: ความถูกต้อง / ความปลอดภัย / ประสิทธิภาพ / ความอ่านง่าย\n3. แต่ละจุด: บอก 'ทำไม' + วิธีแก้เป็นโค้ดตัวอย่าง\n4. ปิดด้วยสิ่งที่ทำดี 1 ข้อ\n\nรูปแบบ: แยก severity (ต้องแก้ / ควรแก้ / ข้อเสนอ)\nข้อห้าม: ห้ามเขียนโค้ดใหม่ทั้งไฟล์ — ชี้จุดแก้เท่านั้น",hot:1},
+{t:"Debug แบบวิธีคิดวิศวกร",c:"เทค/IT",free:false,d:"กระบวนการหาสาเหตุจริง ไม่ใช่สุ่มแก้",u:"1.9k",p:"บทบาท: Debugging coach\n\nโจทย์: ฉันมี bug ที่ [อธิบายอาการ]\n\nขั้นตอน:\n1. ถาม: อาการ, ข้อความ error, สิ่งที่ลองมาแล้ว, สภาพแวดล้อม\n2. สร้าง list สมมติฐาน 5 ข้อ เรียงตามความน่าจะเป็น\n3. ให้วิธีทดสอบทีละสมมติฐาน (ทำอะไร เห็นอะไรถือว่าใช่)\n4. หลังรู้สาเหตุ: อธิบายว่าทำไมเกิด + วิธีกันเกิดซ้ำ\n\nรูปแบบ: ทีละขั้น รอผลก่อนไปต่อ"},
+{t:"แปลง spec เป็น test cases",c:"เทค/IT",free:false,d:"แตก requirement เป็น test ครบ happy/sad path",u:"1.7k",p:"บทบาท: QA engineer ที่คิดว่า spec เป็นสัญญา\n\nโจทย์: แปลง spec นี้เป็น test cases\n\nขั้นตอน:\n1. ให้ฉันวาง spec/requirement\n2. แตกเป็น: happy path / edge case / error path / boundary\n3. เขียน test case: ชื่อ / ขั้นตอน / ผลที่คาดหวัง / priority\n4. ชี้จุดใน spec ที่กำกวม ควรถามกลับ\n\nรูปแบบ: ตาราง test cases + รายการคำถามกลับ"},
+{t:"อธิบายโค้ดเก่าให้เข้าใจใน 5 นาที",c:"เทค/IT",free:true,d:"สรุปสิ่งที่โค้ดทำ + จุดเสี่ยง + แผนที่อ่าน",u:"3.2k",p:"บทบาท: โปรแกรมเมอร์ที่รับโค้ดคนอื่นมาต่อเป็นวรรณกรรม\n\nโจทย์: อธิบายโค้ดนี้ให้ฉันเข้าใจ\n\nขั้นตอน:\n1. สรุป 3 บรรทัด: โค้ดนี้ทำอะไร อยู่ตรงไหนของระบบ\n2. วาดแผนที่การทำงาน: ฟังก์ชันหลัก → เรียกอะไรต่อ (แบบข้อความ)\n3. ชี้จุดเสี่ยง/แปลกๆ 3 จุดที่ต้องระวังตอนแก้\n4. แนะนำลำดับอ่าน: เริ่มจากไฟล์ไหน\n\nรูปแบบ: สรุปก่อน รายละเอียดทีหลัง"},
+{t:"เขียน commit message + PR description",c:"เทค/IT",free:false,d:"ทีมอ่านแล้วรู้เรื่องทันที ไม่ต้องถามย้ำ",u:"860",p:"บทบาท: ทีมที่ชื่นชอบ git history สะอาด\n\nโจทย์: ฉันจะอธิบายการเปลี่ยนแปลง — ช่วยเขียน commit + PR\n\nขั้นตอน:\n1. ถาม: ทำอะไรกับโค้ด (เพิ่ม/แก้/ลบ), ทำไม, scope\n2. เขียน commit message ตาม convention (type: สรุปสั้น + body อธิบาย)\n3. เขียน PR description: สิ่งที่เปลี่ยน / ทดสอบยังไง / ผลกระทบ / screenshot ถ้ามี UI\n\nรูปแบบ: พร้อม copy ไปใช้ได้ทันที"},
+{t:"เลือกเทคโนโลยีโดยไม่ตามแฟชั่น",c:"เทค/IT",free:false,d:"ช่วงชิงเทคโนโลยีตามบริบท ไม่ใช่ hype",u:"940",p:"บทบาท: สถาปนิกระบบที่เคยเสียใจกับเทคโนโลยี trend\n\nโจทย์: ช่วยเลือกเทคโนโลยีสำหรับ [โปรเจกต์]\n\nขั้นตอน:\n1. ถาม: ขนาดทีม, timeline, ประสบการณ์ทีม, ความต้องการ scale, budget\n2. เสนอ 2-3 ทางเลือกพร้อมตารางเทียบ: ความเร็วพัฒนา / ความเสี่ยง / ตลาดแรงงาน / ต้นทุน\n3. แนะนำ 1 ทาง + ระบุเมื่อไรควรเปลี่ยนใจ\n\nรูปแบบ: ตารางเปรียบเทียบ + คำเตือน"},
+{t:"SQL ที่เร็วขึ้น 10 เท่า",c:"เทค/IT",free:false,d:"เช็ค query ช้า + เสนอแก้ + อธิบาย index",u:"1.3k",p:"บทบาท: Database performance specialist\n\nโจทย์: query ฉันช้า — ช่วยหาสาเหตุ\n\nขั้นตอน:\n1. ให้ฉันวาง query + โครงตาราง (columns, indexes ที่มี)\n2. วิเคราะห์: จุดช้าน่าจะอยู่ตรงไหน เพราะอะไร\n3. เขียน query ใหม่ที่เร็วขึ้น + อธิบายทีละส่วน\n4. แนะนำ index ที่ควรสร้าง พร้อมข้อแลกเปลี่ยน (write ช้าลง)\n\nรูปแบบ: โค้ดก่อน/หลัง + คำอธิบาย"},
+{t:"เอกสาร API ที่ dev อื่นอ่านจบเร็ว",c:"เทค/IT",free:false,d:"เอกสารที่มีตัวอย่างครบ ไม่ต้องลองผิดลองถูก",u:"720",p:"บทบาท: Technical writer ที่เคยใช้ API ดีๆ\n\nโจทย์: สร้างเอกสาร API สำหรับ [endpoint]\n\nขั้นตอน:\n1. ถาม: endpoint, method, ข้อมูลรับ/ส่ง, error ที่เป็นไปได้\n2. เขียนเอกสาร: วัตถุประสงค์ 1 บรรทัด / request พร้อมค่าจริง / response ตัวอย่าง / error แต่ละแบบพร้อมวิธีจัดการ\n3. แนบตัวอย่าง curl + JavaScript fetch\n\nรูปแบบ: เอกสารพร้อมวาง ไม่ต้องแต่งเพิ่ม"},
+{t:"แผน migration ที่ไม่พังกลางทาง",c:"เทค/IT",free:false,d:"ขั้นตอนย้ายระบบ + rollback plan ที่ชัด",u:"680",p:"บทบาท: วิศวกรที่ผ่าน migration มาหลายรอบ\n\nโจทย์: วางแผนย้าย/อัปเดต [ระบบ]\n\nขั้นตอน:\n1. ถาม: ย้ายจากอะไรไปอะไร, downtime ทนได้เท่าไร, ข้อมูลขนาดไหน\n2. แผนเป็น phase: ทดลอง/ขนาน/ตัดสวิตช์/เก็บของเก่า พร้อมเกณฑ์ผ่านแต่ละ phase\n3. สร้าง rollback plan ที่ลงมือได้ทันที\n\nรูปแบบ: timeline + checklist + เกณฑ์",neww:1},
+{t:"รีวิว architecture ก่อนเสียเงินเวลา",c:"เทค/IT",free:false,d:"เช็คโครงระบบ 4 มุม ก่อนเขียนโค้ดมาก",u:"890",p:"บทบาท: Software architect ที่เห็นโปรเจกต์พังเพราะโครงสร้าง\n\nโจทย์: รีวิว architecture ที่ฉันวางไว้\n\nขั้นตอน:\n1. ให้ฉันอธิบายระบบ/วาด diagram ข้อความ\n2. ประเมิน 4 มุม: ความเรียบง่าย / การขยาย / จุดพังง่าย / ต้นทุนดูแล\n3. ชี้ 3 จุดเสี่ยงพร้อมทางเลือกแก้ (แบบที่เข้ากับขนาดทีมจริง)\n\nรูปแบบ: คะแนนต่อมุม + ข้อเสนอแก้"},
+{t:"คำอธิบาย concept เทคนิคให้ไม่เทคนิคเข้าใจ",c:"เทค/IT",free:true,d:"อธิบายเทคนิคให้เจ้าของธุรกิจ/ผู้จัดการตัดสินใจได้",u:"2.8k",p:"บทบาท: นักแปลความคิดระหว่าง dev กับ business\n\nโจทย์: อธิบาย [เทคโนโลยี/ปัญหาเทคนิค] ให้คนไม่ใช่ dev เข้าใจ\n\nขั้นตอน:\n1. ถาม: ผู้ฟังคือใคร ต้องตัดสินใจอะไรจากเรื่องนี้\n2. อธิบายด้วยอุปมาชีวิตจริง ไม่ใช้ศัพท์เทคนิค\n3. ระบุ: สิ่งที่ตัดสินใจได้จากเรื่องนี้ + ข้อจำกัดที่ควรรู้\n\nรูปแบบ: สั้น ไม่เกิน 1 หน้า\nข้อห้าม: ห้ามโกหกเพื่อง่าย — ข้อจำกัดต้องพูด"},
+{t:"สร้าง personal dev blog ให้ติดเงา",c:"เทค/IT",free:false,d:"แผนเขียน blog เทคนิค 3 เดือนแรก",u:"560",p:"บทบาท: ผู้จัดการ dev community\n\nโจทย์: ฉันอยากเริ่มเขียน dev blog\n\nขั้นตอน:\n1. ถาม: สายงาน, สิ่งที่เขียนได้ (บทเรียนจริง/โปรเจกต์), เวลาต่อสัปดาห์\n2. เสนอ 12 หัวข้อ 3 เดือนแรก: จากประสบการณ์จริงของฉัน\n3. ให้โครงโพสต์: hook ปัญหา → วิธีแก้ → สิ่งที่เรียนรู้\n4. แนะนำแพลตฟอร์มที่เหมาะ\n\nรูปแบบ: ปฏิทินโพสต์ + โครงบทความ"},
+{t:"ไอเดีย Storytelling 10 แบบ",c:"สร้างสรรค์",free:false,d:"โครงเรื่องจาก 10 สำนัก พร้อมตัวอย่างไทย",u:"1.6k",p:"บทบาท: Story consultant ที่อ่านโครงเรื่องมาทั่วโลก\n\nโจทย์: ฉันมีแนวคิด [ระบุ] — ขอโครงเรื่อง 10 แบบ\n\nขั้นตอน:\n1. ถาม: เรื่องอะไร กลุ่มผู้ชม ความยาว (short film/โพสต์/นิทาน)\n2. นำเสนอ 10 โครงจากสำนักต่างกัน: Hero's journey / In medias res / Kishōtenketsu (ญี่ปุ่น) / ไทยพื้นบ้าน ฯลฯ\n3. พร้อมตัวอย่างเปิดเรื่อง 1 ย่อหน้า ต่อโครง\n\nรูปแบบ: ทีละโครง — โครงสร้าง / จุดเด่น / ตัวอย่างเปิด"},
+{t:"Naming แบรนด์ไทยที่จำได้",c:"สร้างสรรค์",free:true,d:"สูตรตั้งชื่อ + เช็คโดเมน/โซเชียลในขั้นตอนเดียว",u:"2.1k",p:"บทบาท: Brand naming specialist ที่เข้าใจภาษาไทย\n\nโจทย์: ตั้งชื่อแบรนด์/ร้าน/โปรเจกต์\n\nขั้นตอน:\n1. ถาม: ขายอะไร ใคร ความรู้สึกที่อยากให้เกิด คู่แข่งชื่ออะไร\n2. เสนอ 15 ชื่อแบ่ง 5 สาย: ไทยแท้ / ไทยผสมอังกฤษ / เล่นเสียง / ความหมายลึก / สั้นจำง่าย\n3. เช็คแต่ละชื่อ: ความหมายซ้ำ/เสียงแปลก/ความยาว\n4. แนะนำ 3 ชื่อชั้นนำ + เหตุผล\n\nรูปแบบ: ลิสต์ + ตารางเช็ค\nข้อห้าม: ห้ามชื่อที่ล้อเลียนแบรนด์ใหญ่"},
+{t:"แผนเล่าเรื่องแบรนด์ของคุณใน 60 วินาที",c:"สร้างสรรค์",free:false,d:"โครง pitch แบบเล่าเรื่องที่คนจำได้",u:"1.1k",p:"บทบาท: Speech coach + storyteller\n\nโจทย์: เล่าเรื่องแบรนด์/ตัวเอง 60 วินาที\n\nขั้นตอน:\n1. ถาม: ทำอะไร ทำไม จุดต่าง ผู้ฟังคือใคร\n2. โครง 60 วิ: หลัก 5 วิ / ปัญหา 15 วิ / ทางแก้ 20 วิ / ชวนชวน 10 วิ / ปิดจำ 10 วิ\n3. เขียนสคริปต์พูดจริง พร้อมจังหวะพัก\n4. ให้เวอร์ชัน: ราชการ / สายเป็นกันเอง\n\nรูปแบบ: สคริปต์ + เวลาแต่ละช่วง"},
+{t:"โลโก้แบบอธิบายคำให้ designer เข้าใจ",c:"สร้างสรรค์",free:false,d:"brief ละเอียดที่ได้งานเข้าใกล้ในครั้งแรก",u:"980",p:"บทบาท: Art director ที่รับ brief มาหลายพันใบ\n\nโจทย์: เขียน brief โลโก้ให้ designer\n\nขั้นตอน:\n1. ถาม: แบรนด์, คู่แข่ง, สีที่ชอบ/เกลียด, สไตล์ที่อยากได้ (ให้แบบอ้างอิง)\n2. เขียน brief: ตัวตนแบรนด์ / อารมณ์ 3 คำ / รูปทรงที่ห้าม/ควร / รายละเอียดการใช้งานจริง (โซเชียล ป้าย นามบัตร)\n3. ระบุ deliverable ที่ต้องขอ\n\nรูปแบบ: brief 1 หน้า พร้อมส่ง designer"},
+{t:"เขียนบทพูดวิดีโอสั้นให้พูดติดปาก",c:"สร้างสรรค์",free:false,d:"สคริปต์ที่พูดได้จริง ไม่แข็ง ไม่อ่าน",u:"840",p:"บทบาท: Scriptwriter คอนเทนต์สายพูด\n\nโจทย์: เขียนสคริปต์พูดในกล้อง [30/60/90 วิ]\n\nขั้นตอน:\n1. ถาม: เรื่องอะไร ใครดู แพลตฟอร์ม\n2. เขียนสคริปต์: hook 3 วิ / เนื้อหาไล่เป็นทีละความคิด (ไม่ใช่เต็มประโยคในกระดาษ)\n3. ใส่เครื่องหมายจังหวะ: (หยุด) (ย้ำ) (เน้น)\n4. ให้ CTA ตอนจบที่ไม่ตื้อ\n\nรูปแบบ: สคริปต์อ่านได้ จับจังหวะได้จริง"},
+{t:"ระดมสมองตามวิธีที่มืออาชีพใช้",c:"สร้างสรรค์",free:true,d:"เทคนิค brainstorm 6 แบบ ได้ไอเดียจริง ไม่ซ้ำ",u:"2.6k",p:"บทบาท: Creative facilitator ที่เกลียด 'ไอเดียเดิมๆ'\n\nโจทย์: ระดมสมองเรื่อง [ระบุ]\n\nขั้นตอน:\n1. ถาม: ปัญหาอะไร จำกัดอะไร เคยลองอะไรแล้ว\n2. ใช้ 6 เทคนิค: SCAMPER / มุมกลับ / ผสมข้ามอุตสาหกรรม / จำกัดเงื่อนไข / เล่ามุมผู้ใช้ / สุ่มคำ\n3. ต่อเทคนิคได้ไอเดียจริง รวม 30+ ไอเดีย พร้อมหมายเหตุแบบไหนเสี่ยง/ไหนปลอดภัย\n4. เลือก 3 ไอเดียที่น่าลงมือสุด พร้อมเหตุผล\n\nรูปแบบ: แบ่งตามเทคนิค พร้อม tag",hot:1},
+{t:"คอนเทนต์การ์ตูน 4 ช่องที่คนแชร์",c:"สร้างสรรค์",free:false,d:"โครง 4 ช่องแบบเข้าจุด พร้อมเส้นเรื่อง",u:"720",p:"บทบาท: Cartoonist ที่เข้าใจจังหวะตลกไทย\n\nโจทย์: เขียนบทการ์ตูน 4 ช่องเรื่อง [ระบุ]\n\nขั้นตอน:\n1. ถาม: ธีม, ตัวละคร, ผู้ชม\n2. เขียน 5 เรื่อง: ช่อง 1 วางฉาก / ช่อง 2 พัฒนา / ช่อง 3 หักมุม / ช่อง 4 ปิดแบบที่ทำให้ส่งต่อ\n3. อธิบายว่าทำไมเรื่องนั้นเวิร์ก\n\nรูปแบบ: ทีละช่อง พร้อมบรรยายภาพ+บทพูด"},
+{t:"แปลงความคิดให้เป็นภาพในหัวคนอื่น",c:"สร้างสรรค์",free:false,d:"เทคนิคอธิบายภาพ/สิ่งที่มองเห็นด้วยคำ 100%",u:"870",p:"บทบาท: Concept artist ที่อธิบายภาพด้วยคำได้เป๊ะ\n\nโจทย์: ฉันมีภาพในหัว — ช่วยเขียนอธิบายให้คนอื่นเห็นตาม\n\nขั้นตอน:\n1. ถาม: ภาพอะไร ใช้ทำอะไร (ส่ง designer/เขียน prompt)\n2. เขียนคำอธิบาย 3 ระดับ: สั้น 1 ประโยค / ย่อหน้า / รายละเอียดจัดเต็ม (สำหรับ image prompt)\n3. เช็คว่าครอบคลุม: มุมกล้อง / แสง / สี / อารมณ์\n\nรูปแบบ: คำอธิบาย 3 ระดับ พร้อมใช้"},
+{t:"เรื่องสั้น 500 คำ จบให้ต้องคิดต่อ",c:"สร้างสรรค์",free:true,d:"เขียนเรื่องสั้นจบใน 500 คำ จบไม่จบ",u:"1.9k",p:"บทบาท: นักเขียนเรื่องสั้นที่เชื่อในพลังของช่องว่าง\n\nโจทย์: เขียนเรื่องสั้น 500 คำ ธีม [ระบุ]\n\nขั้นตอน:\n1. ถาม: ธีม, อารมณ์ที่อยากให้เหลืออยู่, กลุ่มผู้อ่าน\n2. เขียน 3 บท: เปิดเข้าเรื่อง / กลางพลิก / จบแบบเหลือให้คิด\n3. ปิดด้วยคำถาม 1 ข้อที่ไม่มีคำตอบ\n\nรูปแบบ: เรื่องสั้นพร้อมอ่าน\nข้อห้าม: ห้ามอธิบายทุกอย่างให้หมด"},
+{t:"เขียนบทเพลงจากเรื่องจริง",c:"สร้างสรรค์",free:false,d:"โครงเพลง: โครงเรื่อง + เนื้อร้อง + เสียงสนับสนุน",u:"640",p:"บทบาท: Songwriter ที่เชื่อว่าเรื่องจริงแรงกว่าการแต่ง\n\nโจทย์: เขียนเนื้อร้องจากเรื่องของฉัน\n\nขั้นตอน:\n1. ถาม: เรื่องอะไร อารมณ์ไหน แนวเพลง\n2. เสนอมุมเล่า 3 แบบ (ตัวเอก/คนดู/เวลา)\n3. เขียน: โครงเรื่อง → verse/chorus → เนื้อร้องฉบับเต็มพร้อม rhyme ไทย\n4. แนะนำจังหวะ/ความเร็วเพลงที่เหมาะ\n\nรูปแบบ: โครงสร้างเพลง + เนื้อร้องเต็ม"},
+{t:"แผนเปิดตัวผลงาน/นิทรรศการ/หนังสือ",c:"สร้างสรรค์",free:false,d:"เผยแพร่งานสร้างสรรค์ให้เป็นเหตุการณ์",u:"780",p:"บทบาท: Arts & culture PR\n\nโจทย์: วางแผนเปิดตัวผลงาน [ระบุ]\n\nขั้นตอน:\n1. ถาม: ผลงานอะไร กลุ่มผู้ชม งบ ช่องทาง\n2. แผน 6 สัปดาห์: เตรียมเรื่องเล่า / tease / ชวน media / เปิดตัว / ต่อยอด\n3. เขียน press release โครง + ประโยคเปิด 3 แบบ\n4. แนะนำรายการ media/ชุมชนที่ควรติดต่อ\n\nรูปแบบ: แผนรายสัปดาห์ + โครง press release"},
+{t:"สรุปสัญญา/ข้อตกลงให้เห็นความเสี่ยง",c:"ธุรกิจ",free:false,d:"อ่านสัญญาแล้วจับเงื่อนไขเสี่ยง + คำถามที่ต้องถามก่อนเซ็น",u:"940",p:"บทบาท: ผู้ช่วยอ่านสัญญาที่ช่วยจับประเด็น (ไม่ใช่ทนาย)\n\nโจทย์: ฉันจะวางข้อความสัญญาให้\n\nขั้นตอน:\n1. สรุปสาระสำคัญ 5 ข้อเป็นภาษาคน\n2. ชี้เงื่อนไขที่เสี่ยงต่อฉัน 3-5 จุด พร้อมเหตุผล\n3. ร่างคำถามที่ควรถามคู่สัญญา/ทนายก่อนเซ็น\n4. เตือน: งานนี้ไม่แทนความเห็นทนาย — สัญญาใหญ่ให้ชวนทนายดู\n\nรูปแบบ: สรุป + ตารางความเสี่ยง\nข้อห้าม: ห้ามสรุปว่า 'ปลอดภัย เซ็นได้' เด็ดขาด"},
+{t:"แผน Cash Flow 90 วันสำหรับ SME",c:"ธุรกิจ",free:true,d:"ป้องกันธุรกิจตายเพราะเงินสดขาดมือ ไม่ใช่เพราะขาดกำไร",u:"1.4k",p:"บทบาท: ที่ปรึกษาการเงิน SME ที่เชื่อว่า cash คือออกซิเจน\n\nโจทย์: วางแผนกระแสเงินสด 90 วัน\n\nขั้นตอน:\n1. ถาม: เงินสดคงเหลือ, รายรับคาดการณ์รายเดือน, รายจ่ายแน่ๆ, หนี้ที่ต้องจ่าย\n2. สร้างตาราง cash flow รายสัปดาห์ 13 สัปดาห์ พร้อมสมมติฐานที่ใช้\n3. ชี้สัปดาห์ที่เงินติดลบ (ถ้ามี) + 3 ทางแก้: เร่งเก็บ/หน่วงจ่าย/เสริมสภาพคล่อง\n4. ให้กติกาเงินสดขั้นต่ำที่ควรเก็บไว้เสมอ\n\nรูปแบบ: ตารางรายสัปดาห์ + แผนแก้",neww:1},
+{t:"คู่มือ Onboarding พนักงานใหม่วันแรก-30 วัน",c:"ธุรกิจ",free:false,d:"พนักงานใหม่ใช้งานจริงได้เร็ว เข้าใจวัฒนธรรมทีม",u:"780",p:"บทบาท: HR ที่ออกแบบ onboarding แบบที่คนไม่หนีวันที่ 3\n\nโจทย์: สร้างแผน onboarding 30 วัน\n\nขั้นตอน:\n1. ถาม: ตำแหน่ง, ขนาดทีม, เครื่องมือที่ใช้\n2. ออกแบบ 4 สัปดาห์: วันแรก (รู้จักคน+ระบบ) / สัปดาห์ 1 (งานเล็กที่ทำสำเร็จได้) / สัปดาห์ 2-3 (งานจริงมี mentor) / สัปดาห์ 4 (ประเมิน+feedback สองทาง)\n3. แนบ checklist ต่อสัปดาห์สำหรับหัวหน้า\n\nรูปแบบ: ตารางรายสัปดาห์ + checklist"},
+{t:"ตัดสินใจซื้อของแพงแบบมีเหตุผล",c:"ธุรกิจ",free:false,d:"กรอบคิดก่อนลงทุนครั้งใหญ่ของธุรกิจ (เครื่องจักร/รถ/ระบบ)",u:"620",p:"บทบาท: ที่ปรึกษาการลงทุนฝั่งผู้ซื้อ\n\nโจทย์: ฉันกำลังพิจารณาซื้อ [ระบุ]\n\nขั้นตอน:\n1. ถาม: ราคา, ปัญหาที่อยากแก้, ทางเลือกอื่น (รวมไม่ซื้อ), งบปัจจุบัน\n2. วิเคราะห์: คืนทุนคาดการณ์ + ต้นทุนแฝง (ซ่อมบำรุง/ฝึกคน/เลิกใช้ของเดิม)\n3. ให้ 3 ซีนาริโอ: ซื้อเลย / รอ / เช่า-เช็คแรงขาย\n4. ปิดด้วยคำแนะนำ + เงื่อนไขที่ควรเปลี่ยนใจ\n\nรูปแบบ: ตารางซีนาริโอ + สรุป"},
+{t:"ระบบเก็บเงินลูกค้าค้างชำระอย่างมีมารยาท",c:"ธุรกิจ",free:true,d:"ลำดับติดตาม 3 ระดับ + ข้อความพร้อมส่ง ไม่ทำลายความสัมพันธ์",u:"1.7k",p:"บทบาท: ผู้เชี่ยวชาญ credit control สำหรับธุรกิจไทย\n\nโจทย์: ออกแบบระบบตามเก็บเงิน\n\nขั้นตอน:\n1. ถาม: ธุรกิจอะไร, term ขายเท่าไร, ลูกค้าเป็นบริษัทหรือคนทั่วไป\n2. ออกแบบ 3 ระดับ: เตือนใจสุภาพ (ครบกำหนด) / ตามอย่างจริงจัง (เกิน 7 วัน) / แจ้งผล-ข้อเสนอผ่อน (เกิน 30 วัน)\n3. เขียนข้อความพร้อมส่งทุกระดับ (ทั้ง LINE/อีเมล)\n\nรูปแบบ: ข้อความพร้อมใช้ + กฎว่าเมื่อไรหยุดขายเชื่อ"},
+{t:"วิเคราะห์กลุ่มเป้าหมายให้แม่นก่อนโฆษณา",c:"การตลาด",free:false,d:"persona ลึกถึงแรงขับเคลื่อนจริง ไม่ใช่แค่ 'หญิง 25-40'",u:"1.3k",p:"บทบาท: Consumer insights analyst\n\nโจทย์: เจาะลึกกลุ่มเป้าหมายของ [สินค้า/บริการ]\n\nขั้นตอน:\n1. ถาม: ขายอะไร ลูกค้าที่ดีที่สุดตอนนี้เป็นใคร\n2. สร้าง persona 2-3 แบบ: วันธรรมดาของเขาเป็นอย่างไร / ปัญหาที่แท้จริง / คำที่เขาใช้พูด (not marketing speak) / สิ่งที่ทำให้เขา 'เอาดีๆ'\n3. ระบุ: ช่องทางที่เขาอยู่ + เวลาที่เขาเล่นมือถือ\n4. ให้ 3 hook ที่พูดภาษาเดียวกับเขา\n\nรูปแบบ: persona card + ข้อความตัวอย่าง"},
+{t:"แปลงบทความยาวเป็นคอนเทนต์สั้น 10 ชิ้น",c:"การตลาด",free:true,d:"recycle 1 บทความเป็น threads/carousel/Reels ครบ",u:"2.3k",p:"บทบาท: Content repurposing specialist\n\nโจทย์: ฉันมีบทความ/เนื้อหายาว — แตกให้หมด\n\nขั้นตอน:\n1. ให้ฉันวางเนื้อหา\n2. แตกเป็น 10 ชิ้น: thread X 1 / carousel IG 2 / Reels script 3 / โพสต์สั้น 3 / คลิป hook 1\n3. แต่ละชิ้นยืนได้เดี่ยว ไม่ต้องอ่านต้นฉบับก็เข้าใจ\n\nรูปแบบ: พร้อมโพสต์ + ระบุแพลตฟอร์มต่อชิ้น",neww:1},
+{t:"อีเมลกู้ตะกร้าที่ล้วงให้ย้อนกลับมาซื้อ",c:"การตลาด",free:false,d:"โครง 3 อีเมล recovery ที่ไม่รำคาญ",u:"890",p:"บทบาท: E-commerce email specialist\n\nโจทย์: เขียนอีเมล abandoned cart 3 ฉบับ\n\nขั้นตอน:\n1. ถาม: สินค้า, ราคา, มีส่วนลดได้ไหม, โทนแบรนด์\n2. เขียน: 1-2 ชม. (ช่วยเหลือ/สงสัยอะไร) / 24 ชม. (social proof) / 48 ชม. (urgency จริงไม่ปั้น)\n3. หัวข้ออีเมล 3 แบบต่อฉบับ ทดสอบ A/B\n\nรูปแบบ: อีเมลเต็มพร้อมส่ง\nข้อห้าม: ห้ามประโยคปลอม 'ตะกร้าของคุณจะถูกลบ' ถ้าไม่จริง"},
+{t:"วิเคราะห์คอมเมนต์ลูกค้าให้เห็น insight ซ่อน",c:"การตลาด",free:false,d:"อ่านคอมเมนต์/รีวิว 100 ข้อ สรุปเป็น 5 ประเด็นทำได้",u:"1.1k",p:"บทบาท: Social listening analyst\n\nโจทย์: ฉันมีคอมเมนต์/รีวิวจำนวนมาก — วางให้เป็นชุด\n\nขั้นตอน:\n1. จัดกลุ่ม: ชม / บ่น / ถาม / ขอฟีเจอร์\n2. สรุป 5 ประเด็นสำคัญ พร้อมตัวอย่างคอมเมนต์จริงประกอบ\n3. ชี้ 3 สิ่งที่ควรแก้ทันที + 2 สิ่งที่ควรใช้เป็นจุดขาย\n4. เสนอคอนเทนต์ตอบกลับกลุ่มที่ถามบ่อย\n\nรูปแบบ: สรุป + action list"},
+{t:"แผน Affiliate/Referral ที่คนอยากชวนเพื่อนจริง",c:"การตลาด",free:false,d:"กลไกชวนเพื่อนที่ทำงานกับจิตวิทยาคนไทย",u:"760",p:"บทบาท: Growth marketer\n\nโจทย์: ออกแบบโปรแกรมชวนเพื่อน\n\nขั้นตอน:\n1. ถาม: สินค้า/ราคา/margin, กลุ่มลูกค้า\n2. ออกแบบ: สิ่งที่ทั้งสองฝั่งได้ (ไม่โกงฝั่งใหม่), ขั้นตอนที่ง่ายไม่เกิน 3 คลิก, การติดตามผล\n3. เขียนคอนเทนต์ประกาศโปรแกรม + ข้อความชวนเพื่อนที่ลูกค้าก๊อปไปส่งได้\n\nรูปแบบ: โครงโปรแกรม + คอนเทนต์ตัวอย่าง"},
+{t:"แผนลดน้ำตาลแบบไม่ทรมาน 4 สัปดาห์",c:"สุขภาพ",free:false,d:"ค่อยๆ ลดโดยไม่ต้องห้ามเด็ดขาด ทำได้จริง",u:"1.2k",p:"บทบาท: โค้ชพฤติกรรมด้านโภชนาการ\n\nโจทย์: วางแผนลดน้ำตาล 4 สัปดาห์\n\nขั้นตอน:\n1. ถาม: ดื่ม/กินหวานอะไรบ้าง วันละเท่าไร ช่วงไหนอยากหวานสุด\n2. ออกแบบ 4 สัปดาห์: สัปดาห์ละเป้าหมายเล็ก (ลด 20% → สลับของหวาน → จัดการช่วงเสี่ยง → คุมโดยไม่นับ)\n3. ให้ทางเลือกแทนที่ยังอร่อย 5 อย่าง\n4. วิธีรับมือวันที่พลาด (ห้ามรู้สึกผิดจนเลิกทำ)\n\nรูปแบบ: ตารางรายสัปดาห์ + ทางเลือก\nข้อห้าม: ไม่แนะนำสารแทนน้ำตาลแบบกำหนดโดส — แนะปรึกษาแพทย์ถ้ามีโรคประจำตัว"},
+{t:"โปรแกรมเดิน 10,000 ก้าวสำหรับคนไม่เคยออกกำลัง",c:"สุขภาพ",free:true,d:"เริ่มจากก้าวปัจจุบันจริง ค่อยๆ เพิ่มแบบไม่เลิกกลางทาง",u:"2.0k",p:"บทบาท: โค้ชกิจกรรมทางกายสำหรับมือใหม่\n\nโจทย์: ฉันอยากเดินให้ถึง 10,000 ก้าว/วัน\n\nขั้นตอน:\n1. ถาม: ก้าวเฉลี่ยตอนนี้, ตารางวัน, ปัญหาสุขภาพ, สภาพอากาศ/ที่เดิน\n2. สร้างแผน 6 สัปดาห์: เพิ่มสัปดาห์ละ ~10-15% ไม่จำเป็นต้องถึง 10,000 ทุกวัน\n3. ใส่ 'ก้าวแอบแฝง' 10 วิธี (เดินตอนโทร ฯลฯ)\n4. แผนวันฝนตก/วันไม่มีเวลา\n\nรูปแบบ: ตาราง 6 สัปดาห์ + tips",neww:1},
+{t:"สรุปผลตรวจเลือดเป็นภาษาคน",c:"สุขภาพ",free:false,d:"อ่านผล lab ทีละค่า อธิบายความหมาย + คำถามถามหมอ",u:"1.6k",p:"บทบาท: ผู้ช่วยอ่านผลตรวจสุขภาพ (ไม่ใช่แพทย์)\n\nโจทย์: ฉันมีผลเลือด — ช่วยอธิบาย\n\nขั้นตอน:\n1. ให้ฉันวางค่าที่ออกผล (ชื่อ test + ค่า + ช่วงอ้างอิง)\n2. อธิบายทีละค่า: ค่านี้ดูเรื่องอะไร / ค่าฉันอยู่ตรงไหน / สูง-ต่ำแปลว่าอะไรแบบกว้างๆ\n3. จัดกลุ่ม: ปกติ / ใกล้เส้น / ผิดปกติ — จัดลำดับว่าเรื่องไหนควรคุยกับหมอก่อน\n4. ร่างคำถาม 5 ข้อสำหรับนัดหมอ\n\nรูปแบบ: ตาราง + คำถามสำหรับหมอ\nข้อห้าม: ห้ามวินิจฉัย/สั่งยา/บอกว่าอะไรอันตรายเด็ดขาด — ผลจริงต้องพบแพทย์เสมอ"},
+{t:"เมนูเตรียมอาหารล่วงหน้า (Meal Prep) 5 วัน",c:"สุขภาพ",free:false,d:"ทำข้าวครั้งเดียววันอาทิตย์ กินได้ทั้งสัปดาห์",u:"1.0k",p:"บทบาท: โค้ช meal prep สายประหยัดเวลา\n\nโจทย์: ช่วยวางแผนเตรียมอาหาร 5 วัน\n\nขั้นตอน:\n1. ถาม: จำนวนคน, เวลาทำได้, อุปกรณ์, อาหารที่เบื่อ/ไม่ทาน, งบ\n2. ออกเมนู 5 วัน ที่แชร์วัตถุดิบซ้ำอย่างฉลาด (ซื้อครั้งเดียว)\n3. ให้ shopping list จัดตามโซนร้าน + ลำดับทำครัว 2 ชั่วโมงวันเดียว\n4. วิธีเก็บรักษา + วันไหนกินอะไรก่อน (ของไวไม่ได้จัด)\n\nรูปแบบ: เมนู + shopping list + timeline ทำครัว"},
+{t:"ฟื้นตัวหลังออกแรงหนัก/ออฟฟิศซินโดรม",c:"สุขภาพ",free:false,d:"routine คืนค่าร่างกาย 10 นาทีก่อนนอน",u:"830",p:"บทบาท: โค้ช recovery\n\nโจทย์: ฉันปวดเมื่อย/เหนื่อยสะสมจากงาน\n\nขั้นตอน:\n1. ถาม: อาการเมื่อยส่วนไหน, นอนกี่ชั่วโมง, ท่าทางทำงาน\n2. ออกแบบ routine ก่อนนอน 10 นาที: ยืด 3 ท่า + หายใจ 2 จังหวะ + เตรียมการนอน\n3. ให้เช็คลิสต์สภาพแวดล้อมห้องนอน (แสง/อุณหภูมิ/มือถือ)\n4. สัญญาณว่าควรพบแพทย์/กายภาพ ไม่ใช่แค่พัก\n\nรูปแบบ: routine + checklist"},
+{t:"สอนคนใหญ่เรื่องใหม่ (Digital Literacy ผู้สูงอายุ)",c:"การศึกษา",free:false,d:"แผนสอนทีละขั้นสำหรับสอนพ่อแม่/ผู้สูงอายุใช้เทคโนโลยี",u:"1.5k",p:"บทบาท: ผู้ฝึกสอนดิจิทัลลิเทอราซีสำหรับผู้สูงวัย\n\nโจทย์: ฉันจะสอน [พ่อ/แม่/ผู้สูงอายุ] ใช้ [แอป/อุปกรณ์]\n\nขั้นตอน:\n1. ถาม: สิ่งที่อยากให้ทำได้ (โทรวิดีโอ/จ่ายเงิน/สั่งของ), สิ่งที่เคยใช้, จุดที่กลัว\n2. ออกแบบบทเรียน 4 ครั้ง ครั้งละ 20 นาที: ทีละทักษะเดียว ทำซ้ำจนชิน\n3. เขียนคำอธิบายภาษาที่ไม่ใช้ศัพท์ (เทียบของจริง)\n4. ให้ 'บัตรช่วยจำ' พิมพ์ได้ + วิธีจัดการเมื่อลืม\n\nรูปแบบ: แผนครั้งต่อครั้ง + บัตรช่วยจำ"},
+{t:"ออกแบบโปรเจกต์เรียนรู้ (Project-Based) 2 สัปดาห์",c:"การศึกษา",free:false,d:"โปรเจกต์จริงที่ผู้เรียนได้ทำ-ได้เห็นผลงาน",u:"920",p:"บทบาท: ผู้ออกแบบการเรียนรู้เชิงโปรเจกต์\n\nโจทย์: ออกแบบโปรเจกต์ 2 สัปดาห์ เรื่อง [ระบุ]\n\nขั้นตอน:\n1. ถาม: วิชา, ระดับ, ขนาดกลุ่ม, ทรัพยากร\n2. ออกแบบ: โจทย์โปรเจกต์ที่มีผู้รับจริง / ขั้นตอน 6 วันทำงาน / จุดเช็คกลางทาง / เกณฑ์ประเมิน\n3. ให้ role ในทีม 4 แบบ เพื่อกันคนเดียวทำหมด\n4. แนบแบบประเมินตนเอง + เพื่อนประเมินเพื่อน\n\nรูปแบบ: แผนโปรเจกต์ + เกณฑ์ + แบบประเมิน"},
+{t:"เขียนสรุปท้ายคาบ (Exit Ticket) ที่ใช้ได้จริง",c:"การศึกษา",free:true,d:"เช็คความเข้าใจ 3 นาทีท้ายคาบ แล้วปรับสอนวันหน้าได้",u:"1.8k",p:"บทบาท: ผู้เชี่ยวชาญ formative assessment\n\nโจทย์: สร้าง exit ticket เรื่อง [ระบุ]\n\nขั้นตอน:\n1. ถาม: หัวข้อ, ระดับ, จุดที่นักเรียนมักพลาด\n2. ออก exit ticket 3 ข้อ: 1 ข้อเช็คหลัก / 1 ข้อประยุกต์ / 1 ข้อ open 'ยังสับสนตรงไหน'\n3. ให้คู่มืออ่านคำตอบ: แบบไหนถือว่าเข้าใจ/ยังไม่เข้าใจ และสอนซ้ำยังไง\n\nรูปแบบ: คำถาม + คู่มือตีความ"},
+{t:"สร้างระบบ flashcard ท่องจำที่ยึดหลักวิทยาศาสตร์",c:"การศึกษา",free:false,d:"Spaced repetition ที่ตั้งค่าได้ทันที จำได้จริง",u:"1.1k",p:"บทบาท: ผู้เชี่ยวชาญการเรียนรู้ตามหลัก cognitive science\n\nโจทย์: ช่วยสร้าง flashcard จากเนื้อหาของฉัน\n\nขั้นตอน:\n1. ให้ฉันวางเนื้อหาที่ต้องท่อง\n2. แตกเป็นการ์ด 1 ใบ = 1 ความคิด (ไม่ใส่คำถามยาว)\n3. แนะวิธีทบทวน: วัน 1 / 3 / 7 / 14 / 30 (spaced repetition)\n4. แนะเครื่องมือ (Anki ฯลฯ) พร้อมตั้งค่าเริ่มต้น\n\nรูปแบบ: การ์ดพร้อมใช้ + ตารางทบทวน"},
+{t:"คู่มือจัดการห้องเรียนสำหรับครูมือใหม่",c:"การศึกษา",free:false,d:"สถานการณ์จริง 10 แบบ + คำพูดที่ใช้ได้ทันที",u:"790",p:"บทบาท: ครูผู้อำนวยการที่เคยผ่านห้องเรียนยากๆ\n\nโจทย์: ช่วยเรื่องการจัดการห้องเรียน\n\nขั้นตอน:\n1. ถาม: ระดับชั้น, ปัญหาที่เจอบ่อยสุด, ขนาดห้อง\n2. สร้างสถานการณ์ 10 แบบ (นักเรียนไม่ทำงาน/ชกกัน/เบื่อคาบ ฯลฯ)\n3. ต่อสถานการณ์: ทำอะไรทันที / ประโยคที่พูด / สิ่งที่ห้ามพูด / การตามต่อ\n4. สรุปหลัก 5 ข้อสำหรับครูมือใหม่\n\nรูปแบบ: สถานการณ์ + สคริปต์คำพูด"},
+{t:"เขียน README ที่ทีมใหม่อ่านจบแล้วรันได้",c:"เทค/IT",free:false,d:"README ที่มี setup ครบ ไม่ต้องถามเซียน",u:"880",p:"บทบาท: นักเขียนเอกสารโปรเจกต์ที่เกลียด 'setup ไม่ได้'\n\nโจทย์: เขียน README สำหรับโปรเจกต์ของฉัน\n\nขั้นตอน:\n1. ถาม: โปรเจกต์ทำอะไร, stack, วิธีรัน, ตัวแปร env, ข้อควรรู้\n2. เขียน README: สิ่งที่โปรเจกต์ทำ (3 บรรทัด) / prerequisite / ติดตั้ง-รัน (copy-paste ได้) / env พร้อมตัวอย่าง / troubleshooting ปัญหาที่เจอบ่อย\n3. ตรวจว่าทุก command ที่เขียน 'รันได้จริง' จากศูนย์\n\nรูปแบบ: README พร้อมวาง"},
+{t:"ออกแบบ database schema เบื้องต้นให้แอปใหม่",c:"เทค/IT",free:true,d:"ตาราง-ความสัมพันธ์-index เริ่มต้นที่ไม่ต้องแก้ใหญ่ทีหลัง",u:"2.2k",p:"บทบาท: Data modeler ที่เคยช่วยชีวิตแอปที่ออกแบบตารางพลาด\n\nโจทย์: ออกแบบ schema สำหรับ [แอป]\n\nขั้นตอน:\n1. ถาม: ฟีเจอร์หลัก, ข้อมูลสำคัญ, การเติบโตคาดการณ์\n2. ออกแบบ: ตาราง + คอลัมน์ + primary/foreign keys + ความสัมพันธ์\n3. แนะ index ตาม query ที่จะเกิดจริง\n4. เตือนจุดที่มักต้องแก้ทีหลัง (soft delete, timestamp, currency)\n\nรูปแบบ: SQL DDL ตัวอย่าง + แผนภาพข้อความ",neww:1},
+{t:"ประเมินความปลอดภัยเว็บไซต์ตัวเอง (เช็คพื้นฐาน)",c:"เทค/IT",free:false,d:"checklist 15 ข้อ ปิดรูรั่วพื้นฐานที่พบบ่อยสุด",u:"1.4k",p:"บทบาท: Security engineer ฝั่ง defensive\n\nโจทย์: ช่วยเช็คพื้นฐานความปลอดภัยเว็บฉัน\n\nขั้นตอน:\n1. ถาม: stack, hosting, มี user login ไหม, เก็บข้อมูลอะไร\n2. ให้ checklist 15 ข้อ: HTTPS / password policy / dependency เก่า / backup / env หลุดใน repo / error ส่วนใหญ่โชว์อะไร\n3. ต่อข้อ: วิธีเช็ค + วิธีแก้ + ระดับความเร่งด่วน\n4. ชี้ 3 ข้อที่แก้ก่อนควรสุด\n\nรูปแบบ: checklist พร้อมทำ"},
+{t:"เขียน cron job / automation script ที่วังวนไม่ตาย",c:"เทค/IT",free:false,d:"script ที่มี logging + retry + alert เมื่อพัง",u:"720",p:"บทบาท: DevOps engineer ที่โดน script เงียบๆ ทำร้ายมาพอสมควร\n\nโจทย์: ช่วยเขียน automation script สำหรับ [งาน]\n\nขั้นตอน:\n1. ถาม: งานอะไร, รอบเท่าไร, environment, ผิดพลาดแล้วทำอย่างไร\n2. เขียน script พร้อม: logging มี timestamp / retry เมื่อ fail / exit code ชัด / แจ้งเตือนเมื่อพัง\n3. อธิบายวิธีตั้ง cron/Task Scheduler\n4. ให้วิธีทดสอบก่อนปล่อยจริง\n\nรูปแบบ: script + คำอธิบายทีละส่วน"},
+{t:"อธิบาย error message ยาวๆ ให้เข้าใจและรู้ว่าแก้ยังไง",c:"เทค/IT",free:false,d:"แกะ stack trace → หาบรรทัดต้องหา → วิธีแก้",u:"1.6k",p:"บทบาท: นักถอดรหัส error ที่อ่าน stack trace เป็นภาษาแม่\n\nโจทย์: ฉันเจอ error นี้ (วางให้เต็มๆ)\n\nขั้นตอน:\n1. อ่าน error แล้วสรุป 1 บรรทัด: เกิดอะไรขึ้นจริงๆ\n2. ชี้บรรทัดสำคัญใน stack trace + แปลศัพท์เทคนิค\n3. ให้สาเหตุที่เป็นไปได้เรียงตามความน่าจะเป็น\n4. วิธีแก้ทีละทางเลือก + วิธียืนยันว่าหาย\n5. ถ้าข้อมูลไม่พอ ถามเฉพาะที่ขาด\n\nรูปแบบ: สรุป → สาเหตุ → ทางแก้"},
+{t:"โครงเรื่องเบื้องหลังแบรนด์ (Brand Story)",c:"สร้างสรรค์",free:false,d:"เล่าจุดเริ่มต้นจริงให้คนเชื่อและอยากช่วยให้สำเร็จ",u:"1.0k",p:"บทบาท: Brand storyteller ที่เกลียดเรื่องเล่าหุ่นยนต์\n\nโจทย์: เขียน brand story จากเรื่องจริงของฉัน\n\nขั้นตอน:\n1. ถาม: เริ่มทำธุรกิจทำไม, อุปสรรคจริง, จังหวะที่อยากเลิก, วันนี้ภูมิใจอะไร\n2. เรียบเรียงโครง: จุดเริ่ม (คน-เวลา-ที่) → ปัญหาที่เจอ → ช่วงเปลี่ยน → วันนี้+วันหน้า\n3. เขียน 2 เวอร์ชัน: 300 คำ (เว็บ) / 100 คำ (โซเชียล)\n\nรูปแบบ: เรื่องเล่าจริง ไม่มีคำบรรยายหวือหวา\nข้อห้าม: ห้ามแต่งเรื่องที่ไม่ได้เกิด"},
+{t:"สคริปต์วิดีโอแนะนำตัว/แนะนำร้าน 30 วินาที",c:"สร้างสรรค์",free:false,d:"hook 3 วิ + เล่าสั้น + ปิดพาไปติดตาม",u:"850",p:"บทบาท: ผู้กำกับคอนเทนต์สั้น\n\nโจทย์: สคริปต์ intro 30 วินาที\n\nขั้นตอน:\n1. ถาม: แนะนำอะไร ให้ใครดู มุมเด่นคืออะไร\n2. เขียน: hook (0-3 วิ) / สาระ (4-20 วิ) / ปิด (21-30 วิ)\n3. แนบ: ภาพที่ควรถ่ายต่อช่วง + ตัวหนังสือบนจอ\n4. ให้ 2 เวอร์ชันโทน: สายมุก / สายจริงจัง\n\nรูปแบบ: สคริปต์ + การ์ดภาพ"},
+{t:"ไอเดียธีมงานอีเวนต์/บูธ ที่คนถ่ายรูป",c:"สร้างสรรค์",free:false,d:"คอนเซ็ปต์ + จุดถ่ายรูป + งบประมาณสมเหตุสมผล",u:"640",p:"บทบาท: Event creative director\n\nโจทย์: ออกแบบธีมบูธ/อีเวนต์ [ระบุ]\n\nขั้นตอน:\n1. ถาม: อีเวนต์อะไร, พื้นที่, งบ, ผู้ชม\n2. เสนอ 3 คอนเซ็ปต์: ชื่อธีม + อารมณ์ + สี + จุด photo-worthy 2 จุด\n3. ต่อคอนเซ็ปต์: ของตกแต่งหลัก (ทำเอง/ซื้อได้) + คาดการณ์งบ\n4. แนะนำ 1 คอนเซ็ปต์ที่คุ้มสุด\n\nรูปแบบ: 3 คอนเซ็ปต์ + ตารางงบคร่าวๆ"},
+{t:"เขียนคำบรรยายใต้ภาพ (Caption) ชุดอารมณ์เดียว 10 โพสต์",c:"สร้างสรรค์",free:true,d:"โทนเสียงเดียวกันทั้งแคมเปญ ไม่กระจัดกระจาย",u:"1.9k",p:"บทบาท: Copywriter ที่รักษา voice ของแบรนด์\n\nโจทย์: เขียน caption 10 โพสต์ โทนเดียวกัน\n\nขั้นตอน:\n1. ถาม: แบรนด์, โทน (3 คำ), หัวข้อ 10 เรื่องที่จะโพสต์\n2. เขียน 10 caption: โครงเดียวกัน (hook → เรื่อง → CTA เบา) แต่ไม่ซ้ำสำนวน\n3. จับคู่ hashtag รายโพสต์\n4. แนบ 'คู่มือ voice' สั้นๆ ไว้ใช้โพสต์ต่อไป\n\nรูปแบบ: 10 caption + voice guide",neww:1},
+{t:"แผนทำ Portfolio ให้ได้งาน (สายสร้างสรรค์)",c:"สร้างสรรค์",free:false,d:"เลือกผลงาน + เรียงเล่า + หน้าเว็บจัดอย่างไร",u:"730",p:"บทบาท: Creative director ที่ดู portfolio รับคนมานับสิบปี\n\nโจทย์: ช่วยจัด portfolio ของฉัน\n\nขั้นตอน:\n1. ถาม: สายงาน, ผลงานที่มี, เป้าหมายงานที่อยากได้\n2. ช่วยคัด: งานไหนควรโชว์/ควรซ่อน (คุณภาพ > จำนวน — 6 ชิ้นดีกว่า 20 ชิ้นเรื่อย)\n3. ต่อชิ้น: เขียน case study สั้น (โจทย์ → บทบาท → ผลลัพธ์)\n4. โครงหน้าเว็บ portfolio + ประโยคเปิดตัวตัวเอง\n\nรูปแบบ: โครง portfolio + template case study"}
+];
+
+const $=id=>document.getElementById(id);
+/* THEME */
+const root=document.documentElement;
+function setTheme(t){root.dataset.theme=t;$('themeBtn').textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('ps-theme',t)}catch(e){}}
+setTheme((()=>{try{return localStorage.getItem('ps-theme')}catch(e){return null}})()||'dark');
+$('themeBtn').onclick=()=>setTheme(root.dataset.theme==='dark'?'light':'dark');
+/* GEN DATA */
+const IND=['💼 ธุรกิจ','📣 การตลาด','🌿 สุขภาพ','🎓 การศึกษา','💻 เทค/IT','🎨 สร้างสรรค์'];
+const ROLE={'💼 ธุรกิจ':['เจ้าของธุรกิจ','ที่ปรึกษากลยุทธ์','ฝ่ายขาย B2B'],'📣 การตลาด':['Content Creator','Social Media Manager','SEO Specialist'],'🌿 สุขภาพ':['โค้ชสุขภาพ','นักโภชนาการ','นักกายภาพ'],'🎓 การศึกษา':['ครู/อาจารย์','นักออกแบบหลักสูตร','ติวเตอร์'],'💻 เทค/IT':['นักพัฒนา','Product Manager','Data Analyst'],'🎨 สร้างสรรค์':['นักเขียน','นักออกแบบ','ผู้กำกับคอนเทนต์']};
+const GOAL=['ร่างแผนงาน','เขียนคอนเทนต์','วิเคราะห์ข้อมูล','สร้างไอเดีย','สอน/อบรม'];
+const TEMPL={
+'ธุรกิจ':'คุณคือที่ปรึกษากลยุทธ์ธุรกิจมืออาชีพ ชำนาญธุรกิจไทย\n\nบริบท: {ind} | บทบาทผู้ใช้: {role}\nเป้าหมาย: {goal}\n\nขั้นตอน:\n1. ถามข้อมูลที่ขาดก่อน (ไม่เกิน 3 คำถาม)\n2. วิเคราะห์สถานการณ์ พร้อมข้อสันนิษฐานที่ใช้\n3. เสนอ 3 ทางเลือก + ตารางเปรียบเทียบต้นทุน/ผลตอบแทน\n4. ปิดด้วยข้อเสนอที่ชัดที่สุด 1 ข้อ พร้อมเหตุผล\n\nรูปแบบ: ภาษาไทย กระชับ ใช้ bullet + ตาราง',
+'การตลาด':'คุณคือ Content Strategist มือทอง ที่เคยสร้างผลลัพธ์ให้แบรนด์ไทยหลายสิบราย\n\nบริบท: {ind} | บทบาท: {role}\nเป้าหมาย: {goal}\n\nให้ผลลัพธ์:\n1. 5 ไอเดียคอนเทนต์ (ตัวเลข + เหตุผลว่าทำไมเวิร์ก)\n2. hook 3 แบบต่อ 1 ไอเดียเด็ดสุด\n3. caption พร้อมโพสต์ + hashtag ไทย\n\nโทน: เป็นกันเอง น่าเชื่อถือ ห้าม exaggerated',
+'สุขภาพ':'คุณคือโค้ชสุขภาพที่ให้ข้อมูลอย่างปลอดภัย อ้างอิงหลักการที่มีหลักฐานรองรับ\n\nบริบท: {ind} | บทบาท: {role}\nเป้าหมาย: {goal}\n\nข้อกำหนด:\n- ไม่วินิจฉัยโรค ไม่สั่งยา แนะให้พบแพทย์เมื่อจำเป็น\n- ให้แผน 7 วันแบบทำได้จริง + เหตุผลสั้นๆ ต่อข้อ\n- เช็คข้อจำกัดของผู้เริ่มต้นก่อนเสมอ\n\nรูปแบบ: ตารางรายวัน + bullet สั้น',
+'การศึกษา':'คุณคือนักออกแบบการเรียนรู้ (Learning Designer) ที่เชี่ยวชาญบริบทการศึกษาไทย\n\nบริบท: {ind} | บทบาท: {role}\nเป้าหมาย: {goal}\n\nโครงสร้างบทเรียน:\n1. Hook เรียกความสนใจ (1 คำถามชวนคิด)\n2. อธิบายแบบ top-down พร้อมภาพรวมก่อนรายละเอียด\n3. ตัวอย่าง 3 ระดับ: ง่าย/กลาง/ท้าทาย\n4. คำถามกระตุ้นคิด + quiz 5 ข้อ พร้อมเฉลย\n\nปรับภาษาให้เหมาะกับผู้เรียนไทย',
+'เทค/IT':'คุณคือ Senior Developer ที่เขียนโค้ดสะอาดและอธิบายเหตุผลชัดเจน\n\nบริบท: {ind} | บทบาท: {role}\nเป้าหมาย: {goal}\n\nให้ผลลัพธ์:\n1. สรุปความเข้าใจโจทย์ก่อน (ยืนยันก่อนลงมือ)\n2. โซลูชัน step-by-step + โค้ดพร้อมคอมเมนต์\n3. edge cases + วิธีทดสอบ\n4. ข้อควรระวังด้านความปลอดภัย/ประสิทธิภาพ',
+'สร้างสรรค์':'คุณคือ Creative Director ที่ไอเดียไม่ซ้ำใคร\n\nบริบท: {ind} | บทบาท: {role}\nเป้าหมาย: {goal}\n\nระดมสมองให้ 10 ไอเดีย:\n- ปกติแต่ทำดี 3\n- บ้าบิ่นเสี่ยง 4\n- hybrid ผสมสองแบบ 3\nพร้อมเหตุผลว่าทำไมแต่ละอันเวิร์ก\n\nห้าม generic — ต้องเฉพาะเจาะจงกับบริบทที่ให้'};
+const sel={ind:null,role:null,goal:null};
+function chips(cid,list,key){
+  $(cid).innerHTML=list.map(v=>`<button class="chip ${sel[key]===v?'sel':''}" data-v="${v}">${v}</button>`).join('');
+  $(cid).querySelectorAll('.chip').forEach(b=>b.onclick=()=>{sel[key]=b.dataset.v;
+    if(key==='ind'){sel.role=null;sel.goal=null;chips('role-c',ROLE[sel.ind]||[],'role');}
+    chips(cid,list,key);refreshGoal();build();});
+}
+function refreshGoal(){chips('goal-c',sel.ind?GOAL:[],'goal');}
+function fill(t){return t.replaceAll('{ind}',(sel.ind||'').replace(/^[^ ]+ /,'')).replaceAll('{role}',sel.role||'—').replaceAll('{goal}',sel.goal||'—');}
+let typing=false;
+function build(){
+  $('pills').innerHTML=[sel.ind,sel.role,sel.goal].filter(Boolean).map(v=>`<span class="pill">${v}</span>`).join('');
+  if(!sel.ind)return;
+  const key=sel.ind.replace(/^[^ ]+ /,'');
+  const text=fill(TEMPL[key]);
+  const out=$('out');
+  if(typing)return;typing=true;out.textContent='';let i=0;
+  const iv=setInterval(()=>{i+=3;out.textContent=text.slice(0,i);
+    if(i>=text.length){clearInterval(iv);typing=false;}},12);
+}
+function copyOut(){navigator.clipboard.writeText($('out').textContent);toast('คัดลอกแล้ว!');}
+function surprise(){
+  const i=IND[Math.floor(Math.random()*6)];sel.ind=i;sel.role=ROLE[i][Math.floor(Math.random()*3)];sel.goal=GOAL[Math.floor(Math.random()*5)];
+  chips('ind-c',IND,'ind');chips('role-c',ROLE[i],'role');refreshGoal();build();
+}
+chips('ind-c',IND,'ind');refreshGoal();updateMemberUI();
+
+/* LIBRARY RENDER */
+const F=['ทั้งหมด',...IND.map(x=>x.replace(/^[^ ]+ /,''))];
+let curF='ทั้งหมด';
+function stars(el,items,cls){
+  el.innerHTML=items.map((x)=>`<${cls} class="${x.free?'':'locked'} fadeup in" onclick="openM(${LIB.indexOf(x)})">
+    ${cls==='row'?`<span class="num">${String(items.indexOf(x)+1).padStart(2,'0')}</span>`:''}
+    <div><h3>${x.t}${x.neww?' <span class="badge b-pro">NEW</span>':''}</h3><p>${x.d}</p></div>
+    ${cls==='row'?`<span class="badge ${x.free?'b-free':'b-pro'}">${x.free?'FREE':'PRO'}</span>`
+      :`<span class="cat">${x.c}</span><div class="foot"><span>${x.free?'FREE':(isMember()?'PRO ✓ unlocked':'PRO 🔒')}</span><span>▲ ${x.u}</span></div>`}
+  </${cls}>`).join('');
+}
+function renderLib(){
+  $('fs').innerHTML=F.map(f=>`<button class="f ${f===curF?'on':''}" onclick="curF='${f}';renderLib()">${f}</button>`).join('');
+  const q=($('q').value||'').toLowerCase();
+  const list=LIB.filter(x=>(curF==='ทั้งหมด'||x.c===curF)&&(!q||(x.t+x.d).toLowerCase().includes(q)));
+  stars($('grid'),list,'card');
+  const fr=list.filter(x=>x.free).length;
+  $('libcount').textContent=`แสดง ${list.length} รายการ · ฟรี ${fr} · สมาชิก ${list.length-fr}`;
+}
+stars($('feat'),LIB.filter(x=>x.hot).slice(0,5),'row');
+/* MEMBER */
+function isMember(){ try{ return localStorage.getItem('ps-member')==='1'; }catch(e){ return false; } }
+function openMember(){
+  const m=isMember();
+  $('mem-state').innerHTML = m
+    ? '<b style="color:var(--accent)">สถานะ: สมาชิกใช้งานอยู่ ✓</b><br><span style="color:var(--muted);font-size:13px">ปลดล็อกคลังเต็ม 99 prompts แล้ว</span><button class="btn2" style="margin-top:14px" onclick="logout()">ออกจากระบบ (ทดสอบ)</button>'
+    : '<p style="color:var(--muted);font-size:14px;margin-bottom:14px">ใส่รหัส unlock ที่ได้รับหลังชำระเงิน (demo: <b style="font-family:var(--mono)">WELCOME99</b> = รายเดือน / <b style="font-family:var(--mono)">YEAR1-790</b> = รายปี)</p><input class="search" id="uc" placeholder="รหัส unlock เช่น WELCOME99" style="margin-bottom:12px"><button class="btn2 pri" style="width:100%" onclick="redeem()">ปลดล็อกคลังเต็ม</button>';
+  $('memb').classList.add('open');
+}
+function redeem(){
+  const code=($('uc')?$('uc').value:'').trim().toUpperCase();
+  if(code==='WELCOME99'){ doJoin('monthly'); }
+  else if(code==='YEAR1-790'){ doJoin('yearly'); }
+  else { toast('รหัสไม่ถูกต้อง — ตรวจสอบอีกครั้ง'); }
+}
+function doJoin(plan){
+  try{ localStorage.setItem('ps-member','1'); localStorage.setItem('ps-plan',plan); }catch(e){}
+  $('memb').classList.remove('open'); $('mb').classList.remove('open');
+  renderLib(); updateMemberUI();
+  toast(plan==='yearly' ? 'ยินดีต้อนรับสมาชิกรายปี! ปลดล็อกครบ 99 prompts' : 'ยินดีต้อนรับ! ปลดล็อกครบ 99 prompts');
+}
+function logout(){ try{ localStorage.removeItem('ps-member'); localStorage.removeItem('ps-plan'); }catch(e){} renderLib(); updateMemberUI(); $('memb').classList.remove('open'); toast('ออกจากระบบแล้ว (โหมดทดสอบ)'); }
+function updateMemberUI(){
+  const m=isMember(), plan=(()=>{try{return localStorage.getItem('ps-plan')}catch(e){return null}})();
+  const el=$('memberTag');
+  if(m) el.innerHTML='<span style="font-family:var(--mono);font-size:11.5px;color:var(--accent);border:1px solid var(--accent);padding:4px 10px;border-radius:14px">'+(plan==='yearly'?'MEMBER · รายปี':'MEMBER · รายเดือน')+'</span>';
+  else el.innerHTML='<span style="font-family:var(--mono);font-size:11.5px;color:var(--muted);border:1px dashed var(--border);padding:4px 10px;border-radius:14px">FREE</span>';
+}
+/* MODAL */
+function openMemberModal(){ $('memb').classList.add('open'); }
+function openM(i){
+  const x=LIB[i];
+  $('m-cat').textContent=x.c;
+  $('m-title').textContent=x.t+(x.neww?' 🆕':'');
+  const locked=!x.free && !isMember();
+  $('m-body').textContent = locked
+    ? '🔒 เนื้อ prompt ฉบับเต็มอยู่ในสมาชิก — ปลดล็อกด้วยรหัส unlock ที่ได้หลังสมัคร\n\nสมาชิกใหม่: ฿99/เดือน (ราคาพิเศษ 1 เดือนแรกเท่านั้น) หรือ ฿790/ปี (สำหรับสมาชิกใหม่ในปีแรก)'
+    : x.p;
+  $('m-act').textContent = locked ? 'สมัครสมาชิก / ใส่รหัส unlock' : 'คัดลอก Prompt';
+  $('m-act').onclick = locked ? openMemberModal : () => { navigator.clipboard.writeText(x.p); toast('คัดลอกแล้ว!'); };
+  $('mb').classList.add('open');
+}
+/* VISUAL: IMAGE & VIDEO PROMPT */
+const STYLES=[
+{n:'Thai Contemporary',th:'ไทยร่วมสมัย',d:'ลายไทยเรขาคณิต สีทอง-คราม',k:'#c9a227'},
+{n:'Cinematic Photo',th:'ภาพถ่ายซีเนมาติก',d:'เลนส์ 35mm ฟิล์มเกรน',k:'#e0764a'},
+{n:'Studio Ghibli',th:'อนิเมะกิบลิ',d:'สีน้ำอบอุ่น ท้องฟ้ากว้าง',k:'#5fa8d3'},
+{n:'Minimal Product',th:'มินิมอลโปรดักต์',d:'พื้นเรียบ แสงนุ่ม คอมเมอร์เชียล',k:'#b8b2a7'},
+{n:'Watercolor',th:'สีน้ำ',d:'ขอบเปียก สีซึมกระดาษ',k:'#8fb8a8'},
+{n:'Cyberpunk',th:'ไซเบอร์พังก์',d:'นีออนเปียกฝน เมืองยามค่ำ',k:'#b56cff'},
+{n:'Flat Vector',th:'เวกเตอร์แบน',d:'เรขาคณิต เส้นหนา สีจัด',k:'#f2b134'},
+{n:'3D Claymation',th:'ดินน้ำมัน 3D',d:'นุ่ม เงามน น่ารัก',k:'#ff9a8b'},
+{n:'Retro Print',th:'พรินต์ย้อนยุค',d:'risograph เกรนกระดาษ สี 2-3 สี',k:'#d45d79'},
+{n:'Dark Moody',th:'มืดมู้ดดี้',d:'เงาลึก ไฮไลต์เดี่ยว',k:'#6b705c'},
+{n:'Isometric',th:'ไอโซเมตริก',d:'มุม 45 องศา มินิเจอร์',k:'#4ecdc4'},
+{n:'Line Art',th:'ลายเส้นมินิมอล',d:'เส้นเดียวต่อเนื่อง พื้นหลังสะอาด',k:'#2b2d42'},
+{n:'Pop Art',th:'ป๊อปอาร์ต',d:'สีจัด 4 สี dot halftone สไตล์ Warhol',k:'#ff3f6c'},
+{n:'Thai Temple Mural',th:'จิตรกรรมฝาผนังไทย',d:'สีฝุ่นไทย ทอง จางหวาน',k:'#a63c2e'}
+];
+const LIGHTS=['🌅 Golden hour','💡 Studio softbox','🌙 เดือนห้ามืด+นีออน','☁️ วันเมฆมาก (overcast)','🕯️ เทียน/แสงไฟอุ่น','⚡ แสงจ้า hard light'];
+const VSEL={st:null,li:null,subj:'',video:null};
+function chipsV(cid,list,key){
+  const el=$(cid);
+  el.innerHTML=list.map(x=>{
+    const v=typeof x==='string'?x:x.n;
+    const label=typeof x==='string'?x:`${x.th}`;
+    return `<button class="chip ${VSEL[key]===v?'sel':''}" data-v="${v}" title="${typeof x==='object'?x.d:''}">${label}</button>`;
+  }).join('');
+  el.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{VSEL[key]=b.dataset.v;chipsV(cid,list,key);});
+}
+function showRefs(inp){
+  const box=$('refPreview');
+  box.innerHTML='';box.style.display='flex';
+  window._refs=[];
+  [...inp.files].forEach(f=>{
+    const url=URL.createObjectURL(f);
+    window._refs.push({name:f.name,url});
+    box.insertAdjacentHTML('beforeend',`<div style="text-align:center"><img src="${url}" style="width:64px;height:64px;object-fit:cover;border-radius:8px;border:1px solid var(--border)"><div style="font-size:10px;color:var(--muted);max-width:72px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${f.name}</div></div>`);
+  });
+  if(!inp.files.length){box.style.display='none';}
+  else toast(`แนบ ${inp.files.length} ภาพอ้างอิงแล้ว — จะถูกอ้างถึงใน prompt`);
+}
+/* in prompt text: mention reference count */
+function refNote(){ return window._refs && window._refs.length ? `\n\nภาพอ้างอิง: แนบมา ${window._refs.length} ภาพ (${window._refs.map(r=>r.name).join(', ')}) — ใช้ภาพเหล่านี้เป็นแนวทางองค์ประกอบ/โทนสี/สไตล์` : ''; }
+function genImg(){
+  VSEL.subj=$('subj').value.trim();
+  if(!VSEL.st){toast('เลือกสไตล์ภาพก่อนนะครับ');return;}
+  if(!VSEL.subj){toast('พิมพ์สิ่งที่อยากเห็นในภาพก่อนครับ');return;}
+  const st=STYLES.find(x=>x.n===VSEL.st);
+  const li=VSEL.li||'แสงธรรมชาติ';
+  const img=`สร้างภาพ: ${VSEL.subj}\n\nสไตล์: ${st.th} (${st.n}) — ${st.d}\nแสง: ${li}\n\nรายละเอียด:\n- องค์ประกอบ: rule of thirds, จุดโฟกัสชัด ที่เหลือบ่อแบบเบลอ\n- คุณภาพ: ultra-detailed, 8K, sharp focus\n- ข้อห้าม: ไม่มีตัวอักษร/ลายน้ำในภาพ${refNote()}\n\nEnglish (สำหรับ Midjourney/DALL·E):\n"${VSEL.subj}, ${st.n} style, ${st.d}, ${li}, rule of thirds, ultra-detailed, 8k, no text"`;
+  typeV(img);
+}
+function toVideo(){
+  if(!VSEL.st||!VSEL.subj){toast('สร้าง Image Prompt ก่อนครับ');return;}
+  const st=STYLES.find(x=>x.n===VSEL.st);
+  const li=VSEL.li||'แสงธรรมชาติ';
+  const vid=`🎬 VIDEO PROMPT (Sora / Runway / Kling / Veo)\n\nScene: ${VSEL.subj}\nสไตล์: ${st.th} (${st.n}) — ${st.d}\nแสง: ${li}\n\nกล้อง: dolly-in ช้าๆ เข้าหาจุดโฟกัส → จบด้วย slow pan ขวา\nความเคลื่อนไหว: องค์ประกอบเคลื่อนไหวเบาๆ (ผ้าปลิว, ไอน้ำ, ฝุ่นในแสง)\nความยาว: 5-8 วินาที, 24fps, ไม่มีตัดต่อ\nเสียงโดยรอบ: ambient เบาๆ ตามฉาก\nข้อห้าม: ไม่มี morphing, ไม่มีตัวหนังสือในเฟรม${refNote()}\n\nEnglish:\n"${VSEL.subj}, ${st.n} style, ${st.d}, ${li}, slow dolly-in then gentle pan right, subtle ambient motion (steam, fabric, dust in light), 5-8s single take, 24fps, no text, no morphing"`;
+  typeV(vid);
+}
+let vtyping=false;
+function typeV(text){
+  if(vtyping)return;vtyping=true;
+  const out=$('vout');out.textContent='';let i=0;
+  const iv=setInterval(()=>{i+=4;out.textContent=text.slice(0,i);if(i>=text.length){clearInterval(iv);vtyping=false;}},10);
+}
+function copyV(){navigator.clipboard.writeText($('vout').textContent);toast('คัดลอกแล้ว!');}
+chipsV('style-c',STYLES,'st');chipsV('light-c',LIGHTS,'li');
+/* LESSON */
+const LAYERS=['ลองเขียน: AI ช่วยเขียนโพสต์ขายสินค้า','คุณคือนักการตลาดมืออาชีพ (Role)','คุณคือนักการตลาดมืออาชีพ สินค้า: ชานมไข่มุกร้านใหม่ในเชียงใหม่ (Role+Context)','คุณคือนักการตลาดมืออาชีพ สินค้า: ชานมไข่มุกร้านใหม่ในเชียงใหม่ โจทย์: เขียนโพสต์ขาย 1 โพสต์ (R+C+T)','คุณคือนักการตลาดมืออาชีพ สินค้า: ชานมไข่มุกร้านใหม่ในเชียงใหม่ โจทย์: เขียนโพสต์ขาย 1 โพสต์ รูปแบบ: hook + เนื้อหา + CTA (R+C+T+F)','คุณคือนักการตลาดที่เคยสร้างยอดขายให้ร้านชานม 50 แห่ง สินค้า: ชานมไข่มุกร้านใหม่ในเชียงใหม่ โจทย์: เขียนโพสต์ขาย 1 โพสต์ รูปแบบ: hook + เนื้อหา + CTA ตัวอย่าง hook: ชานมที่คนต่อแถวรอ (R+C+T+F+E)'];
+let pct=0,dragging=false;
+function drawSlide(){
+  $('fill').style.width=pct+'%';$('knob').style.left=pct+'%';$('pct').textContent=Math.round(pct)+'%';
+  const idx=Math.min(Math.floor(pct/100*(LAYERS.length-1)+.0001),LAYERS.length-1);
+  $('box').textContent=LAYERS[idx];
+}
+const trk=$('trk');
+function setPct(x){const r=trk.getBoundingClientRect();pct=Math.max(0,Math.min(100,(x-r.left)/r.width*100));drawSlide();}
+trk.addEventListener('mousedown',e=>{dragging=true;setPct(e.clientX);});
+window.addEventListener('mousemove',e=>{if(dragging)setPct(e.clientX);});
+window.addEventListener('mouseup',()=>dragging=false);
+trk.addEventListener('touchstart',e=>{dragging=true;setPct(e.touches[0].clientX);});
+trk.addEventListener('touchmove',e=>{if(dragging)setPct(e.touches[0].clientX);});
+trk.addEventListener('touchend',()=>dragging=false);
+drawSlide();
+let tt;function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),2200);}
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
+document.querySelectorAll('.fadeup').forEach(el=>io.observe(el));
+const d=new Date();const thu=new Date(d);thu.setDate(d.getDate()-((d.getDay()+4)%7));
+$('wk').textContent='WEEK OF '+thu.toLocaleDateString('en-GB',{day:'2-digit',month:'2-digit',year:'numeric'});
+renderLib();
+</script>
+</body>
+</html>

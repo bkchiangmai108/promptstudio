@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prompt Studio — Editorial Library</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=IBM+Plex+Serif:wght@500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing:border-box; margin:0; padding:0; }
+  :root {
+    --bg:#fbfaf7; --card:#ffffff; --border:#e7e4dc; --fg:#1c1b18; --muted:#8a857a;
+    --accent:#c2410c; --accent-soft:#fff1e8; --ink:#2d2a24;
+    --font:'IBM Plex Sans Thai',sans-serif; --serif:'IBM Plex Serif',serif; --mono:'IBM Plex Mono',monospace;
+  }
+  body { background:var(--bg); color:var(--fg); font-family:var(--font); line-height:1.65; -webkit-font-smoothing:antialiased; }
+  nav { display:flex; align-items:center; gap:26px; padding:18px 48px; border-bottom:1px solid var(--border); background:rgba(251,250,247,.9); backdrop-filter:blur(10px); position:sticky; top:0; z-index:40; }
+  .logo { font-family:var(--serif); font-weight:600; font-size:20px; }
+  .logo em { color:var(--accent); font-style:normal; }
+  nav a { color:var(--muted); text-decoration:none; font-size:14.5px; }
+  nav a:hover { color:var(--fg); }
+  .nav-sp { flex:1; }
+  .lang { font-family:var(--mono); font-size:12px; border:1px solid var(--border); background:#fff; padding:6px 14px; border-radius:6px; cursor:pointer; color:var(--muted); }
+  .wrap { max-width:1200px; margin:0 auto; padding:0 48px; }
+  /* HERO — asymmetric split */
+  .hero { display:grid; grid-template-columns:5fr 7fr; gap:64px; padding:72px 0 64px; align-items:start; }
+  .hero-l { position:sticky; top:96px; }
+  .kicker { font-family:var(--mono); font-size:12px; letter-spacing:2px; color:var(--accent); text-transform:uppercase; margin-bottom:18px; }
+  h1 { font-family:var(--serif); font-size:clamp(34px,4vw,50px); line-height:1.18; font-weight:600; letter-spacing:-.5px; }
+  .lede { color:var(--muted); font-size:17px; margin:20px 0 30px; }
+  .cta { background:var(--ink); color:#fff; border:none; font-size:15.5px; font-family:var(--font); padding:13px 28px; border-radius:8px; cursor:pointer; transition:.2s; }
+  .cta:hover { background:var(--accent); }
+  .link { color:var(--accent); font-weight:600; text-decoration:none; margin-left:20px; font-size:15px; }
+  .link:hover { text-decoration:underline; }
+  .hero-note { margin-top:36px; border-left:3px solid var(--accent); padding:6px 0 6px 18px; color:var(--muted); font-size:14px; }
+  .hero-note b { color:var(--fg); }
+  /* featured list on the right */
+  .feat-head { display:flex; justify-content:space-between; align-items:baseline; border-bottom:2px solid var(--fg); padding-bottom:10px; margin-bottom:4px; }
+  .feat-head h2 { font-family:var(--serif); font-size:20px; }
+  .feat-head span { font-family:var(--mono); font-size:12px; color:var(--muted); }
+  .row { display:grid; grid-template-columns:52px 1fr auto; gap:18px; align-items:baseline; padding:18px 4px; border-bottom:1px solid var(--border); cursor:pointer; transition:.15s; }
+  .row:hover { background:#fff; padding-left:14px; padding-right:14px; }
+  .num { font-family:var(--mono); color:var(--muted); font-size:13px; }
+  .row h3 { font-size:16.5px; font-weight:600; }
+  .row p { color:var(--muted); font-size:13.5px; margin-top:2px; }
+  .badge { font-family:var(--mono); font-size:11px; padding:3px 10px; border-radius:5px; white-space:nowrap; }
+  .b-free { color:#166534; background:#e7f5ec; } .b-pro { color:var(--accent); background:var(--accent-soft); }
+  /* LIBRARY */
+  .section { padding:64px 0; }
+  .sec-title { display:flex; align-items:baseline; gap:14px; margin-bottom:24px; }
+  h2.sec { font-family:var(--serif); font-size:30px; font-weight:600; }
+  .sec-title small { color:var(--muted); font-family:var(--mono); font-size:12.5px; }
+  .toolbar { display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:26px; }
+  .search { flex:1; min-width:220px; border:1px solid var(--border); background:#fff; border-radius:8px; padding:11px 16px; font-size:14.5px; font-family:var(--font); }
+  .search:focus { outline:2px solid var(--accent); outline-offset:-1px; }
+  .f { font-size:13.5px; padding:9px 18px; border-radius:8px; border:1px solid var(--border); background:#fff; color:var(--muted); cursor:pointer; font-family:var(--font); transition:.15s; }
+  .f.on { background:var(--ink); color:#fff; border-color:var(--ink); }
+  .cards { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:24px; display:flex; flex-direction:column; gap:10px; transition:.2s; cursor:pointer; }
+  .card:hover { border-color:var(--accent); box-shadow:0 6px 24px rgba(28,27,24,.08); transform:translateY(-3px); }
+  .card .cat { font-family:var(--mono); font-size:11px; letter-spacing:1px; text-transform:uppercase; color:var(--accent); }
+  .card h3 { font-size:16.5px; font-weight:600; line-height:1.4; }
+  .card p { color:var(--muted); font-size:13.5px; flex:1; }
+  .card .foot { display:flex; justify-content:space-between; align-items:center; font-family:var(--mono); font-size:12px; color:var(--muted); border-top:1px dashed var(--border); padding-top:12px; }
+  .card.locked { opacity:.6; }
+  /* modal */
+  .mb { position:fixed; inset:0; background:rgba(28,27,24,.35); display:none; align-items:center; justify-content:center; z-index:80; }
+  .mb.open { display:flex; }
+  .modal { background:#fff; border-radius:14px; padding:36px; width:min(620px,92vw); max-height:82vh; overflow:auto; box-shadow:0 30px 80px rgba(0,0,0,.2); }
+  .modal h3 { font-family:var(--serif); font-size:22px; margin:8px 0 4px; }
+  .modal .cat { font-family:var(--mono); font-size:11px; letter-spacing:1px; color:var(--accent); text-transform:uppercase; }
+  .modal pre { font-family:var(--mono); font-size:13px; background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:20px; white-space:pre-wrap; margin:16px 0 20px; line-height:1.7; }
+  .x { float:right; border:none; background:none; font-size:18px; cursor:pointer; color:var(--muted); }
+  footer { border-top:1px solid var(--border); padding:30px 48px; color:var(--muted); font-size:13px; display:flex; justify-content:space-between; }
+  @media (max-width:900px){ .hero{grid-template-columns:1fr;} .hero-l{position:static;} .cards{grid-template-columns:1fr;} .wrap,nav,footer{padding-left:24px;padding-right:24px;} }
+</style>
+</head>
+<body>
+<nav>
+  <div class="logo">Prompt<em>Studio</em></div>
+  <a href="#library">Library</a><a href="#generator">Generator</a><a href="#learn">เรียนรู้</a>
+  <div class="nav-sp"></div>
+  <button class="lang" onclick="alert('สลับภาษา TH ⇄ EN (demo)')">TH / EN</button>
+</nav>
+<div class="wrap">
+  <section class="hero">
+    <div class="hero-l">
+      <div class="kicker">Thai-first Prompt Library</div>
+      <h1>คลัง Prompt คุณภาพ<br>จัดหมวดตามอุตสาหกรรม<br>ที่คุณทำงานจริง</h1>
+      <p class="lede">ทุก prompt ผ่านการเรียบเรียงโครงสร้าง Role–Context–Task–Format พร้อมตัวอย่างผลลัพธ์จริง ครบ 6 กลุ่มอุตสาหกรรม อ่าน เข้าใจ ใช้ได้ทันที</p>
+      <button class="cta" onclick="document.getElementById('generator').scrollIntoView({behavior:'smooth'})">ลอง Generator ฟรี</button>
+      <a class="link" href="#library">เรียกดูทั้งหมด ↓</a>
+      <div class="hero-note"><b>48 prompts</b> คัดสรรจากการใช้งานจริง · อัปเดตทุกเดือน · ใช้กับ ChatGPT, Claude, Gemini ได้ทุกตัว</div>
+    </div>
+    <div class="hero-r">
+      <div class="feat-head"><h2>Prompt ยอดนิยมสัปดาห์นี้</h2><span>UPDATED 02.09.2026</span></div>
+      <div id="feat"></div>
+    </div>
+  </section>
+
+  <section class="section" id="library">
+    <div class="sec-title"><h2 class="sec">Library</h2><small>ค้นหาและกรองจาก 48 prompts</small></div>
+    <div class="toolbar">
+      <input class="search" id="q" placeholder="ค้นหา prompt… เช่น content calendar, code review" oninput="renderLib()">
+      <span id="fs"></span>
+    </div>
+    <div class="cards" id="grid"></div>
+  </section>
+
+  <section class="section" id="generator">
+    <div class="sec-title"><h2 class="sec">Generator</h2><small>ประกอบ prompt ของคุณเองใน 3 ขั้น</small></div>
+    <div class="cards" style="grid-template-columns:repeat(3,1fr)">
+      <div class="card" onclick="alert('เลือกอุตสาหกรรม (demo)')"><span class="cat">ขั้นที่ 1</span><h3>เลือกอุตสาหกรรม</h3><p>ธุรกิจ การตลาด สุขภาพ การศึกษา เทค/IT หรืองานสร้างสรรค์ — ระบบจะปรับบริบทให้เข้ากับงานจริง</p><div class="foot"><span>STEP 01</span><span>→</span></div></div>
+      <div class="card" onclick="alert('เลือกบทบาท (demo)')"><span class="cat">ขั้นที่ 2</span><h3>เลือกบทบาทของ AI</h3><p>กำหนดให้ AI สวมบทผู้เชี่ยวชาญเฉพาะทาง ผลลัพธ์เป็นมืออาชีพขึ้นทันที</p><div class="foot"><span>STEP 02</span><span>→</span></div></div>
+      <div class="card" onclick="alert('เลือกเป้าหมาย (demo)')"><span class="cat">ขั้นที่ 3</span><h3>ใส่โจทย์ของคุณ</h3><p>ระบุเป้าหมายและรูปแบบผลลัพธ์ ได้ prompt พร้อมคัดลอกไปใช้ได้เลย</p><div class="foot"><span>STEP 03</span><span>→</span></div></div>
+    </div>
+  </section>
+</div>
+<footer><span>© 2026 Prompt Studio</span><span>อ่านฟรี 30% · ชุดเต็มปลดล็อกครั้งเดียว</span></footer>
+
+<div class="mb" id="mb" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal">
+    <button class="x" onclick="document.getElementById('mb').classList.remove('open')">✕</button>
+    <span class="cat" id="m-cat"></span>
+    <h3 id="m-title"></h3>
+    <pre id="m-body"></pre>
+    <button class="cta" onclick="alert('คัดลอกแล้ว! (demo)')">คัดลอก Prompt</button>
+  </div>
+</div>
+<script>
+const LIB = [
+  {t:'ร่าง Business Model Canvas ใน 10 นาที', c:'ธุรกิจ', free:true, d:'ให้ AI ถามกลับ 7 คำถามก่อนร่าง BMC ได้แผนที่เข้าจริง', u:'2.4k', hot:1},
+  {t:'Email ตามลูกค้าแบบไม่น่าเบื่อ', c:'ธุรกิจ', free:false, d:'โครง follow-up 3 จังหวะ อัตราตอบกลับสูงขึ้น', u:'1.1k'},
+  {t:'Content Calendar 30 วันจาก 1 หัวข้อ', c:'การตลาด', free:true, d:'แตก 1 topic เป็น 30 โพสต์ครบทุกแพลตฟอร์ม', u:'3.8k', hot:1},
+  {t:'Hook เด็ดสำหรับ Reels/TikTok', c:'การตลาด', free:false, d:'สูตร hook 8 แบบ พร้อมตัวอย่างตลาดไทย', u:'5.2k', hot:1},
+  {t:'แผนมื้ออาหาร 7 วันตามเป้าหมาย', c:'สุขภาพ', free:true, d:'แผนโภชนาการปลอดภัย ไม่วินิจฉัย ไม่สั่งยา', u:'1.9k', hot:1},
+  {t:'สร้างแบบฝึกหัดจากหัวข้อใดก็ได้', c:'การศึกษา', free:true, d:'แตกหัวข้อเป็นแบบฝึกหัด 3 ระดับ + เฉลย', u:'2.7k'},
+  {t:'Code Review เหมือน Senior ตัวจริง', c:'เทค/IT', free:false, d:'เช็คความปลอดภัย ประสิทธิภาพ readability ในครั้งเดียว', u:'4.1k', hot:1},
+  {t:'ไอเดีย Storytelling 10 แบบ', c:'สร้างสรรค์', free:false, d:'โครงเรื่องจาก 10 สำนัก พร้อมตัวอย่างไทย', u:'1.6k'},
+  {t:'วิเคราะห์คู่แข่งใน 15 นาที', c:'ธุรกิจ', free:false, d:'โครงคำถาม + ตารางเปรียบเทียบ + จุดโจมตี', u:'2.2k'},
+];
+const F=['ทั้งหมด','ธุรกิจ','การตลาด','สุขภาพ','การศึกษา','เทค/IT','สร้างสรรค์']; let curF='ทั้งหมด';
+function rows(el, items){
+  el.innerHTML = items.map((x,i)=>`
+    <${el.id==='feat'?'div':'div'} class="${el.id==='feat'?'row':'card'} ${x.free?'':'locked'}" onclick="openM(${LIB.indexOf(x)})">
+      ${el.id==='feat'?`<span class="num">${String(i+1).padStart(2,'0')}</span>`:''}
+      <div><h3>${x.t}</h3><p>${x.d}</p></div>
+      ${el.id==='feat'?`<span class="badge ${x.free?'b-free':'b-pro'}">${x.free?'FREE':'PRO'}</span>`
+        :`<span class="cat">${x.c}</span><div class="foot"><span>${x.free?'FREE':'PRO 🔒'}</span><span>▲ ${x.u}</span></div>`}
+    </${el.id==='feat'?'div':'div'}>`).join('');
+}
+function renderLib(){
+  document.getElementById('fs').innerHTML = F.map(f=>`<button class="f ${f===curF?'on':''}" style="margin-left:6px" onclick="curF='${f}';renderLib()">${f}</button>`).join('');
+  const q=(document.getElementById('q').value||'').toLowerCase();
+  rows(document.getElementById('grid'), LIB.filter(x=>(curF==='ทั้งหมด'||x.c===curF)&&(!q||(x.t+x.d).toLowerCase().includes(q))));
+}
+rows(document.getElementById('feat'), LIB.filter(x=>x.hot).slice(0,5));
+renderLib();
+function openM(i){
+  const x=LIB[i];
+  document.getElementById('m-cat').textContent=x.c;
+  document.getElementById('m-title').textContent=x.t;
+  document.getElementById('m-body').textContent = x.free
+    ? `บทบาท: คุณคือผู้เชี่ยวชาญเรื่อง "${x.t}"
+
+คำสั่ง:
+1. ถามข้อมูลที่ขาดก่อน (ไม่เกิน 3 คำถาม)
+2. ตอบเป็น bullet + ตัวอย่างจริง
+3. ปิดด้วยข้อควรระวัง 1 ข้อ
+
+รูปแบบ: ภาษาไทย กระชับ ใช้ได้ทันที`
+    : '🔒 ฉบับเต็มอยู่ในชุด Pro — ปลดล็อกแบบจ่ายครั้งเดียว';
+  document.getElementById('mb').classList.add('open');
+}
+</script>
+</body>
+</html>
