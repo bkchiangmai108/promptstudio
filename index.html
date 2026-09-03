@@ -150,8 +150,12 @@ h2.sec{font-family:var(--serif);font-size:30px;font-weight:600}
 .plan .btn2.pri{color:#fff}
 .anchor{font-size:12.5px;color:var(--muted);text-decoration:line-through;font-family:var(--mono)}
 /* CARD HOVER — title turns orange */
-.card:hover h3, .row:hover h3, .mcard:hover h4 { color:var(--accent) }
-.card h3, .row h3 { transition:color .2s }
+/* interactive feedback: orange title + pointer cursor */
+.card, .row, .mcard, .opt, .chip, .f, .paycard { cursor:pointer }
+.card:hover h3, .row:hover h3, .mcard:hover h4 { color:#f97316 }
+.card:hover .cat, .row:hover .badge { color:#f97316 }
+.card h3, .row h3, .mcard h4, .card .cat, .row .badge { transition:color .2s }
+.modal h3, #m-title { color:#f97316 !important }
 
 /* PROFESSIONAL FOOTER */
 .site-footer{border-top:1px solid var(--border);margin-top:72px;background:var(--bg2)}
