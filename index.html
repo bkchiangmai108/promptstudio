@@ -527,8 +527,8 @@ footer{border-top:1px solid var(--border);margin-top:64px;padding:30px 48px;colo
 
 /* ====== STORE CONFIG — แก้ 3 ค่านี้ก่อนใช้จริง ====== */
 const STORE = {
-  promptpay: "0812345678",   // ← TODO: เบอร์พร้อมเพย์/เลขบัตรประชาชนของพี่ (แก้ตรงนี้!)
-  line:      "@promptstudio", // ← TODO: LINE ID สำหรับรับแจ้งชำระเงิน
+  promptpay: "0616247965",   // PromptPay จริง
+  line:      "",             // ยังไม่มี LINE OA — ใช้ช่องทางสำรองด้านล่าง
   email:     "hello@promptstudio.app"
 };
 /* PromptPay QR payload (EMVCo) — สร้างฝั่ง client ไม่ใช้ API เสียค่าใช้จ่าย */
@@ -697,10 +697,19 @@ function showPay(amount, plan){
       </div>
       <p style="color:var(--muted);font-size:13px;margin:10px 0 4px">สแกนด้วยแอปธนาคาร — PromptPay: <b style="font-family:var(--mono)">${STORE.promptpay.replace(/^(\d{3})(\d{3})(\d{4})$/,'$1-$2-$3')}</b></p>
       <p style="color:var(--muted);font-size:12px;margin-bottom:16px">จำนวนเงินถูกระบุไว้ใน QR แล้ว ไม่ต้องพิมพ์เอง</p>
-      <a class="btn2 pri" style="display:inline-block;text-decoration:none" href="https://line.me/R/ti/p/${STORE.line}?text=${encodeURIComponent('สมัครสมาชิก Prompt Studio ('+(plan==='yearly'?'รายปี ฿790':'รายเดือน ฿99')+') — แจ้งชำระเงินครับ หลักฐาน: [แนบสลิป]')}" target="_blank" rel="noopener">📲 แจ้งชำระเงินผ่าน LINE</a>
+      ${STORE.line
+        ? `<a class="btn2 pri" style="display:inline-block;text-decoration:none" href="https://line.me/R/ti/p/${STORE.line}?text=${encodeURIComponent('สมัครสมาชิก Prompt Studio ('+(plan==='yearly'?'รายปี ฿790':'รายเดือน ฿99')+') — แจ้งชำระเงินครับ หลักฐาน: [แนบสลิป]')}" target="_blank" rel="noopener">📲 แจ้งชำระเงินผ่าน LINE</a>`
+        : `<button class="btn2 pri" onclick="notifyPay('${plan}',${amount})">📩 แจ้งชำระเงิน</button>
+           <p style="color:var(--muted);font-size:12px;margin-top:8px">หลังโอน กดปุ่มด้านบน แล้วส่งสลิปมาที่อีเมล <b style="font-family:var(--mono)">${STORE.email}</b> — ยืนยันภายใน 15 นาที รับรหัส unlock ทางอีเมล</p>`}
       <div style="margin-top:14px"><button class="btn2" onclick="unlockDemo('${plan}')">ฉันชำระแล้ว — ปลดล็อกเลย (โหมดทดสอบ)</button></div>
       <div style="margin-top:10px"><button class="btn2" onclick="openMember()" style="border:none;color:var(--muted)">← กลับ</button></div>
     </div>`;
+}
+function notifyPay(plan, amount){
+  const subj = encodeURIComponent('แจ้งชำระเงิน Prompt Studio — ' + (plan==='yearly'?'รายปี ฿790':'รายเดือน ฿99'));
+  const body = encodeURIComponent('สวัสดีครับ\n\nขอแจ้งชำระเงินสมาชิก Prompt Studio\nแพ็กเกจ: ' + (plan==='yearly'?'รายปี ฿790':'รายเดือน ฿99 (เดือนแรก)') + '\nโอนเมื่อ: [วันที่-เวลา]\nแนบสลิป: [แนบไฟล์ในอีเมลนี้]\n\nอีเมลสำหรับรับรหัส unlock: [ใส่อีเมลของคุณ]\n\nขอบคุณครับ');
+  location.href = 'mailto:' + STORE.email + '?subject=' + subj + '&body=' + body;
+  toast('เปิดอีเมลให้แล้ว — แนบสลิปและส่งได้เลย');
 }
 function unlockDemo(plan){ doJoin(plan); }
 function redeem(){
