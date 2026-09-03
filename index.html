@@ -149,6 +149,10 @@ h2.sec{font-family:var(--serif);font-size:30px;font-weight:600}
 .plan .btn2{width:100%;text-align:center}
 .plan .btn2.pri{color:#fff}
 .anchor{font-size:12.5px;color:var(--muted);text-decoration:line-through;font-family:var(--mono)}
+/* CARD HOVER — title turns orange */
+.card:hover h3, .row:hover h3, .mcard:hover h4 { color:var(--accent) }
+.card h3, .row h3 { transition:color .2s }
+
 /* PROFESSIONAL FOOTER */
 .site-footer{border-top:1px solid var(--border);margin-top:72px;background:var(--bg2)}
 .fwrap{max-width:1200px;margin:0 auto;padding:52px 48px 36px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px}
@@ -314,7 +318,7 @@ footer{border-top:1px solid var(--border);margin-top:64px;padding:30px 48px;colo
         <div class="price">฿0</div>
         <ul>
           <li>เข้าถึง prompt ฟรี ~30% ของคลัง</li>
-          <li>Generator + Image/Video ใช้ได้ไม่จำกัด</li>
+          <li>Generator + Image/Video ใช้ได้ <b>15 ครั้ง</b></li>
           <li>บทเรียน interactive พื้นฐาน</li>
           <li class="no">Prompt ฉบับเต็มทุกหมวด</li>
           <li class="no">คลังใหม่ที่เพิ่มทุกสัปดาห์</li>
@@ -818,6 +822,19 @@ const POLICIES = {
     <p style="color:var(--muted);font-size:14px"><b>① Generator</b> — เลือกอุตสาหกรรม → บทบาท → เป้าหมาย แล้วกดคัดลอก prompt ไปใช้ได้เลย<br>
     <b>② Library</b> — ค้นหา/กรอง 99 prompts กดการ์ดเพื่อดูเนื้อเต็ม ฟรี 26 ตัวแรก ไม่ต้องสมัคร<br>
     <b>③ Image & Video</b> — เลือกสไตล์ + ใส่ subject + แนบภาพอ้างอิง ได้ทั้ง image prompt และ video prompt</p>
+    <h4 style="margin:14px 0 6px">📝 ตัวอย่างการใช้จริง</h4>
+    <div style="border:1px solid var(--border);border-radius:12px;padding:14px;margin:8px 0;background:var(--bg2)">
+      <b style="color:var(--accent)">ตัวอย่าง 1 — เจ้าของร้านกาแฟ อยากโพสต์ขาย</b>
+      <p style="color:var(--muted);font-size:13.5px;margin:6px 0">เข้า Library → หมวด "การตลาด" → เปิดการ์ด <b>Content Calendar 30 วัน</b> (ฟรี) → คัดลอก → วางใน ChatGPT พร้อมตอบคำถามที่ AI ถามกลับ (ขายอะไร, ลูกค้าคือใคร) → ได้ตารางโพสต์ 30 วันพร้อมใช้</p>
+    </div>
+    <div style="border:1px solid var(--border);border-radius:12px;padding:14px;margin:8px 0;background:var(--bg2)">
+      <b style="color:var(--accent)">ตัวอย่าง 2 — ครูอยากได้แบบฝึกหัด</b>
+      <p style="color:var(--muted);font-size:13.5px;margin:6px 0">เข้า Generator → เลือก "🎓 การศึกษา" → บทบาท "ครู/อาจารย์" → เป้าหมาย "สอน/อบรม" → กดคัดลอก → วางใน AI พร้อมพิมพ์หัวข้อที่สอน เช่น "เรื่องการแยกวัสดุรีไซเคิล ป.5" → ได้แบบฝึกหัด 3 ระดับพร้อมเฉลย</p>
+    </div>
+    <div style="border:1px solid var(--border);border-radius:12px;padding:14px;margin:8px 0;background:var(--bg2)">
+      <b style="color:var(--accent)">ตัวอย่าง 3 — ทำรูปโฆษณา + วิดีโอสั้น</b>
+      <p style="color:var(--muted);font-size:13.5px;margin:6px 0">เข้าหมวด Image & Video → พิมพ์ "แก้วลาเต้วางบนโต๊ะไม้ ร้านกาแฟยามเช้า" → เลือกสไตล์ "ภาพถ่ายซีเนมาติก" + แสง "Golden hour" → กดสร้าง Image Prompt แล้วคัดลอกไป Midjourney → กด 🎬 แปลงเป็น Video Prompt ส่งต่อ Sora/Runway ได้เลย</p>
+    </div>
     <h4 style="margin:14px 0 6px">💡 เคล็ดลับใช้ให้เวิร์ก</h4>
     <p style="color:var(--muted);font-size:14px">• อ่านโครง [Role–Context–Task–Format] ใน prompt ก่อนใช้ — เติมข้อมูลจริงของคุณในส่วนที่เป็น {input}/{goal}<br>
     • ลองเรียง prompt ที่ได้กับ AI หลายตัวแล้วเทียบผล<br>
