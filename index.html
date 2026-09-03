@@ -150,11 +150,13 @@ h2.sec{font-family:var(--serif);font-size:30px;font-weight:600}
 .plan .btn2.pri{color:#fff}
 .anchor{font-size:12.5px;color:var(--muted);text-decoration:line-through;font-family:var(--mono)}
 /* CARD HOVER — title turns orange */
-/* interactive feedback: orange title + pointer cursor */
-.card, .row, .mcard, .opt, .chip, .f, .paycard { cursor:pointer }
-.card:hover h3, .row:hover h3, .mcard:hover h4 { color:#f97316 }
-.card:hover .cat, .row:hover .badge { color:#f97316 }
-.card h3, .row h3, .mcard h4, .card .cat, .row .badge { transition:color .2s }
+/* interactive feedback: orange title + pointer cursor (bulletproof) */
+.card, .row, .mcard, .opt, .chip, .f, .paycard, .plan { cursor:pointer !important }
+.card *, .row *, .mcard * { cursor:inherit }
+#feat .row:hover h3, #grid .card:hover h3,
+.card:hover h3, .row:hover h3, .mcard:hover h4 { color:#f97316 !important }
+.card:hover .cat, .row:hover .badge { color:#f97316 !important }
+.card h3, .row h3, .mcard h4, .card .cat, .row .badge { transition:color .2s ease }
 .modal h3, #m-title { color:#f97316 !important }
 
 /* PROFESSIONAL FOOTER */
