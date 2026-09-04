@@ -405,7 +405,7 @@ footer{border-top:1px solid var(--border);margin-top:64px;padding:30px 48px;colo
   <div class="modal">
     <button class="x" onclick="document.getElementById('mb').classList.remove('open')">✕</button>
     <span class="cat" id="m-cat" style="font-family:var(--mono);font-size:11px;letter-spacing:1px;color:var(--accent);text-transform:uppercase"></span>
-    <h3 id="m-title"></h3>
+    <h3 id="m-title" style="color:#f97316"></h3>
     <pre id="m-body"></pre>
     <button class="cta" id="m-act">คัดลอก Prompt</button>
   </div>
@@ -644,7 +644,7 @@ function setLang(lang){
 const F=['ทั้งหมด',...IND.map(x=>x.replace(/^[^ ]+ /,''))];
 let curF='ทั้งหมด';
 function stars(el,items,cls){
-  el.innerHTML=items.map((x)=>`<${cls} class="${x.free?'':'locked'} fadeup in" onclick="openM(${LIB.indexOf(x)})">
+  el.innerHTML=items.map((x)=>`<${cls} style="cursor:pointer" onmouseenter="this.classList.add('hov-orange')" onmouseleave="this.classList.remove('hov-orange')" class="${x.free?'':'locked'} fadeup in" onclick="openM(${LIB.indexOf(x)})">
     ${cls==='row'?`<span class="num">${String(items.indexOf(x)+1).padStart(2,'0')}</span>`:''}
     <div><h3>${x.t}${x.neww?' <span class="badge b-pro">NEW</span>':''}</h3><p>${x.d}</p></div>
     ${cls==='row'?`<span class="badge ${x.free?'b-free':'b-pro'}">${x.free?'FREE':'PRO'}</span>`
