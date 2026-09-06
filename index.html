@@ -533,7 +533,8 @@ footer{border-top:1px solid var(--border);margin-top:64px;padding:30px 48px;colo
 const STORE = {
   promptpay: "0616247965",   // PromptPay จริง
   line:      "238tqjem",     // LINE OA ID (@238tqjem)
-  email:     "hello@promptstudio.cloud"
+  email:     "hello@promptstudio.cloud",
+  api:       "https://script.google.com/macros/s/AKfycbyB_n0TdsE8sPT2C7d0-yloErPKe4nTm34_PaWRTvueSJGknIiA5LJTM0cqnLiUUNyE/exec"   // Google Apps Script Web App URL — วางที่นี่หลัง deploy (ดู apps-script/Code.gs)
 };
 /* PromptPay QR payload (EMVCo) — สร้างฝั่ง client ไม่ใช้ API เสียค่าใช้จ่าย */
 function ppPayload(amount){
@@ -666,7 +667,7 @@ function openMember(){
   const m=isMember();
   if(m){
     const plan=(()=>{try{return localStorage.getItem('ps-plan')}catch(e){return null}})();
-    $('mem-state').innerHTML = '<b style="color:var(--accent)">สถานะ: สมาชิกใช้งานอยู่ \u2713 '+(plan==='yearly'?'(รายปี)':'(รายเดือน)')+'</b><br><span style="color:var(--muted);font-size:13px">ปลดล็อกคลังเต็ม 99 prompts แล้ว</span><button class="btn2" style="margin-top:14px" onclick="logout()">ออกจากระบบ (ทดสอบ)</button>';
+    $('mem-state').innerHTML = '<b style="color:var(--accent)">สถานะ: สมาชิกใช้งานอยู่ \u2713 '+(plan==='yearly'?'(รายปี)':'(รายเดือน)')+'</b><br><span style="color:var(--muted);font-size:13px">ปลดล็อกคลังเต็ม 99 prompts แล้ว</span><div style="margin-top:14px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><button class="btn2" onclick="cancelUI()">ยกเลิกสมาชิก</button></div>';
   } else {
     $('mem-state').innerHTML = `
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px">
@@ -705,9 +706,39 @@ function showPay(amount, plan){
         ? `<a class="btn2 pri" style="display:inline-block;text-decoration:none" href="https://line.me/R/ti/p/${STORE.line}?text=${encodeURIComponent('สมัครสมาชิก Prompt Studio ('+(plan==='yearly'?'รายปี ฿790':'รายเดือน ฿99')+') — แจ้งชำระเงินครับ หลักฐาน: [แนบสลิป]')}" target="_blank" rel="noopener">📲 แจ้งชำระเงินผ่าน LINE</a>`
         : `<button class="btn2 pri" onclick="notifyPay('${plan}',${amount})">📩 แจ้งชำระเงิน</button>
            <p style="color:var(--muted);font-size:12px;margin-top:8px">หลังโอน กดปุ่มด้านบน แล้วส่งสลิปมาที่อีเมล <b style="font-family:var(--mono)">${STORE.email}</b> — ยืนยันภายใน 15 นาที รับรหัส unlock ทางอีเมล</p>`}
-      <div style="margin-top:14px"><button class="btn2" onclick="unlockDemo('${plan}')">ฉันชำระแล้ว — ปลดล็อกเลย (โหมดทดสอบ)</button></div>
+      <p style="color:var(--muted);font-size:12px;margin-bottom:14px">ขั้นตอน: สแกน QR โอนเงิน → แคปหน้าจอสลิป → กดปุ่ม "📲 แจ้งชำระเงินผ่าน LINE" แนบสลิป → ทีมงานตรวจสอบและส่งรหัส unlock ให้ทาง LINE ภายใน 15 นาที (9:00–21:00 ทุกวัน)</p>
+      <div style="margin-top:6px"><button class="btn2" onclick="redeemUI()">🔐 ฉันได้รับรหัส unlock แล้ว — ใส่รหัส</button></div>
       <div style="margin-top:10px"><button class="btn2" onclick="openMember()" style="border:none;color:var(--muted)">← กลับ</button></div>
     </div>`;
+}
+function redeemUI(){
+  $('mem-state').innerHTML = `
+    <div style="text-align:center">
+      <h3 style="margin-bottom:6px">ใส่รหัส unlock</h3>
+      <p style="color:var(--muted);font-size:13px;margin-bottom:14px">รหัสจะถูกส่งทาง LINE หลังทีมงานตรวจสอบสลิปการชำระเงินแล้ว</p>
+      <input class="search" id="uc2" placeholder="เช่น XXXX-XXXX" style="text-align:center;max-width:260px;margin:0 auto">
+      <div style="margin-top:12px"><button class="btn2 pri" onclick="redeem2()">ปลดล็อก</button></div>
+      <div style="margin-top:14px;font-size:12.5px;color:var(--muted)">ยังไม่ได้ชำระเงิน? <a href="#" onclick="openMember();return false" style="color:var(--accent)">ดูแพ็กเกจสมาชิก</a></div>
+    </div>`;
+}
+function redeem2(){
+  const v=($('uc2')?$('uc2').value:'').trim().toUpperCase().replace(/[\s-]/g,'');
+  if(!v){ toast('กรุณาใส่รหัส unlock'); return; }
+  /* โหมด offline (ยังไม่ตั้งค่า API): ใช้โค้ดทดสอบเดิมได้ */
+  if(!STORE.api){
+    if(v==='WELCOME99'){ doJoin('monthly'); return; }
+    if(v==='YEAR1790'){ doJoin('yearly'); return; }
+    toast('รหัสไม่ถูกต้อง — ตรวจสอบอีกครั้ง'); return;
+  }
+  const btn=document.querySelector('#mem-state .btn2.pri'); if(btn){btn.disabled=true;btn.textContent='กำลังตรวจสอบรหัส...';}
+  fetch(STORE.api,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body:JSON.stringify({action:'redeem',code:v})})
+    .then(r=>r.json())
+    .then(d=>{
+      if(d.ok){ doJoin(d.plan, d.expires); }
+      else { toast(d.error||'รหัสไม่ถูกต้อง'); if(btn){btn.disabled=false;btn.textContent='ปลดล็อก';} }
+    })
+    .catch(()=>{ toast('เชื่อมต่อเซิร์ฟเวอร์ไม่ได้ — ลองอีกครั้ง'); if(btn){btn.disabled=false;btn.textContent='ปลดล็อก';} });
 }
 function notifyPay(plan, amount){
   const subj = encodeURIComponent('แจ้งชำระเงิน Prompt Studio — ' + (plan==='yearly'?'รายปี ฿790':'รายเดือน ฿99'));
@@ -722,11 +753,59 @@ function redeem(){
   else if(code==='YEAR1-790'){ doJoin('yearly'); }
   else { toast('รหัสไม่ถูกต้อง — ตรวจสอบอีกครั้ง'); }
 }
-function doJoin(plan){
-  try{ localStorage.setItem('ps-member','1'); localStorage.setItem('ps-plan',plan); }catch(e){}
+function doJoin(plan, expiresIso){
+  const exp = expiresIso || (plan==='yearly'
+      ? new Date(Date.now()+365*864e5).toISOString()
+      : new Date(Date.now()+30*864e5).toISOString());
+  try{ localStorage.setItem('ps-member','1'); localStorage.setItem('ps-plan',plan);
+    localStorage.setItem('ps-joined',new Date().toISOString());
+    localStorage.setItem('ps-exp', exp);
+  }catch(e){}
   $('memb').classList.remove('open'); $('mb').classList.remove('open');
   renderLib(); updateMemberUI();
-  toast(plan==='yearly' ? 'ยินดีต้อนรับสมาชิกรายปี! ปลดล็อกครบ 99 prompts' : 'ยินดีต้อนรับ! ปลดล็อกครบ 99 prompts');
+  const expStr=(()=>{try{return new Date(localStorage.getItem('ps-exp')).toLocaleDateString('th-TH',{year:'numeric',month:'long',day:'numeric'})}catch(e){return ''}})();
+  $('mem-state').innerHTML = `
+    <div style="text-align:center;padding:8px 0">
+      <div style="font-size:44px">🎉</div>
+      <h3 style="margin:4px 0 8px">ขอบคุณที่สมัครสมาชิก Prompt Studio!</h3>
+      <p style="color:var(--muted);font-size:14px">สถานะ: <b style="color:var(--accent)">${plan==='yearly'?'สมาชิกรายปี':'สมาชิกรายเดือน'}</b> — ปลดล็อกคลังเต็ม 99 prompts เรียบร้อยแล้ว</p>
+      ${expStr?`<p style="color:var(--muted);font-size:13px">สิทธิ์ถึงวันที่ <b style="color:var(--fg)">${expStr}</b></p>`:''}
+      <div style="margin-top:14px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+        <button class="btn2 pri" onclick="document.getElementById('memb').classList.remove('open');document.querySelector('#library').scrollIntoView({behavior:'smooth'})">📚 เริ่มใช้คลัง 99 prompts</button>
+        <button class="btn2" onclick="cancelUI()">ยกเลิกสมาชิก</button>
+      </div>
+    </div>`;
+  $('memb').classList.add('open');
+}
+/* CANCEL MEMBERSHIP */
+function cancelUI(){
+  const plan=(()=>{try{return localStorage.getItem('ps-plan')}catch(e){return null}})();
+  $('mem-state').innerHTML = `
+    <div style="text-align:center">
+      <h3 style="margin-bottom:8px">ยกเลิกการเป็นสมาชิก</h3>
+      <div style="text-align:left;color:var(--muted);font-size:13.5px;background:var(--code-bg);border-radius:10px;padding:14px 18px;margin:10px 0;line-height:1.8">
+        • การยกเลิกจะมีผลทันที — สิทธิ์เข้าถึงคลัง 99 prompts จะสิ้นสุดลง<br>
+        • เงินที่ชำระแล้ว<b style="color:var(--fg)">ไม่สามารถขอคืนได้</b> (ยกเว้นกรณีขอคืนภายใน 7 วันตามเงื่อนไข ดูใน "นโยบายคืนเงิน")<br>
+        • คุณสามารถสมัครใหม่ได้ทุกเมื่อ<br>
+        • ต้องการสอบถามเพิ่มเติม — LINE @238tqjem
+      </div>
+      <div style="display:flex;gap:10px;justify-content:center;margin-top:14px">
+        <button class="btn2" onclick="openMember()">← ย้อนกลับ (ยังไม่ยกเลิก)</button>
+        <button class="btn2" style="border-color:#ef4444;color:#ef4444" onclick="confirmCancel()">ยืนยันยกเลิกสมาชิก</button>
+      </div>
+    </div>`;
+}
+function confirmCancel(){
+  try{ localStorage.removeItem('ps-member'); localStorage.removeItem('ps-plan'); localStorage.removeItem('ps-exp'); localStorage.removeItem('ps-joined'); }catch(e){}
+  renderLib(); updateMemberUI();
+  $('mem-state').innerHTML = `
+    <div style="text-align:center;padding:10px 0">
+      <div style="font-size:40px">👋</div>
+      <h3 style="margin:6px 0 8px">ยกเลิกสมาชิกเรียบร้อยแล้ว</h3>
+      <p style="color:var(--muted);font-size:14px">ขอบคุณที่ใช้บริการ — หากต้องการกลับมาเป็นสมาชิกอีกครั้ง สมัครใหม่ได้ทุกเมื่อ</p>
+      <div style="margin-top:14px"><button class="btn2 pri" onclick="openMember()">ดูแพ็กเกจสมาชิก</button></div>
+    </div>`;
+  toast('ยกเลิกสมาชิกแล้ว — ขอบคุณที่ใช้บริการครับ');
 }
 function logout(){ try{ localStorage.removeItem('ps-member'); localStorage.removeItem('ps-plan'); }catch(e){} renderLib(); updateMemberUI(); $('memb').classList.remove('open'); toast('ออกจากระบบแล้ว (โหมดทดสอบ)'); }
 function updateMemberUI(){
