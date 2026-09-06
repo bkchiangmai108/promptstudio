@@ -649,7 +649,7 @@ function stars(el,items,cls){
     ${cls==='row'?`<span class="num">${String(items.indexOf(x)+1).padStart(2,'0')}</span>`:''}
     <div><h3>${x.t}${x.neww?' <span class="badge b-pro">NEW</span>':''}</h3><p>${x.d}</p></div>
     ${cls==='row'?`<span class="badge ${x.free?'b-free':'b-pro'}">${x.free?'FREE':'PRO'}</span>`
-      :`<span class="cat">${x.c}</span><div class="foot"><span>${x.free?'FREE':(isMember()?'PRO ✓ unlocked':'PRO 🔒')}</span><span>▲ ${x.u}</span></div>`}
+      :`<span class="cat">${x.c}</span><div class="foot"><span>${x.free?'FREE':(memberActive()?'PRO ✓ unlocked':'PRO 🔒')}</span><span>▲ ${x.u}</span></div>`}
   </${cls}>`).join('');
 }
 function renderLib(){
@@ -663,11 +663,36 @@ function renderLib(){
 stars($('feat'),LIB.filter(x=>x.hot).slice(0,10),'row');
 /* MEMBER */
 function isMember(){ try{ return localStorage.getItem('ps-member')==='1'; }catch(e){ return false; } }
+function memberActive(){ // เช็คสิทธิ์ตามวันหมดอายุจริง
+  if(!isMember()) return false;
+  try{
+    const exp=localStorage.getItem('ps-exp');
+    if(!exp) return true; // ไม่มีข้อมูลวันหมดอายุ (โหมดเก่า) — ถือว่าใช้ได้
+    return new Date(exp) > new Date();
+  }catch(e){ return true; }
+}
+function memberExpired(){
+  try{ return isMember() && localStorage.getItem('ps-exp') && new Date(localStorage.getItem('ps-exp')) <= new Date(); }
+  catch(e){ return false; }
+}
+function expDateStr(){ try{ const e=localStorage.getItem('ps-exp'); return e?new Date(e).toLocaleDateString('th-TH',{year:'numeric',month:'long',day:'numeric'}):''; }catch(e){ return ''; } }
 function openMember(){
   const m=isMember();
   if(m){
     const plan=(()=>{try{return localStorage.getItem('ps-plan')}catch(e){return null}})();
-    $('mem-state').innerHTML = '<b style="color:var(--accent)">สถานะ: สมาชิกใช้งานอยู่ \u2713 '+(plan==='yearly'?'(รายปี)':'(รายเดือน)')+'</b><br><span style="color:var(--muted);font-size:13px">ปลดล็อกคลังเต็ม 99 prompts แล้ว</span><div style="margin-top:14px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><button class="btn2" onclick="cancelUI()">ยกเลิกสมาชิก</button></div>';
+    if(memberExpired()){
+      try{ localStorage.removeItem('ps-member'); localStorage.removeItem('ps-plan'); localStorage.removeItem('ps-exp'); localStorage.removeItem('ps-joined'); }catch(e){}
+      renderLib(); updateMemberUI();
+    }
+  }
+  if(memberActive()){
+    const plan=(()=>{try{return localStorage.getItem('ps-plan')}catch(e){return null}})();
+    const cancelled=(()=>{try{return localStorage.getItem('ps-cancelled')==='1'}catch(e){return false}})();
+    const d=expDateStr();
+    $('mem-state').innerHTML = '<b style="color:var(--accent)">สถานะ: สมาชิกใช้งานอยู่ \u2713 '+(plan==='yearly'?'(รายปี)':'(รายเดือน)')+'</b><br><span style="color:var(--muted);font-size:13px">ปลดล็อกคลังเต็ม 99 prompts แล้ว</span>'
+      +(d?`<br><span style="color:var(--muted);font-size:13px">สิทธิ์ถึงวันที่ <b style="color:var(--fg)">${d}</b></span>`:'')
+      +(cancelled?`<br><span style="color:var(--muted);font-size:12.5px">🔔 สถานะ: ยกเลิกแล้ว — ใช้งานได้ถึงวันสิ้นสุดดังกล่าว (ไม่ต่ออายุอัตโนมัติ)</span>`:'')
+      +'<div style="margin-top:14px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><button class="btn2" onclick="cancelUI()">ยกเลิกสมาชิก</button></div>';
   } else {
     $('mem-state').innerHTML = `
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px">
@@ -760,6 +785,7 @@ function doJoin(plan, expiresIso){
   try{ localStorage.setItem('ps-member','1'); localStorage.setItem('ps-plan',plan);
     localStorage.setItem('ps-joined',new Date().toISOString());
     localStorage.setItem('ps-exp', exp);
+    localStorage.removeItem('ps-cancelled'); // สมัครใหม่ = ยกเลิกสถานะเดิม
   }catch(e){}
   $('memb').classList.remove('open'); $('mb').classList.remove('open');
   renderLib(); updateMemberUI();
@@ -784,28 +810,36 @@ function cancelUI(){
     <div style="text-align:center">
       <h3 style="margin-bottom:8px">ยกเลิกการเป็นสมาชิก</h3>
       <div style="text-align:left;color:var(--muted);font-size:13.5px;background:var(--code-bg);border-radius:10px;padding:14px 18px;margin:10px 0;line-height:1.8">
-        • การยกเลิกจะมีผลทันที — สิทธิ์เข้าถึงคลัง 99 prompts จะสิ้นสุดลง<br>
+        • การยกเลิกจะ<b style="color:var(--fg)">ไม่สิ้นสุดทันที</b> — คุณยังใช้งานได้ถึงวันสิ้นสุดสมาชิกที่เหลืออยู่ครบถ้วน${(()=>{const d=expDateStr();return d?` (วันที่ <b style="color:var(--accent)">${d}</b>)`:''})}<br>
+        • จนถึงวันดังกล่าว สิทธิ์เข้าถึงคลัง 99 prompts ยังเปิดใช้งานตามปกติทุกอย่าง<br>
+        • เมื่อถึงวันสิ้นสุด สิทธิ์จะหมดอายุอัตโนมัติ — ระบบจะเปลี่ยนเป็นสถานะ FREE โดยอัตโนมัติ<br>
         • เงินที่ชำระแล้ว<b style="color:var(--fg)">ไม่สามารถขอคืนได้</b> (ยกเว้นกรณีขอคืนภายใน 7 วันตามเงื่อนไข ดูใน "นโยบายคืนเงิน")<br>
-        • คุณสามารถสมัครใหม่ได้ทุกเมื่อ<br>
+        • หากเปลี่ยนใจ สามารถสมัครใหม่ได้ทุกเมื่อ — ไม่กระทบสิทธิ์ที่เหลืออยู่<br>
         • ต้องการสอบถามเพิ่มเติม — LINE @238tqjem
       </div>
       <div style="display:flex;gap:10px;justify-content:center;margin-top:14px">
         <button class="btn2" onclick="openMember()">← ย้อนกลับ (ยังไม่ยกเลิก)</button>
-        <button class="btn2" style="border-color:#ef4444;color:#ef4444" onclick="confirmCancel()">ยืนยันยกเลิกสมาชิก</button>
+        <button class="btn2" style="border-color:#ef4444;color:#ef4444" onclick="confirmCancel()">ยืนยันยกเลิก (ใช้งานต่อถึงวันสิ้นสุด)</button>
       </div>
     </div>`;
 }
 function confirmCancel(){
-  try{ localStorage.removeItem('ps-member'); localStorage.removeItem('ps-plan'); localStorage.removeItem('ps-exp'); localStorage.removeItem('ps-joined'); }catch(e){}
+  const d=expDateStr();
+  try{ localStorage.setItem('ps-cancelled','1'); }catch(e){} // ตั้งธงยกเลิก — สิทธิ์ยังอยู่ถึงวันหมดอายุ ไม่ต่ออายุอีก
   renderLib(); updateMemberUI();
   $('mem-state').innerHTML = `
     <div style="text-align:center;padding:10px 0">
-      <div style="font-size:40px">👋</div>
-      <h3 style="margin:6px 0 8px">ยกเลิกสมาชิกเรียบร้อยแล้ว</h3>
-      <p style="color:var(--muted);font-size:14px">ขอบคุณที่ใช้บริการ — หากต้องการกลับมาเป็นสมาชิกอีกครั้ง สมัครใหม่ได้ทุกเมื่อ</p>
-      <div style="margin-top:14px"><button class="btn2 pri" onclick="openMember()">ดูแพ็กเกจสมาชิก</button></div>
+      <div style="font-size:40px">✅</div>
+      <h3 style="margin:6px 0 8px">บันทึกการยกเลิกเรียบร้อยแล้ว</h3>
+      <p style="color:var(--muted);font-size:14px">สิทธิ์สมาชิกของคุณจะยังเปิดใช้งานต่อไปจนถึง</p>
+      ${d?`<div style="font-size:20px;font-weight:600;color:var(--accent);margin:6px 0">📅 ${d}</div>`:''}
+      <p style="color:var(--muted);font-size:13px;margin-top:6px">จนถึงวันดังกล่าว คุณใช้คลัง 99 prompts ได้ครบทุกอย่างเหมือนเดิม<br>เมื่อครบกำหนด ระบบจะปิดสิทธิ์อัตโนมัติและเปลี่ยนสถานะเป็น FREE</p>
+      <div style="margin-top:14px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+        <button class="btn2 pri" onclick="document.getElementById('memb').classList.remove('open');document.querySelector('#library').scrollIntoView({behavior:'smooth'})">📚 ใช้งานต่อจนถึงวันสิ้นสุด</button>
+        <button class="btn2" onclick="openMember()">สถานะสมาชิก</button>
+      </div>
     </div>`;
-  toast('ยกเลิกสมาชิกแล้ว — ขอบคุณที่ใช้บริการครับ');
+  toast('บันทึกยกเลิกแล้ว — ใช้งานต่อได้ถึงวันสิ้นสุดสมาชิกครับ');
 }
 function logout(){ try{ localStorage.removeItem('ps-member'); localStorage.removeItem('ps-plan'); }catch(e){} renderLib(); updateMemberUI(); $('memb').classList.remove('open'); toast('ออกจากระบบแล้ว (โหมดทดสอบ)'); }
 function updateMemberUI(){
@@ -820,7 +854,7 @@ function openM(i){
   const x=LIB[i];
   $('m-cat').textContent=x.c;
   $('m-title').textContent=x.t+(x.neww?' 🆕':'');
-  const locked=!x.free && !isMember();
+  const locked=!x.free && !memberActive();
   $('m-body').textContent = locked
     ? '🔒 เนื้อ prompt ฉบับเต็มอยู่ในสมาชิก — ปลดล็อกด้วยรหัส unlock ที่ได้หลังสมัคร\n\nสมาชิกใหม่: ฿99/เดือน (ราคาพิเศษ 1 เดือนแรกเท่านั้น) หรือ ฿790/ปี (สำหรับสมาชิกใหม่ในปีแรก)'
     : x.p;
