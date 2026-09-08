@@ -676,6 +676,38 @@ function memberExpired(){
   catch(e){ return false; }
 }
 function expDateStr(){ try{ const e=localStorage.getItem('ps-exp'); return e?new Date(e).toLocaleDateString('th-TH',{year:'numeric',month:'long',day:'numeric'}):''; }catch(e){ return ''; } }
+/* ===== RENEWAL (ต่ออายุ) — ราคาปกติ: รายเดือน ฿199 · รายปี ฿1,990 (เท่าจ่ายรายเดือน 10 เดือน) ===== */
+const RENEW = {
+  monthly: {price: 199, label: 'ต่ออายุรายเดือน (ราคาปกติ)'},
+  yearly:  {price: 1990, label: 'ต่ออายุรายปี (ลด 2 เดือน)'}
+};
+function daysLeft(){
+  try{ const e=localStorage.getItem('ps-exp'); if(!e) return null;
+    return Math.ceil((new Date(e)-new Date())/864e5);
+  }catch(err){ return null; }
+}
+function renewBanner(){
+  const dl=daysLeft(); if(dl===null) return '';
+  const plan=(()=>{try{return localStorage.getItem('ps-plan')}catch(e){return null}})();
+  const d=expDateStr();
+  if(dl<=0) return '';
+  if(dl<=7){
+    return `<div style="margin-top:12px;border:1px solid var(--accent);border-radius:12px;padding:12px 16px;background:var(--code-bg)">
+      <b style="color:var(--accent)">⏰ สมาชิกจะหมดอายุในอีก ${dl} วัน (${d})</b>
+      <p style="color:var(--muted);font-size:13px;margin:6px 0 10px">${plan==='yearly'
+        ? 'ต่ออายุรายปี ฿1,990 (เท่าจ่ายรายเดือน 10 เดือน — ลด 2 เดือน) — สแกน QR ด้านล่าง'
+        : 'ต่ออายุรายเดือนในราคาปกติ ฿199/เดือน — สแกน QR ด้านล่าง'}</p>
+      ${plan==='yearly'
+        ? `<button class="btn2 pri" onclick="showPay(${RENEW.yearly.price},'renew-yearly')">🔄 ต่ออายุ ฿1,990/ปี</button>`
+        : `<button class="btn2 pri" onclick="showPay(${RENEW.monthly.price},'renew-monthly')">🔄 ต่ออายุ ฿199/เดือน</button>`}
+    </div>`;
+  }
+  return `<p style="color:var(--muted);font-size:12.5px;margin-top:10px">สิทธิ์ถึงวันที่ ${d} (อีก ${dl} วัน) · ต่ออายุได้เมื่อใกล้หมดอายุ</p>`;
+}
+function renewMonthly(){
+  openMember();
+  showPay(RENEW.monthly.price,'renew-monthly');
+}
 function openMember(){
   const m=isMember();
   if(m){
@@ -692,6 +724,7 @@ function openMember(){
     $('mem-state').innerHTML = '<b style="color:var(--accent)">สถานะ: สมาชิกใช้งานอยู่ \u2713 '+(plan==='yearly'?'(รายปี)':'(รายเดือน)')+'</b><br><span style="color:var(--muted);font-size:13px">ปลดล็อกคลังเต็ม 99 prompts แล้ว</span>'
       +(d?`<br><span style="color:var(--muted);font-size:13px">สิทธิ์ถึงวันที่ <b style="color:var(--fg)">${d}</b></span>`:'')
       +(cancelled?`<br><span style="color:var(--muted);font-size:12.5px">🔔 สถานะ: ยกเลิกแล้ว — ใช้งานได้ถึงวันสิ้นสุดดังกล่าว (ไม่ต่ออายุอัตโนมัติ)</span>`:'')
+      +renewBanner()
       +'<div style="margin-top:14px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><button class="btn2" onclick="cancelUI()">ยกเลิกสมาชิก</button></div>';
   } else {
     $('mem-state').innerHTML = `
@@ -718,9 +751,16 @@ function openMember(){
 function showPay(amount, plan){
   const payload = ppPayload(amount);
   const qr = 'https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=' + encodeURIComponent(payload);
+  const isRenewM = plan==='renew-monthly', isRenewY = plan==='renew-yearly';
+  const headTxt = isRenewM ? 'ต่ออายุรายเดือน — ราคาปกติ' : (isRenewY ? 'ต่ออายุรายปี — ลด 2 เดือน' : (plan==='yearly'?'สมาชิกรายปี — ปีแรก':'สมาชิกรายเดือน — เดือนแรก'));
+  const lineMsg = isRenewM
+    ? 'ต่ออายุสมาชิก Prompt Studio รายเดือน (฿199/เดือน) — แจ้งชำระเงินครับ หลักฐาน: [แนบสลิป]'
+    : isRenewY
+    ? 'ต่ออายุสมาชิก Prompt Studio รายปี (฿1,990/ปี) — แจ้งชำระเงินครับ หลักฐาน: [แนบสลิป]'
+    : 'สมัครสมาชิก Prompt Studio ('+(plan==='yearly'?'รายปี ฿790':'รายเดือน ฿99')+') — แจ้งชำระเงินครับ หลักฐาน: [แนบสลิป]';
   $('mem-state').innerHTML = `
     <div style="text-align:center">
-      <div class="pc-tag" style="display:inline-block">${plan==='yearly'?'สมาชิกรายปี — ปีแรก':'สมาชิกรายเดือน — เดือนแรก'}</div>
+      <div class="pc-tag" style="display:inline-block">${headTxt}</div>
       <div style="font-family:var(--mono);font-size:34px;font-weight:600;margin:6px 0">฿${amount}</div>
       <div style="border:1px solid var(--border);border-radius:14px;display:inline-block;padding:14px;background:#fff">
         <img src="${qr}" width="200" height="200" alt="PromptPay QR">
@@ -728,7 +768,7 @@ function showPay(amount, plan){
       <p style="color:var(--muted);font-size:13px;margin:10px 0 4px">สแกนด้วยแอปธนาคาร — PromptPay: <b style="font-family:var(--mono)">${STORE.promptpay.replace(/^(\d{3})(\d{3})(\d{4})$/,'$1-$2-$3')}</b></p>
       <p style="color:var(--muted);font-size:12px;margin-bottom:16px">จำนวนเงินถูกระบุไว้ใน QR แล้ว ไม่ต้องพิมพ์เอง</p>
       ${STORE.line
-        ? `<a class="btn2 pri" style="display:inline-block;text-decoration:none" href="https://line.me/R/ti/p/${STORE.line}?text=${encodeURIComponent('สมัครสมาชิก Prompt Studio ('+(plan==='yearly'?'รายปี ฿790':'รายเดือน ฿99')+') — แจ้งชำระเงินครับ หลักฐาน: [แนบสลิป]')}" target="_blank" rel="noopener">📲 แจ้งชำระเงินผ่าน LINE</a>`
+        ? `<a class="btn2 pri" style="display:inline-block;text-decoration:none" href="https://line.me/R/ti/p/${STORE.line}?text=${encodeURIComponent(lineMsg)}" target="_blank" rel="noopener">📲 แจ้งชำระเงินผ่าน LINE</a>`
         : `<button class="btn2 pri" onclick="notifyPay('${plan}',${amount})">📩 แจ้งชำระเงิน</button>
            <p style="color:var(--muted);font-size:12px;margin-top:8px">หลังโอน กดปุ่มด้านบน แล้วส่งสลิปมาที่อีเมล <b style="font-family:var(--mono)">${STORE.email}</b> — ยืนยันภายใน 15 นาที รับรหัส unlock ทางอีเมล</p>`}
       <p style="color:var(--muted);font-size:12px;margin-bottom:14px">ขั้นตอน: สแกน QR โอนเงิน → แคปหน้าจอสลิป → กดปุ่ม "📲 แจ้งชำระเงินผ่าน LINE" แนบสลิป → ทีมงานตรวจสอบและส่งรหัส unlock ให้ทาง LINE ภายใน 15 นาที (9:00–21:00 ทุกวัน)</p>
