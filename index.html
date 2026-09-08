@@ -415,7 +415,7 @@ footer{border-top:1px solid var(--border);margin-top:64px;padding:30px 48px;colo
     <button class="x" onclick="document.getElementById('memb').classList.remove('open')">✕</button>
     <span style="font-family:var(--mono);font-size:11px;letter-spacing:1px;color:var(--accent);text-transform:uppercase">MEMBER ACCESS</span>
     <h3>เข้าถึงคลังเต็ม 99 prompts</h3>
-    <p style="color:var(--muted);font-size:14px;margin-top:6px">รายเดือน ฿99 — ราคาพิเศษ <b style="color:var(--fg)">1 เดือนแรกเท่านั้น</b> (เดือนถัดไป ฿199) · รายปี ฿790 — <b style="color:var(--fg)">สำหรับสมาชิกใหม่ในปีแรก</b> เท่ากับ ฿66/เดือน</p>
+    <p style="color:var(--muted);font-size:14px;margin-top:6px">รายเดือน ฿99 — ราคาพิเศษ <b style="color:var(--fg)">1 เดือนแรกเท่านั้น</b> · ต่ออายุเดือนถัดไป <b style="color:var(--fg)">฿199/เดือน</b> · รายปี ฿790 สมัครปีแรก (เท่ากับ ฿66/เดือน) · ต่ออายุปีถัดไป <b style="color:var(--fg)">฿1,990/ปี</b> (ลด 2 เดือน จากจ่ายรายเดือนสะสม)</p>
     <div id="mem-state" style="margin-top:18px"></div>
   </div>
 </div>
@@ -846,11 +846,12 @@ function doJoin(plan, expiresIso){
 /* CANCEL MEMBERSHIP */
 function cancelUI(){
   const plan=(()=>{try{return localStorage.getItem('ps-plan')}catch(e){return null}})();
+  const d=expDateStr();
   $('mem-state').innerHTML = `
     <div style="text-align:center">
       <h3 style="margin-bottom:8px">ยกเลิกการเป็นสมาชิก</h3>
       <div style="text-align:left;color:var(--muted);font-size:13.5px;background:var(--code-bg);border-radius:10px;padding:14px 18px;margin:10px 0;line-height:1.8">
-        • การยกเลิกจะ<b style="color:var(--fg)">ไม่สิ้นสุดทันที</b> — คุณยังใช้งานได้ถึงวันสิ้นสุดสมาชิกที่เหลืออยู่ครบถ้วน${(()=>{const d=expDateStr();return d?` (วันที่ <b style="color:var(--accent)">${d}</b>)`:''})}<br>
+        • การยกเลิกจะ<b style="color:var(--fg)">ไม่สิ้นสุดทันที</b> — คุณยังใช้งานได้ถึงวันสิ้นสุดสมาชิกที่เหลืออยู่ครบถ้วน${d?` (วันที่ <b style="color:var(--accent)">${d}</b>)`:''}<br>
         • จนถึงวันดังกล่าว สิทธิ์เข้าถึงคลัง 99 prompts ยังเปิดใช้งานตามปกติทุกอย่าง<br>
         • เมื่อถึงวันสิ้นสุด สิทธิ์จะหมดอายุอัตโนมัติ — ระบบจะเปลี่ยนเป็นสถานะ FREE โดยอัตโนมัติ<br>
         • เงินที่ชำระแล้ว<b style="color:var(--fg)">ไม่สามารถขอคืนได้</b> (ยกเว้นกรณีขอคืนภายใน 7 วันตามเงื่อนไข ดูใน "นโยบายคืนเงิน")<br>
