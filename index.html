@@ -187,7 +187,7 @@ h2.sec{font-family:var(--serif);font-size:30px;font-weight:600}
 .cb-l .ghost:hover{border-color:#fff}
 .cb-mini{font-family:var(--mono);font-size:12px;color:rgba(255,255,255,.85);margin-top:18px;position:relative}
 .cb-r{position:relative;display:flex;justify-content:center}
-.cb-art-wrap{position:relative;max-width:300px}
+.cb-art-wrap{position:relative;max-width:430px}
 .cb-art{width:100%;display:block;border-radius:14px;box-shadow:0 18px 50px rgba(0,0,0,.3);transform:rotate(2.5deg);animation:cbFloat 6s ease-in-out infinite}
 .cb-art:hover{transform:rotate(0) scale(1.03);animation-play-state:paused}
 @keyframes cbFloat{0%,100%{transform:rotate(2.5deg) translateY(0)}50%{transform:rotate(2.5deg) translateY(-10px)}}
@@ -200,6 +200,9 @@ h2.sec{font-family:var(--serif);font-size:30px;font-weight:600}
 /* CTA caption — pulses in at the "7s beat" of the loop */
 .cb-art-cta{position:absolute;left:6%;right:6%;bottom:9%;transform:rotate(2.5deg);background:rgba(10,12,22,.82);border:1px solid rgba(255,255,255,.25);border-radius:9px;color:#fff;font-size:12.5px;font-weight:600;text-align:center;padding:8px 6px;backdrop-filter:blur(4px);animation:cbCta 6s ease-in-out infinite}
 @keyframes cbCta{0%,55%{opacity:0;transform:rotate(2.5deg) translateY(8px)}68%,92%{opacity:1;transform:rotate(2.5deg) translateY(0)}100%{opacity:0}}
+/* ปุ่มเปิด/ปิดเสียงวิดีโอ */
+.cb-sound{position:absolute;top:4%;right:4%;z-index:5;width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.4);background:rgba(10,12,22,.65);color:#fff;font-size:15px;cursor:pointer;backdrop-filter:blur(4px);transition:.2s}
+.cb-sound:hover{background:rgba(10,12,22,.9);transform:scale(1.08)}
 /* FLOATING TRUST STRIP under hero */
 .trust-strip{display:flex;gap:26px;flex-wrap:wrap;margin-top:26px;padding:16px 20px;border:1px solid var(--border);border-radius:12px;background:var(--card)}
 .ts-item{display:flex;align-items:center;gap:9px;font-size:13.5px;color:var(--muted)}
@@ -326,7 +329,7 @@ footer{border-top:1px solid var(--border);margin-top:64px;padding:30px 48px;colo
       </div>
       <div class="cb-r">
         <div class="cb-art-wrap">
-          <video class="cb-art" src="cta-loop.webm" autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&q=80&auto=format&fit=crop" onerror="this.style.display='none'"></video>
+          <video class="cb-art" id="cbVdo" src="cta-loop.webm" autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&q=80&auto=format&fit=crop" onerror="this.style.display='none'"></video>
           <div class="cb-art-fx"></div>
           <div class="cb-art-cta">ปลดล็อกคลัง 99 Prompts — เริ่ม ฿99/เดือน</div>
         </div>
@@ -1076,6 +1079,21 @@ function openPolicy(key){
   $('policy').classList.add('open');
 }
 let tt;function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),2200);}
+/* ===== CTA VIDEO — เสียงอัตโนมัติ: เปิดได้เมื่อผู้ใช้กด ปิดเองเมื่อเลื่อนออกจากหน้าจอ ===== */
+(function(){
+  const v=document.getElementById('cbVdo'); if(!v) return;
+  const btn=document.createElement('button');
+  btn.className='cb-sound'; btn.setAttribute('aria-label','เปิด/ปิดเสียงวิดีโอ'); btn.textContent='🔇';
+  btn.onclick=()=>{ v.muted=!v.muted; sync(); v.play().catch(()=>{}); };
+  const sync=()=>{ btn.textContent=v.muted?'🔇':'🔊'; btn.title=v.muted?'เปิดเสียงวิดีโอ':'ปิดเสียงวิดีโอ'; };
+  sync();
+  document.querySelector('.cb-art-wrap').appendChild(btn);
+  /* เลื่อนออกจากจอ → ปิดเสียง+หยุด / เลื่อนกลับเข้ามา → เล่นต่อ (เสียงยังปิดจนกดปุ่มใหม่) */
+  new IntersectionObserver(es=>es.forEach(e=>{
+    if(e.isIntersecting){ v.play().catch(()=>{}); }
+    else { v.pause(); if(!v.muted){ v.muted=true; sync(); toast('ปิดเสียงวิดีโอแล้ว'); } }
+  }),{threshold:.25}).observe(v);
+})();
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
 document.querySelectorAll('.fadeup').forEach(el=>io.observe(el));
 /* JS-BASED HOVER (bulletproof — ทำงานแม้ CSS :hover มีปัญหา) */
